@@ -1,5 +1,6 @@
 <html>
 <body>
-<h2>Hello World!2</h2>
+<jsp:include page="mainMenu.jsp"></jsp:include><br/>
+<h2>Welcome</h2>
 </body>
 </html>
