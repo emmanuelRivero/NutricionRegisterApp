@@ -3,6 +3,7 @@ package database;
 import java.sql.*;
 
 public class databaseConsult {
+
 	//Registros
 	public static ResultSet getRegistros() {
 		String dbIP;
@@ -11,7 +12,7 @@ public class databaseConsult {
 		String dbUser;
 		String dbPassword;
 		
-		dbIP = "35.196.88.143";
+		dbIP = "35.231.140.162";
 		dbPort = "3306";
 		dbName = "nutricion";
 		dbUser = "nutricion";
@@ -47,7 +48,7 @@ public class databaseConsult {
 		String dbUser;
 		String dbPassword;
 		
-		dbIP = "35.196.88.143";
+		dbIP = "35.231.140.162";
 		dbPort = "3306";
 		dbName = "nutricion";
 		dbUser = "nutricion";
