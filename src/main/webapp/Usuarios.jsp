@@ -12,7 +12,7 @@
 <%@page import="java.sql.*" %>
 
 <% ResultSet data;
-	data = databaseConsult.getUser();
+	data = databaseQuery.getUser();
 %>
 <h2>Registros</h2>
 <br>

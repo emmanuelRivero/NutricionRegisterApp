@@ -19,7 +19,9 @@
     <a class="nav-item nav-link" id="nav-usuarios-tab" data-toggle="tab" href="#nav-usuarios" role="tab" aria-controls="nav-usuarios" aria-selected="false">Usuarios</a>
   </div>
 </nav>
+
 <div class="tab-content" id="nav-tabContent">
+	<!-- aqui empiezan las ligas de los tabls -->
   <div class="tab-pane fade show active" id="nav-registros" role="tabpanel" aria-labelledby="nav-registros-tab">
 	<div class="embed-responsive embed-responsive-16by9">
   	<iframe class="embed-responsive-item" src="Registros.jsp" allowfullscreen></iframe>
@@ -28,7 +30,13 @@
 
   <div class="tab-pane fade" id="nav-alumnos" role="tabpanel" aria-labelledby="nav-alumnos-tab">Alumnos</div>
   <div class="tab-pane fade" id="nav-horarios" role="tabpanel" aria-labelledby="nav-horarios-tab">Horarios</div>
-  <div class="tab-pane fade" id="nav-hospitales" role="tabpanel" aria-labelledby="nav-hospitales-tab">Hospitales</div>
+  
+  <div class="tab-pane fade" id="nav-hospitales" role="tabpanel" aria-labelledby="nav-hospitales-tab">
+  	<div class="embed-responsive embed-responsive-16by9">
+  	<iframe class="embed-responsive-item" src="Hospitales.jsp" allowfullscreen></iframe>
+	</div>
+  </div>
+  
   <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">Grupos</div>
   <div class="tab-pane fade" id="nav-ciclo" role="tabpanel" aria-labelledby="nav-ciclo-tab">Ciclo</div>
  
