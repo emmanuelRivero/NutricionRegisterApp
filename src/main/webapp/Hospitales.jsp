@@ -13,14 +13,18 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>
 
-	<% ArrayList<Hospital> data;
-	data = databaseQuery.getHospitales();
-	
+	<% 	
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
-		out.println("Updated");
+		String hospital = request.getParameter("hospital");
+		String telefono = request.getParameter("telefono");
+		String responsable = request.getParameter("responsable");
+		String domicilio = request.getParameter("domicilio");
+		
+		databaseInsert.hospital(hospital,telefono,responsable,domicilio);
 	};
-	
+	ArrayList<Hospital> data;
+	data = databaseQuery.getHospitales();
 	%>
 <header>
     <div class="container d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
@@ -91,15 +95,15 @@
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Telefono</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="Telefono">
+    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="telefono">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Responsale</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="Resposable">
+    		<input class="form-control form-control-sm" type="text" placeholder="Responsable" name="responsable">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Domicilio</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="Domicilio">
+    		<input class="form-control form-control-sm" type="text" placeholder="Domicilio" name="domicilio">
     	</div>
       </div>
       <div class="modal-footer">

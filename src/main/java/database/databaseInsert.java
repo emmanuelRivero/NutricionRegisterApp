@@ -2,13 +2,14 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class databaseInsert {
-	private static ResultSet doQuery(String query) {
+	
+	public static void hospital(String nombre, String telefono, String responsable, String domicilio) {
 		
+		String query = "insert into hospital (nombre, telefono, responsable, domicilio) values (?,?,?,?);";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
@@ -17,23 +18,34 @@ public class databaseInsert {
 		String dbUser = nutricionDB.getDbUser();
 		String dbPassword = nutricionDB.getDbPassword();
 		
-		try {
-			
-		String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conection=DriverManager.getConnection(url,dbUser,dbPassword);
-		Statement getData = conection.createStatement();
+		Connection conection = null;
+		PreparedStatement insertData = null;
 		
-		ResultSet rs;
-		rs = getData.executeQuery(query);
-	    
-		return rs;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;			
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			insertData = conection.prepareStatement(query);
+		
+			insertData.setString(1, telefono);
+			insertData.setString(2, nombre);
+			insertData.setString(3, responsable);
+			insertData.setString(4, domicilio);
+			
+			insertData.execute();
         }
 		
 		catch (Exception e)
 	    {
 			System.out.println(e.getMessage());
-			return null;
-	    }		
+	    }
+		finally {
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (insertData != null) {
+		        try { insertData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}		
 	}	
 }
