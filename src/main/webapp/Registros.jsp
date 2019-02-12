@@ -10,8 +10,10 @@
 <body>
 <%@page import="database.*" %>
 <%@page import="java.sql.*" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="models.*" %>
 
-<% ResultSet data;
+<% ArrayList<Registro> data;
 	data = databaseQuery.getRegistros();
 %>
 <h2>Usuarios</h2>
@@ -19,59 +21,34 @@
 <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>
-      <th class="th-sm">Cuenta
-
-      </th>
-      <th class="th-sm">Nombres
-
-      </th>
-      <th class="th-sm">Apellido paterno
-
-      </th>
-      <th class="th-sm">Apellido materno
-
-      </th>
-      <th class="th-sm">Dias de la Semana
-
-      </th>
-      <th class="th-sm">Horario
-
-      </th>
-
-      <th class="th-sm">Hospital
-
-      </th>
-
-      <th class="th-sm">Grupo
-
-      </th>
-
-      <th class="th-sm">Ciclo
-
-      </th>
-      <th class="th-sm">Acciones
-
-      </th>
-
-           
+      <th class="th-sm">Cuenta</th>
+      <th class="th-sm">Nombres</th>
+      <th class="th-sm">Apellido paterno</th>
+      <th class="th-sm">Apellido materno</th>
+      <th class="th-sm">Dias de la Semana</th>
+	  <th class="th-sm">Horario</th>
+      <th class="th-sm">Hospital</th>
+      <th class="th-sm">Grupo</th>
+      <th class="th-sm">Ciclo</th>
+      <th class="th-sm"></th>        
     </tr>
   </thead>
   <tbody>
-  <% while(data.next()){%>
+  <% for (Registro registro : data){%>
     <tr>
-      <td><%=data.getInt(2) %></td>
-      <td><%=data.getString(3) %></td>
-      <td><%=data.getString(4) %></td>
-      <td><%=data.getString(5) %></td>
-      <td><%=data.getString(6) %></td>
-      <td><%=data.getString(7) %></td>
-      <td><%=data.getString(8) %></td>
-      <td><%=data.getString(9) %></td>
-      <td><%=data.getString(10) %></td>
+	  <td><%=registro.getCuenta()%></td>
+	  <td><%=registro.getNombres()%></td>
+	  <td><%=registro.getApellidoPaterno()%></td>
+	  <td><%=registro.getApellidoMaterno()%></td>
+	  <td><%=registro.getDiasSemana()%></td>
+	  <td><%=registro.getHorario()%></td>
+	  <td><%=registro.getHospital()%></td>
+	  <td><%=registro.getGrupo()%></td>
+	  <td><%=registro.getCiclo()%></td>
       <td>
       	<div>
-      		<button type="button" class="btn btn-outline-primary btn-sm" id=<%=data.getInt(1) %>>Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=data.getInt(1) %>>Eliminar</button>
+      		<button type="button" class="btn btn-outline-primary btn-sm" id=<%=registro.getId() %>>Modificar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=registro.getId() %>>Eliminar</button>
       		</div>
       </td>
     </tr>

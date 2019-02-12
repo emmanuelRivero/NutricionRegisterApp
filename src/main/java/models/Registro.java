@@ -1,6 +1,7 @@
 package models;
 
 public class Registro {
+	private int id;
 	private int cuenta;
 	private String nombres;
 	private String apellidoPaterno;
@@ -11,6 +12,14 @@ public class Registro {
 	private String grupo;
 	private String ciclo;
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getCuenta() {
 		return cuenta;
 	}

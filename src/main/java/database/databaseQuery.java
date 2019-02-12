@@ -35,11 +35,63 @@ public class databaseQuery {
 	}	
 	
 	//Registros
-	public static ResultSet getRegistros() {
+	public static ArrayList<Registro> getRegistros() {
 		String query = "select r.registro_id, r.cuenta, a.nombre, a.apellido_paterno, a.apellido_materno, hor.dias_semana,hor.horario,hosp.nombre,g.nombre,c.nombre from registro AS r JOIN horario AS hor ON r.horario_id=hor.horario_id JOIN alumno AS a ON r.cuenta=a.cuenta JOIN grupo AS g ON g.grupo_id=hor.grupo_id JOIN hospital AS hosp ON hor.hospital_id=hosp.hospital_id JOIN ciclo as c ON c.ciclo_id=g.ciclo_id;";
-		ResultSet rs;
-	    rs = doQuery(query);
-	    return rs;   
+		ArrayList<Registro> registros = new ArrayList<Registro>();
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		Connection conection = null;
+		Statement getData = null;
+		ResultSet rs = null;
+		
+		try {		
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;
+			Class.forName("com.mysql.jdbc.Driver");
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			getData = conection.createStatement();
+
+		
+			rs = getData.executeQuery(query);
+			
+			while(rs.next()){
+				Registro registro = new Registro();
+				registro.setId(rs.getInt("r.registro_id"));
+				registro.setCuenta(rs.getInt("r.cuenta"));
+				registro.setNombres(rs.getString("a.nombre"));
+				registro.setApellidoPaterno(rs.getString("a.apellido_paterno"));
+				registro.setApellidoMaterno(rs.getString("a.apellido_materno"));
+				registro.setDiasSemana(rs.getString("hor.dias_semana"));
+				registro.setHorario(rs.getString("hor.horario"));
+				registro.setHospital(rs.getString("hosp.nombre"));
+				registro.setGrupo(rs.getString("g.nombre"));
+				registro.setCiclo(rs.getString("c.nombre"));
+				
+				registros.add(registro);
+			}
+		}
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+	    }
+		finally {
+			if (rs != null) {
+		        try { rs.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (getData != null) {
+		        try { getData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}
+		
+		return registros;
 	}
 
 	//Registros
