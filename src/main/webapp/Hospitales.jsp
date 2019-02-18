@@ -4,7 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- bootstarp & datatable css -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -63,9 +66,10 @@
 		<button type="button" class="btn btn-secondary btn-sm">Small button</button>
 	</div>
 </div>-->
+
 <br>
 <div class="table-responsive">
-<table id="table" class="table table-striped table-sm">
+<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>
       <th class="th-sm">Hospital</th>
@@ -83,7 +87,7 @@
       <td><%=hospital.getResponsable()%></td>
       <td><%=hospital.getDomiclio()%></td>
       <td>
-      	<div a>
+      	<div>
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=hospital.getId()%>">Modificar</button>
       		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=hospital.getId()%>>Eliminar</button>
       	</div>
@@ -173,9 +177,18 @@
   </div>
 </div>
 <%} %>
- 
+
+
+<!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<!-- datatables scrips -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#mainTable').DataTable();
+} );
+</script>
 </body>
 </html>

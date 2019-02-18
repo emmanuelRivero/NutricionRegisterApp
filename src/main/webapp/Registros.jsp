@@ -4,7 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- bootstarp & datatable css -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -19,14 +22,13 @@
 %>
 <h2>Alumnos registrados</h2>
 <br>
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>
       <th class="th-sm">Cuenta</th>
       <th class="th-sm">Nombres</th>
       <th class="th-sm">Apellido paterno</th>
       <th class="th-sm">Apellido materno</th>
-      <th class="th-sm">Dias de la Semana</th>
 	  <th class="th-sm">Horario</th>
       <th class="th-sm">Hospital</th>
       <th class="th-sm">Grupo</th>
@@ -41,7 +43,6 @@
 	  <td><%=registro.getNombres()%></td>
 	  <td><%=registro.getApellidoPaterno()%></td>
 	  <td><%=registro.getApellidoMaterno()%></td>
-	  <td><%=registro.getDiasSemana()%></td>
 	  <td><%=registro.getHorario()%></td>
 	  <td><%=registro.getHospital()%></td>
 	  <td><%=registro.getGrupo()%></td>
@@ -57,16 +58,16 @@
   </tbody>
 </table>
 
-<script>
-$(document).ready(function () {
-	  $('#dtBasicExample').DataTable();
-	  $('.dataTables_length').addClass('bs-select');
-	});
-</script>
-
-
+<!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<!-- datatables scrips -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#mainTable').DataTable();
+} );
+</script>
 </body>
 </html>

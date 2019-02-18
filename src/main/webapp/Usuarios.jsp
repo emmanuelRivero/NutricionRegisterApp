@@ -4,7 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- bootstarp & datatable css -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -17,7 +20,7 @@
 %>
 <h2>Registros</h2>
 <br>
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>
       <th class="th-sm">Usuario
@@ -71,8 +74,16 @@ $(document).ready(function () {
 	});
 </script>
 
+<!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<!-- datatables scrips -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#mainTable').DataTable();
+} );
+</script>
 </body>
 </html>
