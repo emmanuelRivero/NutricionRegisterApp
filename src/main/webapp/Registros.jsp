@@ -9,6 +9,7 @@
 </head>
 <body>
 <%@page import="database.*" %>
+<%@page import="database.databaseQuery"%>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>

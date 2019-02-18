@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class databaseInsert {
-	
-	public static void hospital(String nombre, String telefono, String responsable, String domicilio) {
+public class databaseUpdate {
+
+public static void hospital(String id, String nombre, String telefono, String responsable, String domicilio) {
 		
-		String query = "INSERT INTO hospital (nombre,telefono,responsable,domicilio) VALUES ('"+nombre+"','"+telefono+"','"+responsable+"','"+domicilio+"');";
+		String query = "UPDATE hospital SET nombre='"+nombre+"', telefono='"+telefono+"', responsable ='"+responsable+"',domicilio='"+domicilio+"' WHERE hospital_id="+id+";";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
@@ -42,4 +42,5 @@ public class databaseInsert {
 		    }			
 		}		
 	}	
+	
 }

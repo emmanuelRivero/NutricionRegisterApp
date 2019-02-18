@@ -9,6 +9,7 @@
 </head>
 <body>
 <%@page import="database.*" %>
+<%@page import="database.databaseQuery" %>
 <%@page import="java.sql.*" %>
 
 <% ResultSet data;

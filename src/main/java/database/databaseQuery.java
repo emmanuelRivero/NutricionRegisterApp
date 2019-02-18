@@ -94,7 +94,7 @@ public class databaseQuery {
 		return registros;
 	}
 
-	//Registros
+	//Hospital
 	public static ArrayList<Hospital> getHospitales() {
 		String query = "select hospital_id, nombre, telefono, responsable, domicilio from hospital;";
 		ArrayList<Hospital> hospitales = new ArrayList<Hospital>();

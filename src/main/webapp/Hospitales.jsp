@@ -9,11 +9,13 @@
 </head>
 <body>
 <%@page import="database.*" %>
+<%@page import="database.databaseQuery" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>
 
 	<% 	
+	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
 		String hospital = request.getParameter("hospital");
@@ -23,9 +25,24 @@
 		
 		databaseInsert.hospital(hospital,telefono,responsable,domicilio);
 	};
+	// catch update request form
+	String updateButton = request.getParameter("updateButton");
+	if (updateButton != null){
+		String id = request.getParameter("id");
+		String hospital = request.getParameter("hospital");
+		String telefono = request.getParameter("telefono");
+		String responsable = request.getParameter("responsable");
+		String domicilio = request.getParameter("domicilio");
+		
+		databaseUpdate.hospital(id, hospital, telefono, responsable, domicilio);
+	};
+	
 	ArrayList<Hospital> data;
 	data = databaseQuery.getHospitales();
 	%>
+	
+	
+	
 <header>
     <div class="container d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h3">Hospitales</h1>
@@ -61,14 +78,14 @@
   <tbody>
   <% for (Hospital hospital : data){%>
     <tr>
-      <td><%=hospital.getNombre() %></td>
-      <td><%=hospital.getTelefono() %></td>
-      <td><%=hospital.getResponsable() %></td>
-      <td><%=hospital.getDomiclio() %></td>
+      <td><%=hospital.getNombre()%></td>
+      <td><%=hospital.getTelefono()%></td>
+      <td><%=hospital.getResponsable()%></td>
+      <td><%=hospital.getDomiclio()%></td>
       <td>
       	<div a>
-      		<button type="button" class="btn btn-outline-primary btn-sm" id=<%=hospital.getId() %>>Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=hospital.getId() %>>Eliminar</button>
+      		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=hospital.getId()%>">Modificar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=hospital.getId()%>>Eliminar</button>
       	</div>
       </td>
     </tr>
@@ -107,7 +124,7 @@
     	</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button type="submit" class="btn btn-primary" name="newButton" value="Nuevo">Nuevo</button>
       </div>
       </form>
@@ -115,6 +132,48 @@
   </div>
 </div>
 
+<!-- modales for hospital -->
+
+<% for (Hospital hospital : data){ %>
+<div class="modal fade" id="modificarModal<%=hospital.getId()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Hospitales.jsp" method="post">
+      <input type="hidden" name="id" value="<%=hospital.getId()%>">
+      <div class="modal-body">
+      	<div class="form-group">
+    		<label for="exampleFormControlInput1">Hospital</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Hospital" name="hospital" value="<%=hospital.getNombre() %>">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Telefono</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="telefono" value="<%=hospital.getTelefono()%>">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Responsale</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Responsable" name="responsable" value="<%=hospital.getResponsable()%>">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Domicilio</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Domicilio" name="domicilio" value="<%=hospital.getDomiclio()%>">
+    	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="updateButton" value="Nuevo">Actualizar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<%} %>
+ 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
