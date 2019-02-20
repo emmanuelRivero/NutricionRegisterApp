@@ -181,7 +181,7 @@
 
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
-<script src="js/popper.min.js"></script>
+<script src="js/paopper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- datatables scrips -->
 <script src="js/jquery.dataTables.min.js"></script>

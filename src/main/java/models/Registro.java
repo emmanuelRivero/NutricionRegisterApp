@@ -6,7 +6,6 @@ public class Registro {
 	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
-	private String diasSemana;
 	private String horario;
 	private String hospital;
 	private String grupo;
@@ -43,12 +42,6 @@ public class Registro {
 	}
 	public void setApellidoMaterno(String apellidoMaterno) {
 		this.apellidoMaterno = apellidoMaterno;
-	}
-	public String getDiasSemana() {
-		return diasSemana;
-	}
-	public void setDiasSemana(String diasSemana) {
-		this.diasSemana = diasSemana;
 	}
 	public String getHorario() {
 		return horario;

@@ -28,17 +28,34 @@
 	</div>
   </div>
 
-  <div class="tab-pane fade" id="nav-alumnos" role="tabpanel" aria-labelledby="nav-alumnos-tab">Alumnos</div>
-  <div class="tab-pane fade" id="nav-horarios" role="tabpanel" aria-labelledby="nav-horarios-tab">Horarios</div>
-  
-  <div class="tab-pane fade" id="nav-hospitales" role="tabpanel" aria-labelledby="nav-hospitales-tab">
-  	<div class="embed-responsive embed-responsive-16by9">
-  	<iframe class="embed-responsive-item" src="Hospitales.jsp" allowfullscreen></iframe>
+  <div class="tab-pane fade" id="nav-alumnos" role="tabpanel" aria-labelledby="nav-alumnos-tab">
+  <div class="embed-responsive embed-responsive-16by9">
+  	<iframe class="embed-responsive-item" src="Alumnos.jsp" allowfullscreen></iframe>
 	</div>
   </div>
   
-  <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">Grupos</div>
-  <div class="tab-pane fade" id="nav-ciclo" role="tabpanel" aria-labelledby="nav-ciclo-tab">Ciclo</div>
+  <div class="tab-pane fade" id="nav-horarios" role="tabpanel" aria-labelledby="nav-horarios-tab">
+  <div class="embed-responsive embed-responsive-16by9">
+  	<iframe class="embed-responsive-item" src="Horarios.jsp" allowfullscreen></iframe>
+	</div>
+  </div>
+  
+  <div class="tab-pane fade" id="nav-hospitales" role="tabpanel" aria-labelledby="nav-hospitales-tab">
+  	<div class="embed-responsive embed-responsive-16by9">
+  		<iframe class="embed-responsive-item" src="Hospitales.jsp" allowfullscreen></iframe>
+	</div>
+  </div>
+  
+  <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">
+  	<div class="embed-responsive embed-responsive-16by9">
+  		<iframe class="embed-responsive-item" src="Grupos.jsp" allowfullscreen></iframe>
+  	</div>
+  </div>
+  <div class="tab-pane fade" id="nav-ciclo" role="tabpanel" aria-labelledby="nav-ciclo-tab">
+  	<div class="embed-responsive embed-responsive-16by9">
+  		<iframe class="embed-responsive-item" src="Ciclos.jsp" allowfullscreen></iframe>
+  	</div>
+  </div>
  
   <div class="tab-pane fade" id="nav-usuarios" role="tabpanel" aria-labelledby="nav-usuarios-tab">
   	<div class="embed-responsive embed-responsive-16by9">

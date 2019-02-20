@@ -14,9 +14,11 @@
 <%@page import="database.*" %>
 <%@page import="database.databaseQuery" %>
 <%@page import="java.sql.*" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="models.*" %>
 
-<% ResultSet data;
-	data = databaseQuery.getUser();
+<% ArrayList<Usuario> data;
+data = databaseQuery.getUsuario();
 %>
 <h2>Registros</h2>
 <br>
@@ -48,18 +50,18 @@
     </tr>
   </thead>
   <tbody>
-  <% while(data.next()){%>
+  <% for (Usuario usuario : data){%>
     <tr>
-      <td><%=data.getString(2) %></td>
-      <td><%=data.getString(3) %></td>
-      <td><%=data.getString(4) %></td>
-      <td><%=data.getString(5) %></td>
-      <td><%=data.getString(6) %></td>
-      <td><%=data.getString(7) %></td>
+      <td><%=usuario.getUserName() %></td>
+      <td><%=usuario.getNombres() %></td>
+      <td><%=usuario.getApellidoPaterno() %></td>
+      <td><%=usuario.getApellidoMaterno() %></td>
+      <td><%=usuario.getTelefono() %></td>
+      <td><%=usuario.getDomicilio() %></td>
       <td>
       	<div>
-      		<button type="button" class="btn btn-outline-primary btn-sm" id=<%=data.getInt(1) %>>Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=data.getInt(1) %>>Eliminar</button>
+      		<button type="button" class="btn btn-outline-primary btn-sm">Modificar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
       		</div>
       </td>
     </tr>
