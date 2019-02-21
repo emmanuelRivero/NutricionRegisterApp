@@ -174,7 +174,7 @@ public class databaseQuery {
 	
 	//Horario
 	public static ArrayList<Horario> getHorario() {
-		String query = "select hor.horario_id, hor.periodo, hor.horario, hosp.nombre, g.nombre from horario as hor JOIN hospital as hosp ON hor.hospital_id=hosp.hospital_id JOIN grupo AS g ON hor.grupo_id=g.grupo_id;";
+		String query = "select hor.horario_id, hor.periodo, hor.horario, hosp.nombre, g.nombre, hor.cupo_total from horario as hor JOIN hospital as hosp ON hor.hospital_id=hosp.hospital_id JOIN grupo AS g ON hor.grupo_id=g.grupo_id;";
 		ArrayList<Horario> horarios = new ArrayList<Horario>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -205,6 +205,7 @@ public class databaseQuery {
 				horario.setHorario(rs.getString("hor.horario"));
 				horario.setHospital(rs.getString("hosp.nombre"));
 				horario.setGrupo(rs.getString("g.nombre"));
+				horario.setCupoTotal(rs.getInt("hor.cupo_total"));
 				
 				horarios.add(horario);
 			}

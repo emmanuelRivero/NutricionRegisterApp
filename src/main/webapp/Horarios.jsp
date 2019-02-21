@@ -25,6 +25,7 @@
 		String horario = request.getParameter("horario");
 		String hospital = request.getParameter("hospital");
 		String grupo = request.getParameter("grupo");
+		String cupoTotal = request.getParameter("cupoTotal");
 		
 		//databaseInsert.hospital(hospital,telefono,responsable,domicilio);
 	};
@@ -36,6 +37,7 @@
 		String horario = request.getParameter("horario");
 		String hospital = request.getParameter("hospital");
 		String grupo = request.getParameter("grupo");
+		String cupoTotal = request.getParameter("cupoTotal");
 		
 		//databaseUpdate.hospital(id, hospital, telefono, responsable, domicilio);
 	};
@@ -76,6 +78,7 @@
       <th class="th-sm">Horario</th>
       <th class="th-sm">Hospital</th>
       <th class="th-sm">Grupo</th>   
+      <th class="th-sm">Cupo Total</th>  
       <th class="th-sm"></th>        
     </tr>
   </thead>
@@ -86,6 +89,7 @@
       <td><%=horario.getHorario()%></td>
       <td><%=horario.getHospital()%></td>
       <td><%=horario.getGrupo()%></td>
+      <td><%=horario.getCupoTotal()%></td>      
       <td>
       	<div>
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=horario.getId()%>">Modificar</button>
@@ -125,6 +129,10 @@
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Grupo</label>
     		<input class="form-control form-control-sm" type="text" placeholder="Grupo" name="grupo">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Cupo Total</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Cupo Total" name="cupoTotal">
     	</div>
       </div>
       <div class="modal-footer">
@@ -166,6 +174,10 @@
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Grupo</label>
     		<input class="form-control form-control-sm" type="text" placeholder="Grupo" name="grupo" value="<%=horario.getGrupo()%>">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Cupo Total</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Cupo Total" name="cupoTotal" value="<%=horario.getCupoTotal()%>">
     	</div>
       </div>
       <div class="modal-footer">

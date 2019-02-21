@@ -6,6 +6,14 @@ public class Horario {
 	private String horario;
 	private String hospital;
 	private String grupo;
+	private int cupoTotal;
+	
+	public int getCupoTotal() {
+		return cupoTotal;
+	}
+	public void setCupoTotal(int cupoTotal) {
+		this.cupoTotal = cupoTotal;
+	}
 	public int getId() {
 		return id;
 	}
