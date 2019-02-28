@@ -9,7 +9,7 @@ public class databaseQuery {
 	
 	//Alumno
 	public static ArrayList<Alumno> getAlumno() {
-		String query = "select cuenta, nombre, apellido_paterno, apellido_materno, domicilio, telefono from alumno;";
+		String query = "select cuenta, nombre, apellido_paterno, apellido_materno, carrera, desc_carrera, sexo from alumno where active=1;";
 		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -39,8 +39,9 @@ public class databaseQuery {
 				alumno.setNombre(rs.getString("nombre"));
 				alumno.setApellidoPaterno(rs.getString("apellido_paterno"));
 				alumno.setApellidoMaterno(rs.getString("apellido_materno"));
-				alumno.setDomicilio(rs.getString("domicilio"));
-				alumno.setTelefono(rs.getString("telefono"));
+				alumno.setCarrera(rs.getString("carrera"));
+				alumno.setDescCarrera(rs.getString("desc_carrera"));
+				alumno.setSexo(rs.getString("sexo"));
 				
 				alumnos.add(alumno);
 			}
@@ -66,7 +67,7 @@ public class databaseQuery {
 	
 	//Ciclo
 	public static ArrayList<Ciclo> getCiclo() {
-		String query = "select c.ciclo_id, c.nombre, count(reg.cuenta) from ciclo AS c join grupo AS g ON g.ciclo_id=c.ciclo_id JOIN horario as hor on hor.grupo_id=g.grupo_id join registro as reg ON hor.grupo_id=reg.horario_id GROUP BY c.ciclo_id, c.nombre;";
+		String query = "select ciclo_id, nombre from ciclo WHERE active=1;";
 		ArrayList<Ciclo> ciclos = new ArrayList<Ciclo>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -94,7 +95,6 @@ public class databaseQuery {
 				
 				ciclo.setId(rs.getInt("ciclo_id"));
 				ciclo.setNombre(rs.getString("nombre"));
-				ciclo.setAlumnosReg(rs.getInt("count(reg.cuenta)"));
 				
 				ciclos.add(ciclo);
 			}
@@ -120,7 +120,7 @@ public class databaseQuery {
 	
 	//Grupos
 	public static ArrayList<Grupo> getGrupo() {
-		String query = "select g.grupo_id, g.nombre, c.nombre from grupo AS g JOIN ciclo as c ON g.ciclo_id=c.ciclo_id;";
+		String query = "select g.grupo_id, g.nombre, c.nombre from grupo AS g JOIN ciclo as c ON g.ciclo_id=c.ciclo_id WHERE g.active=1;";
 		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -174,7 +174,7 @@ public class databaseQuery {
 	
 	//Horario
 	public static ArrayList<Horario> getHorario() {
-		String query = "select hor.horario_id, hor.periodo, hor.horario, hosp.nombre, g.nombre, hor.cupo_total from horario as hor JOIN hospital as hosp ON hor.hospital_id=hosp.hospital_id JOIN grupo AS g ON hor.grupo_id=g.grupo_id;";
+		String query = "select hor.horario_id, hor.periodo, hor.horario, hosp.nombre, g.nombre, hor.cupo_total from horario as hor JOIN hospital as hosp ON hor.hospital_id=hosp.hospital_id JOIN grupo AS g ON hor.grupo_id=g.grupo_id WHERE hor.active=1;";
 		ArrayList<Horario> horarios = new ArrayList<Horario>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -231,7 +231,7 @@ public class databaseQuery {
 	
 	//Registros
 	public static ArrayList<Registro> getRegistros() {
-		String query = "select r.registro_id, r.cuenta, a.nombre, a.apellido_paterno, a.apellido_materno,hor.horario,hosp.nombre,g.nombre,c.nombre from registro AS r JOIN horario AS hor ON r.horario_id=hor.horario_id JOIN alumno AS a ON r.cuenta=a.cuenta JOIN grupo AS g ON g.grupo_id=hor.grupo_id JOIN hospital AS hosp ON hor.hospital_id=hosp.hospital_id JOIN ciclo as c ON c.ciclo_id=g.ciclo_id;";
+		String query = "select r.registro_id, r.cuenta, a.nombre, a.apellido_paterno, a.apellido_materno,hor.horario,hosp.nombre,g.nombre,c.nombre from registro AS r JOIN horario AS hor ON r.horario_id=hor.horario_id JOIN alumno AS a ON r.cuenta=a.cuenta JOIN grupo AS g ON g.grupo_id=hor.grupo_id JOIN hospital AS hosp ON hor.hospital_id=hosp.hospital_id JOIN ciclo as c ON c.ciclo_id=g.ciclo_id WHERE r.active=1;";
 		ArrayList<Registro> registros = new ArrayList<Registro>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -290,7 +290,7 @@ public class databaseQuery {
 
 	//Hospital
 	public static ArrayList<Hospital> getHospitales() {
-		String query = "select hospital_id, nombre, telefono, responsable, domicilio from hospital;";
+		String query = "select hospital_id, nombre, horario, periodo, domicilio from hospital WHERE active=1;";
 		ArrayList<Hospital> hospitales = new ArrayList<Hospital>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -317,8 +317,8 @@ public class databaseQuery {
 				Hospital hospital = new Hospital();
 				hospital.setId(rs.getInt("hospital_id"));
 				hospital.setNombre(rs.getString("nombre"));
-				hospital.setTelefono(rs.getString("telefono"));
-				hospital.setResponsable(rs.getString("responsable"));
+				hospital.setHorario(rs.getString("horario"));
+				hospital.setPeriodo(rs.getString("periodo"));
 				hospital.setDomiclio(rs.getString("domicilio"));
 				
 				hospitales.add(hospital);
@@ -345,7 +345,7 @@ public class databaseQuery {
 	
 	// Users data
 	public static ArrayList<Usuario> getUsuario() {
-		String query = "select u.user_id, u.username, u.nombres, u.apellido_paterno, u.apellido_materno, u.telefono, u.domicilio, r.rolname from users AS u JOIN roles AS r ON u.rol_id=r.rol_id;";
+		String query = "select u.user_id, u.username, u.nombres, u.apellido_paterno, u.apellido_materno, u.telefono, u.domicilio, r.rolname from users AS u JOIN roles AS r ON u.rol_id=r.rol_id WHERE u.active=1;";
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		databaseData nutricionDB = new databaseData();
 		

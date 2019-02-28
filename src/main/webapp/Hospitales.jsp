@@ -17,27 +17,31 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>
 
-	<% 	
+	<%
+	//Session data
+	String sesioName = (String)session.getAttribute("usuarioSesion");
+	String sessionRol = (String)session.getAttribute("usuarioRol");
+	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
 		String hospital = request.getParameter("hospital");
 		String telefono = request.getParameter("telefono");
-		String responsable = request.getParameter("responsable");
-		String domicilio = request.getParameter("domicilio");
+		String horario = request.getParameter("horario");
+		String periodo = request.getParameter("periodo");
 		
-		databaseInsert.hospital(hospital,telefono,responsable,domicilio);
+		databaseInsert.hospital(hospital,telefono,horario,periodo);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
 	if (updateButton != null){
 		String id = request.getParameter("id");
 		String hospital = request.getParameter("hospital");
-		String telefono = request.getParameter("telefono");
-		String responsable = request.getParameter("responsable");
+		String horario = request.getParameter("horario");
+		String periodo = request.getParameter("periodo");
 		String domicilio = request.getParameter("domicilio");
 		
-		databaseUpdate.hospital(id, hospital, telefono, responsable, domicilio);
+		databaseUpdate.hospital(id, hospital, horario, periodo, domicilio);
 	};
 	
 	ArrayList<Hospital> data;
@@ -50,11 +54,13 @@
     <div class="container d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h3">Hospitales</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+       <%if (sessionRol.equals("admin")) {%>       
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
                 <a class="btn btn-sm btn-outline-secondary">Exportar</a>
             </div>
         </div>
+        <%} %>
     </div>
 </header>
 
@@ -73,8 +79,8 @@
   <thead>
     <tr>
       <th class="th-sm">Hospital</th>
-      <th class="th-sm">Telefono</th>
-      <th class="th-sm">Responsable</th>
+      <th class="th-sm">Horario</th>
+      <th class="th-sm">Periodo</th>
       <th class="th-sm">Domicilio</th>   
       <th class="th-sm"></th>        
     </tr>
@@ -83,14 +89,21 @@
   <% for (Hospital hospital : data){%>
     <tr>
       <td><%=hospital.getNombre()%></td>
-      <td><%=hospital.getTelefono()%></td>
-      <td><%=hospital.getResponsable()%></td>
+      <td><%=hospital.getHorario()%></td>
+      <td><%=hospital.getPeriodo()%></td>
       <td><%=hospital.getDomiclio()%></td>
-      <td>
-      	<div>
+      <td align="right">
+      <%if (sessionRol.equals("admin")) {%>
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=hospital.getId()%>">Modificar</button>
       		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=hospital.getId()%>>Eliminar</button>
       	</div>
+      <%} else {%>
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
+      		<button type="button" class="btn btn-outline-primary btn-sm" disabled>Modificar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" disabled>Eliminar</button>
+      	</div>
+      <%} %>
       </td>
     </tr>
     <%}%>
@@ -115,12 +128,12 @@
     		<input class="form-control form-control-sm" type="text" placeholder="Hospital" name="hospital">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Telefono</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="telefono">
+    		<label for="exampleFormControlInput1">Horario</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Horario" name="horario">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Responsale</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Responsable" name="responsable">
+    		<label for="exampleFormControlInput1">Periodo</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Periodo" name="periodo">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Domicilio</label>
@@ -136,9 +149,11 @@
   </div>
 </div>
 
-<!-- modales for hospital -->
+<!-- update modals -->
 
-<% for (Hospital hospital : data){ %>
+<%
+if (sessionRol.equals("admin")){ 
+for (Hospital hospital : data){ %>
 <div class="modal fade" id="modificarModal<%=hospital.getId()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -156,12 +171,12 @@
     		<input class="form-control form-control-sm" type="text" placeholder="Hospital" name="hospital" value="<%=hospital.getNombre() %>">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Telefono</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="telefono" value="<%=hospital.getTelefono()%>">
+    		<label for="exampleFormControlInput1">Horario</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Horario" name="horario" value="<%=hospital.getHorario()%>">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Responsale</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Responsable" name="responsable" value="<%=hospital.getResponsable()%>">
+    		<label for="exampleFormControlInput1">Periodo</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Periodo" name="periodo" value="<%=hospital.getPeriodo()%>">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Domicilio</label>
@@ -176,7 +191,10 @@
     </div>
   </div>
 </div>
-<%} %>
+<%
+}
+}
+%>
 
 
 <!-- bootstrap 4.3 -->

@@ -47,11 +47,11 @@
 	  <td><%=registro.getHospital()%></td>
 	  <td><%=registro.getGrupo()%></td>
 	  <td><%=registro.getCiclo()%></td>
-      <td>
-      	<div>
+      <td align="right">
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" id=<%=registro.getId() %>>Modificar</button>
       		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=registro.getId() %>>Eliminar</button>
-      		</div>
+     	</div>
       </td>
     </tr>
     <%}%>

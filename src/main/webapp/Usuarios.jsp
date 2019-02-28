@@ -17,8 +17,16 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>
 
-<% ArrayList<Usuario> data;
-data = databaseQuery.getUsuario();
+<% 
+	String sesioName = (String)session.getAttribute("usuarioSesion");
+	String sessionRol = (String)session.getAttribute("usuarioRol");
+	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
+	if (!sessionRol.equals("admin")){
+		response.sendRedirect("index.jsp");
+	};
+	
+	ArrayList<Usuario> data;
+	data = databaseQuery.getUsuario();
 %>
 <h2>Registros</h2>
 <br>
@@ -58,11 +66,11 @@ data = databaseQuery.getUsuario();
       <td><%=usuario.getApellidoMaterno() %></td>
       <td><%=usuario.getTelefono() %></td>
       <td><%=usuario.getDomicilio() %></td>
-      <td>
-      	<div>
+      <td align="right">
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm">Modificar</button>
       		<button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
-      		</div>
+      	</div>
       </td>
     </tr>
     <%}%>

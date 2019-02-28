@@ -3,11 +3,23 @@ package models;
 public class Hospital {
 	private int id;
 	private String nombre;
-	private String telefono;
-	private String responsable;
+	private String horario;
+	private String periodo;
 	private String domiclio;
 	
 	
+	public String getHorario() {
+		return horario;
+	}
+	public void setHorario(String horario) {
+		this.horario = horario;
+	}
+	public String getPeriodo() {
+		return periodo;
+	}
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
+	}
 	public int getId() {
 		return id;
 	}
@@ -19,18 +31,6 @@ public class Hospital {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public String getTelefono() {
-		return telefono;
-	}
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-	public String getResponsable() {
-		return responsable;
-	}
-	public void setResponsable(String responsable) {
-		this.responsable = responsable;
 	}
 	public String getDomiclio() {
 		return domiclio;

@@ -18,7 +18,11 @@
 <%@page import="models.*" %>
 <%@page import="models.Alumno" %>
 
-	<% 	
+	<%
+	//Session data
+	String sesioName = (String)session.getAttribute("usuarioSesion");
+	String sessionRol = (String)session.getAttribute("usuarioRol");
+	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
@@ -26,8 +30,10 @@
 		String nombres = request.getParameter("nombres");		
 		String apellidoPaterno = request.getParameter("apellidoPaterno");
 		String apellidoMaterno = request.getParameter("apellidoMaterno");
-		String domicilio = request.getParameter("domicilio");
-		String telefono = request.getParameter("telefono");
+		String carrera = request.getParameter("carrera");
+		String desc_carrera = request.getParameter("desc_carrera");
+		String sexo = request.getParameter("sexo");
+		
 		
 		//databaseInsert.alumno(cuenta, apellidoPaterno,apellidoMaterno,domicilio,telefono);
 	};
@@ -38,8 +44,9 @@
 		String nombres = request.getParameter("nombres");	
 		String apellidoPaterno = request.getParameter("apellidoPaterno");
 		String apellidoMaterno = request.getParameter("apellidoMaterno");
-		String domicilio = request.getParameter("domicilio");
-		String telefono = request.getParameter("telefono");
+		String carrera = request.getParameter("carrera");
+		String desc_carrera = request.getParameter("desc_carrera");
+		String sexo = request.getParameter("sexo");
 		
 		//databaseUpdate.hospital(id, hospital, telefono, responsable, domicilio);
 	};
@@ -52,10 +59,12 @@
     <div class="container d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h3">Alumnos</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+        <%if (sessionRol.equals("admin")) {%>    
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
                 <a class="btn btn-sm btn-outline-secondary">Exportar</a>
             </div>
+        <%} %>
         </div>
     </div>
 </header>
@@ -78,8 +87,9 @@
       <th class="th-sm">Nombres</th>
       <th class="th-sm">Apellido Paterno</th>
       <th class="th-sm">Apellido Materno</th>   
-      <th class="th-sm">Domicilio</th>   
-      <th class="th-sm">telefono</th>      
+      <th class="th-sm">Carrera</th>   
+      <th class="th-sm">Desc.Carrera</th>      
+      <th class="th-sm">Sexo</th>        
       <th class="th-sm"></th>        
     </tr>
   </thead>
@@ -90,14 +100,21 @@
       <td><%=alumno.getNombre()%></td>
       <td><%=alumno.getApellidoPaterno()%></td>
       <td><%=alumno.getApellidoMaterno()%></td>
-      <td><%=alumno.getDomicilio()%></td>
-      <td><%=alumno.getTelefono()%></td>
-      
-      <td>
-      	<div>
+      <td><%=alumno.getCarrera()%></td>
+      <td><%=alumno.getDescCarrera()%></td>
+      <td><%=alumno.getSexo()%></td>
+      <td align="right">
+      <%if (sessionRol.equals("admin")) {%>
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=alumno.getCuenta()%>">Modificar</button>
       		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=alumno.getCuenta()%>>Eliminar</button>
       	</div>
+      <%} else {%>
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
+      		<button type="button" class="btn btn-outline-primary btn-sm" disabled>Modificar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" disabled>Eliminar</button>
+      	</div>
+      <%} %>
       </td>
     </tr>
     <%}%>
@@ -134,13 +151,21 @@
     		<input class="form-control form-control-sm" type="text" placeholder="Apellido Materno" name="apellidoMaterno">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Domicilio</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Domicilio" name="domicilio">
+    		<label for="exampleFormControlInput1">Carrera</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Domicilio" name="carrera">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Telefono</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="telefono">
+    		<label for="exampleFormControlInput1">Desc. Carrera</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="desc_carrera">
     	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlSelect1">Sexo</label>
+    		<select class="form-control" id="exampleFormControlSelect1" name="sexo">
+      			<option selected>Sexo</option>
+      			<option>M</option>
+      			<option>F</option>
+    		</select>
+  		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -151,9 +176,11 @@
   </div>
 </div>
 
-<!-- modales for hospital -->
+<!-- update modals -->
 
-<% for (Alumno alumno : data){ %>
+<% 
+if (sessionRol.equals("admin")){
+for (Alumno alumno : data){ %>
 <div class="modal fade" id="modificarModal<%=alumno.getCuenta()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -182,13 +209,29 @@
     		<input class="form-control form-control-sm" type="text" placeholder="Apellido Materno" name="apellidoMaterno" value="<%=alumno.getApellidoMaterno()%>">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Domicilio</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Domicilio" name="domicilio" value="<%=alumno.getDomicilio()%>">
+    		<label for="exampleFormControlInput1">Carrera</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Carrera" name="domicilio" value="<%=alumno.getCarrera()%>">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Telefono</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="telefono" value="<%=alumno.getTelefono()%>">
+    		<label for="exampleFormControlInput1">Desc. Carrera</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Desc. Carrera" name="telefono" value="<%=alumno.getDescCarrera()%>">
     	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlSelect1">Sexo</label>
+    		<select class="form-control" id="exampleFormControlSelect1" name="sexo">
+    			<% if (alumno.getSexo() == "M"){ %>
+      			<option selected="selected">M</option>
+      			<option>F</option>
+      			<%}else if(alumno.getSexo() == "F") { %>
+      			<option>M</option>
+      			<option selected="selected">F</option>
+      			<%}else{ %>
+      			<option selected>Sexo</option>
+      			<option>M</option>
+      			<option>F</option>
+      			<%} %>
+    		</select>
+  		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -198,7 +241,10 @@
     </div>
   </div>
 </div>
-<%} %>
+<%
+}
+}
+%>
 
 
 <!-- bootstrap 4.3 -->

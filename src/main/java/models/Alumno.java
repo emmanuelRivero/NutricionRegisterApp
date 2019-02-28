@@ -5,9 +5,29 @@ public class Alumno {
 	private String nombre;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
-	private String domicilio;
-	private String telefono;
-
+	private String carrera;
+	private String descCarrera;
+	private String sexo;
+	
+	
+	public String getCarrera() {
+		return carrera;
+	}
+	public void setCarrera(String carrera) {
+		this.carrera = carrera;
+	}
+	public String getDescCarrera() {
+		return descCarrera;
+	}
+	public void setDescCarrera(String descCarrera) {
+		this.descCarrera = descCarrera;
+	}
+	public String getSexo() {
+		return sexo;
+	}
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 	public int getCuenta() {
 		return cuenta;
 	}
@@ -32,18 +52,4 @@ public class Alumno {
 	public void setApellidoMaterno(String apellidoMaterno) {
 		this.apellidoMaterno = apellidoMaterno;
 	}
-	public String getDomicilio() {
-		return domicilio;
-	}
-	public void setDomicilio(String domiclio) {
-		this.domicilio = domiclio;
-	}
-	public String getTelefono() {
-		return telefono;
-	}
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-	
-	
 }

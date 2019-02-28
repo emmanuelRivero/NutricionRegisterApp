@@ -18,6 +18,13 @@
 <%@page import="models.*" %>
 
 	<% 	
+	String sesioName = (String)session.getAttribute("usuarioSesion");
+	String sessionRol = (String)session.getAttribute("usuarioRol");
+	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
+	
+	if (!sessionRol.equals("admin")){
+		response.sendRedirect("index.jsp");
+	};
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
@@ -67,7 +74,6 @@
   <thead>
     <tr>
       <th class="th-sm">Nombre</th>  
-      <th class="th-sm">Alumnos registrados</th>   
       <th class="th-sm"></th>       
     </tr>
   </thead>
@@ -75,9 +81,8 @@
   <% for (Ciclo ciclo : data){%>
     <tr>
       <td><%=ciclo.getNombre()%></td>
-      <td><%=ciclo.getAlumnosReg()%></td>
-      <td>
-      	<div>
+      <td align="right">
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=ciclo.getId()%>">Modificar</button>
       		<button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
       	</div>

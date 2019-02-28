@@ -17,7 +17,11 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>
 
-	<% 	
+	<%
+	//Session data
+	String sesioName = (String)session.getAttribute("usuarioSesion");
+	String sessionRol = (String)session.getAttribute("usuarioRol");
+	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
@@ -46,11 +50,13 @@
     <div class="container d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h3">Grupos</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+       <%if (sessionRol.equals("admin")) {%>   
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
                 <a class="btn btn-sm btn-outline-secondary">Exportar</a>
             </div>
         </div>
+        <%} %>
     </div>
 </header>
 
@@ -78,11 +84,18 @@
     <tr>
       <td><%=grupo.getNombre()%></td>
       <td><%=grupo.getCiclo()%></td>
-      <td>
-      	<div>
+      <td align="right">
+      <%if (sessionRol.equals("admin")) {%>
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=grupo.getId()%>">Modificar</button>
       		<button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
       	</div>
+      <%} else {%>
+      	<div class="btn-group mr-2" role="group" aria-label="First group">
+      		<button type="button" class="btn btn-outline-primary btn-sm" disabled>Modificar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" disabled>Eliminar</button>
+      	</div>
+      <%} %>
       </td>
     </tr>
     <%}%>
@@ -122,7 +135,9 @@
 
 <!-- modales for hospital -->
 
-<% for (Grupo grupo : data){ %>
+<%
+if (sessionRol.equals("admin")){
+for (Grupo grupo : data){ %>
 <div class="modal fade" id="modificarModal<%=grupo.getId()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -152,7 +167,10 @@
     </div>
   </div>
 </div>
-<%} %>
+<%
+}
+}
+%>
 
 
 <!-- bootstrap 4.3 -->
