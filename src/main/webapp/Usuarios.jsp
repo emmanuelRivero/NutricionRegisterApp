@@ -21,12 +21,12 @@
 	String sesioName = (String)session.getAttribute("usuarioSesion");
 	String sessionRol = (String)session.getAttribute("usuarioRol");
 	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
-	if (!sessionRol.equals("admin")){
-		response.sendRedirect("index.jsp");
-	};
+
 	
 	ArrayList<Usuario> data;
 	data = databaseQuery.getUsuario();
+	
+	if (sessionRol.equals("admin")){
 %>
 <h2>Registros</h2>
 <br>
@@ -95,5 +95,6 @@ $(document).ready(function() {
     $('#mainTable').DataTable();
 } );
 </script>
+<%}%>
 </body>
 </html>

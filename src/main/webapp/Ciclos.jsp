@@ -22,9 +22,6 @@
 	String sessionRol = (String)session.getAttribute("usuarioRol");
 	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
 	
-	if (!sessionRol.equals("admin")){
-		response.sendRedirect("index.jsp");
-	};
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
@@ -43,10 +40,9 @@
 	
 	ArrayList<Ciclo> data;
 	data = databaseQuery.getCiclo();
-	%>
 	
-	
-	
+	if (sessionRol.equals("admin")){
+	%>	
 <header>
     <div class="container d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h3">Ciclos</h1>
@@ -161,5 +157,6 @@ $(document).ready(function() {
     $('#mainTable').DataTable();
 } );
 </script>
+<%} %>
 </body>
 </html>
