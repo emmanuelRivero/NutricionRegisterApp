@@ -35,7 +35,7 @@
 		String sexo = request.getParameter("sexo");
 		
 		
-		//databaseInsert.alumno(cuenta, apellidoPaterno,apellidoMaterno,domicilio,telefono);
+		databaseInsert.alumno(cuenta,nombres, apellidoPaterno,apellidoMaterno,carrera,desc_carrera,sexo);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");

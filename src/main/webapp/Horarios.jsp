@@ -16,6 +16,15 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>
+<%@ page import="org.apache.commons.io.IOUtils"%>
+<%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@ page import="org.apache.commons.fileupload.*"%>
+
+<%@ page import="org.apache.poi.hssf.usermodel.HSSFWorkbook"%>
+<%@ page import="org.apache.poi.xssf.usermodel.XSSFWorkbook"%>
+
+<%@ page import="java.util.*,java.io.*"%>
 
 	<% 	
 	//Session data
@@ -31,7 +40,7 @@
 		String grupo = request.getParameter("grupo");
 		String cupoTotal = request.getParameter("cupoTotal");
 		
-		//databaseInsert.hospital(hospital,telefono,responsable,domicilio);
+		databaseInsert.horario(periodo, horario, hospital, grupo, cupoTotal);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");

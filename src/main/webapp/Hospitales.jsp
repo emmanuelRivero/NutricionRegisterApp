@@ -18,6 +18,7 @@
 <%@page import="models.*" %>
 
 	<%
+	
 	//Session data
 	String sesioName = (String)session.getAttribute("usuarioSesion");
 	String sessionRol = (String)session.getAttribute("usuarioRol");
@@ -57,7 +58,8 @@
        <%if (sessionRol.equals("admin")) {%>       
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
-                <a class="btn btn-sm btn-outline-secondary">Exportar</a>
+                <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#importModal">Importar</a>
+                <a class="btn btn-sm btn-outline-secondary">exportar</a>
             </div>
         </div>
         <%} %>
@@ -148,6 +150,33 @@
     </div>
   </div>
 </div>
+
+<!-- import modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="upload.jsp" method="post" enctype="multipart/form-data">
+      <div class="modal-body">
+		<div class="form-group">
+    		<label for="exampleFormControlFile1">Importar hospitales</label>
+    		<input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+  		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="importButton" value="hospital">Importar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <!-- update modals -->
 

@@ -16,7 +16,6 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="models.*" %>
-
 <% 
 	String sesioName = (String)session.getAttribute("usuarioSesion");
 	String sessionRol = (String)session.getAttribute("usuarioRol");

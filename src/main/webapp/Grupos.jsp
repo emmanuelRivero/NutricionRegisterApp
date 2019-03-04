@@ -27,8 +27,9 @@
 	if (newButton != null){
 		String nombre = request.getParameter("nombre");
 		String ciclo = request.getParameter("ciclo");
+		System.out.println(ciclo);
 		
-		//databaseInsert.hospital(hospital,telefono,responsable,domicilio);
+		databaseInsert.grupo(nombre, ciclo);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
@@ -42,6 +43,11 @@
 	
 	ArrayList<Grupo> data;
 	data = databaseQuery.getGrupo();
+	
+	ArrayList<Ciclo> dataCiclos;
+	dataCiclos = databaseQuery.getCiclo();
+	
+	
 	%>
 	
 	
@@ -121,7 +127,11 @@
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Ciclo</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Ciclo" name="ciclo">
+    		<select class="form-control" id="exampleFormControlSelect1" name="ciclo">
+    			<%for (Ciclo ciclos : dataCiclos){ %>
+      			<option value="<%=ciclos.getId()%>"><%=ciclos.getNombre()%></option>
+      			<%}%>
+    		</select>
     	</div>
       </div>
       <div class="modal-footer">
@@ -156,7 +166,16 @@ for (Grupo grupo : data){ %>
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Ciclo</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Ciclo" name="ciclo" value="<%=grupo.getCiclo()%>">
+    		<select class="form-control" id="exampleFormControlSelect1" name="ciclo">
+    			<%for (Ciclo ciclos : dataCiclos){ 
+    				if (ciclos.getNombre().equals(grupo.getCiclo())){
+    			%>    				
+      				<option selected value="<%=ciclos.getId()%>"><%=ciclos.getNombre()%></option>
+      			<%  } else {%>
+      				<option value="<%=ciclos.getId()%>"><%=ciclos.getNombre()%></option>
+      			<%  }
+      			  }%>
+    		</select>
     	</div>
       </div>
       <div class="modal-footer">

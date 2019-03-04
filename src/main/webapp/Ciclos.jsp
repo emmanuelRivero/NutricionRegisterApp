@@ -27,7 +27,7 @@
 	if (newButton != null){
 		String nombre = request.getParameter("nombre");
 		
-		//databaseInsert.hospital(hospital,telefono,responsable,domicilio);
+		databaseInsert.ciclo(nombre);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
