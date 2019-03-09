@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class databaseUpdate {
 
-public static void hospital(String id, String nombre, String horario, String periodo, String domicilio) {
+	public static void hospital(String id, String nombre, String horario, String periodo, String domicilio) {
 		
 		String query = "UPDATE hospital SET nombre='"+nombre+"', horario='"+horario+"', periodo ='"+periodo+"',domicilio='"+domicilio+"' WHERE hospital_id="+id+";";
 		databaseData nutricionDB = new databaseData();
