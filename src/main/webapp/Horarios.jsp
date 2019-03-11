@@ -34,25 +34,17 @@
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
-		String periodo = request.getParameter("periodo");
 		String horario = request.getParameter("horario");
-		String hospital = request.getParameter("hospital");
-		String grupo = request.getParameter("grupo");
-		String cupoTotal = request.getParameter("cupoTotal");
 		
-		databaseInsert.horario(periodo, horario, hospital, grupo, cupoTotal);
+		databaseInsert.horario(horario);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
 	if (updateButton != null){
-		String id = request.getParameter("id");
-		String periodo = request.getParameter("periodo");
+		String horarioID = request.getParameter("id");
 		String horario = request.getParameter("horario");
-		String hospital = request.getParameter("hospital");
-		String grupo = request.getParameter("grupo");
-		String cupoTotal = request.getParameter("cupoTotal");
 		
-		//databaseUpdate.hospital(id, hospital, telefono, responsable, domicilio);
+		databaseUpdate.Horario(horarioID, horario);
 	};
 	
 	ArrayList<Horario> data;
@@ -89,22 +81,14 @@
 <table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>
-      <th class="th-sm">Periodo</th>
       <th class="th-sm">Horario</th>
-      <th class="th-sm">Hospital</th>
-      <th class="th-sm">Grupo</th>   
-      <th class="th-sm">Cupo Total</th>  
       <th class="th-sm"></th>        
     </tr>
   </thead>
   <tbody>
   <% for (Horario horario: data){%>
     <tr>
-      <td><%=horario.getPeriodo()%></td>
-      <td><%=horario.getHorario()%></td>
-      <td><%=horario.getHospital()%></td>
-      <td><%=horario.getGrupo()%></td>
-      <td><%=horario.getCupoTotal()%></td>      
+      <td><%=horario.getHorario()%></td>     
       <td align="right">
 	  <%if (sessionRol.equals("admin")) {%>
       	<div class="btn-group mr-2" role="group" aria-label="First group">
@@ -134,27 +118,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="Hospitales.jsp" method="post">
+      <form action="Horarios.jsp" method="post">
       <div class="modal-body">
-      	<div class="form-group">
-    		<label for="exampleFormControlInput1">Periodo</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Periodo" name="periodo">
-    	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Horario</label>
     		<input class="form-control form-control-sm" type="text" placeholder="Horario" name="horario">
-    	</div>
-    	<div class="form-group">
-    		<label for="exampleFormControlInput1">Hospital</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Hospital" name="hospital">
-    	</div>
-    	<div class="form-group">
-    		<label for="exampleFormControlInput1">Grupo</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Grupo" name="grupo">
-    	</div>
-    	<div class="form-group">
-    		<label for="exampleFormControlInput1">Cupo Total</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Cupo Total" name="cupoTotal">
     	</div>
       </div>
       <div class="modal-footer">
@@ -175,33 +143,17 @@ for (Horario horario : data){ %>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="Grupos.jsp" method="post">
+      <form action="Horarios.jsp" method="post">
       <input type="hidden" name="id" value="<%=horario.getId()%>">
       <div class="modal-body">
-      	<div class="form-group">
-    		<label for="exampleFormControlInput1">Periodo</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Periodo" name="periodo" value="<%=horario.getPeriodo() %>">
-    	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Horario</label>
     		<input class="form-control form-control-sm" type="text" placeholder="Horario" name="horario" value="<%=horario.getHorario()%>">
-    	</div>
-    	<div class="form-group">
-    		<label for="exampleFormControlInput1">Hospital</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Hospital" name="hospital" value="<%=horario.getHospital()%>">
-    	</div>
-    	<div class="form-group">
-    		<label for="exampleFormControlInput1">Grupo</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Grupo" name="grupo" value="<%=horario.getGrupo()%>">
-    	</div>
-    	<div class="form-group">
-    		<label for="exampleFormControlInput1">Cupo Total</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Cupo Total" name="cupoTotal" value="<%=horario.getCupoTotal()%>">
     	</div>
       </div>
       <div class="modal-footer">
@@ -219,7 +171,7 @@ for (Horario horario : data){ %>
 
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
-<script src="js/paopper.min.js"></script>
+<script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- datatables scrips -->
 <script src="js/jquery.dataTables.min.js"></script>

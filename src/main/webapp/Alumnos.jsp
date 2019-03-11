@@ -19,10 +19,14 @@
 <%@page import="models.Alumno" %>
 
 	<%
+	System.out.println("loading Alumnos.jsp");
 	//Session data
 	String sesioName = (String)session.getAttribute("usuarioSesion");
 	String sessionRol = (String)session.getAttribute("usuarioRol");
 	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
+	String sessioncicloID = (String)session.getAttribute("usuarioCicloID");
+	String sessionImportResult = (String)session.getAttribute("importResult");
+	
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
@@ -31,11 +35,11 @@
 		String apellidoPaterno = request.getParameter("apellidoPaterno");
 		String apellidoMaterno = request.getParameter("apellidoMaterno");
 		String carrera = request.getParameter("carrera");
-		String desc_carrera = request.getParameter("desc_carrera");
+		String descCarrera = request.getParameter("descCarrera");
 		String sexo = request.getParameter("sexo");
 		
 		
-		databaseInsert.alumno(cuenta,nombres, apellidoPaterno,apellidoMaterno,carrera,desc_carrera,sexo);
+		databaseInsert.alumno(cuenta,nombres, apellidoPaterno,apellidoMaterno,carrera,descCarrera,sexo,sessioncicloID);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
@@ -45,14 +49,27 @@
 		String apellidoPaterno = request.getParameter("apellidoPaterno");
 		String apellidoMaterno = request.getParameter("apellidoMaterno");
 		String carrera = request.getParameter("carrera");
-		String desc_carrera = request.getParameter("desc_carrera");
+		String descCarrera = request.getParameter("descCarrera");
 		String sexo = request.getParameter("sexo");
 		
-		//databaseUpdate.hospital(id, hospital, telefono, responsable, domicilio);
+		databaseUpdate.Alumno(cuenta, nombres, apellidoPaterno, apellidoMaterno, carrera, descCarrera, sexo);
 	};
+	if (sessionImportResult != null){
+		if (sessionImportResult.equals("Success")){
+			request.getSession().removeAttribute("importResult");
+			%>
+			<script type="text/javascript">
+				document.addEventListener("DOMContentLoaded", function() {
+				$('#importModalSuccess').modal('show');
+			});
+			</script>			
+			<%
+		}
+	}
+	
 	
 	ArrayList<Alumno> data;
-	data = databaseQuery.getAlumno();
+	data = databaseQuery.getAlumno(sessioncicloID);
 	%>
 	
 <header>
@@ -62,7 +79,8 @@
         <%if (sessionRol.equals("admin")) {%>    
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
-                <a class="btn btn-sm btn-outline-secondary">Exportar</a>
+                <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#importModal">Importar</a>
+                <a class="btn btn-sm btn-outline-secondary">exportar</a>
             </div>
         <%} %>
         </div>
@@ -152,15 +170,15 @@
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Carrera</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Domicilio" name="carrera">
+    		<input class="form-control form-control-sm" type="text" placeholder="Carrera" name="carrera">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Desc. Carrera</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Telefono" name="desc_carrera">
+    		<input class="form-control form-control-sm" type="text" placeholder="Descripción de la carrera" name="descCarrera">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlSelect1">Sexo</label>
-    		<select class="form-control" id="exampleFormControlSelect1" name="sexo">
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="sexo">
       			<option selected>Sexo</option>
       			<option>M</option>
       			<option>F</option>
@@ -176,6 +194,52 @@
   </div>
 </div>
 
+<!-- import modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Importar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="uploadAlumno.jsp" method="post" enctype="multipart/form-data">
+      <div class="modal-body">
+		<div class="form-group">
+    		<label for="exampleFormControlFile1">Importar lista de alumnos</label>
+    		<input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+  		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="imported" value="alumnos">Importar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- import result success -->
+<div class="modal fade" id="importModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Importar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>La importación fue exitosa.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- update modals -->
 
 <% 
@@ -185,17 +249,14 @@ for (Alumno alumno : data){ %>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Cuenta: <%=alumno.getCuenta() %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <form action="Alumnos.jsp" method="post">
+      <input type="hidden" name="cuenta" value="<%=alumno.getCuenta()%>">
       <div class="modal-body">
-        <div class="form-group">
-    		<label for="exampleFormControlInput1">Cuenta</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Hospital" name="cuenta" value="<%=alumno.getCuenta()%>">
-    	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Nombres</label>
     		<input class="form-control form-control-sm" type="text" placeholder="Nombre" name="nombres" value="<%=alumno.getNombre() %>">
@@ -210,19 +271,19 @@ for (Alumno alumno : data){ %>
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Carrera</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Carrera" name="domicilio" value="<%=alumno.getCarrera()%>">
+    		<input class="form-control form-control-sm" type="text" placeholder="Carrera" name="carrera" value="<%=alumno.getCarrera()%>">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Desc. Carrera</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Desc. Carrera" name="telefono" value="<%=alumno.getDescCarrera()%>">
+    		<input class="form-control form-control-sm" type="text" placeholder="Desc. Carrera" name="descCarrera" value="<%=alumno.getDescCarrera()%>">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlSelect1">Sexo</label>
-    		<select class="form-control" id="exampleFormControlSelect1" name="sexo">
-    			<% if (alumno.getSexo() == "M"){ %>
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="sexo">
+    			<% if (alumno.getSexo().equals("M")){ %>
       			<option selected="selected">M</option>
       			<option>F</option>
-      			<%}else if(alumno.getSexo() == "F") { %>
+      			<%}else if(alumno.getSexo().equals("F")) { %>
       			<option>M</option>
       			<option selected="selected">F</option>
       			<%}else{ %>

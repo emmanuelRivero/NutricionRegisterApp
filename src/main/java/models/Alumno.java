@@ -8,8 +8,15 @@ public class Alumno {
 	private String carrera;
 	private String descCarrera;
 	private String sexo;
+	private String cicloID;
 	
 	
+	public String getCicloID() {
+		return cicloID;
+	}
+	public void setCicloID(String cicloID) {
+		this.cicloID = cicloID;
+	}
 	public String getCarrera() {
 		return carrera;
 	}

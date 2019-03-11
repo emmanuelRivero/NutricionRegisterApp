@@ -8,9 +8,9 @@ import java.sql.Statement;
 
 public class databaseInsert {
 
-	public static void alumno(String cuenta, String nombre, String apellidoPaterno, String apellidoMaterno, String carrera, String desc_carrera, String sexo) {
+	public static boolean alumno(String cuenta, String nombre, String apellidoPaterno, String apellidoMaterno, String carrera, String desc_carrera, String sexo, String cicloID) {
 		
-		String query = "INSERT INTO alumno(cuenta,nombre,apellido_paterno,apellido_materno,carrera,desc_carrera,sexo) VALUES ("+cuenta+",'"+nombre+"','"+apellidoPaterno+"','"+apellidoMaterno+"','"+carrera+"','"+desc_carrera+"','"+sexo+"');";
+		String query = "INSERT INTO alumno(cuenta,nombre,apellido_paterno,apellido_materno,carrera,desc_carrera,sexo,ciclo_id) VALUES ("+cuenta+",'"+nombre+"','"+apellidoPaterno+"','"+apellidoMaterno+"','"+carrera+"','"+desc_carrera+"','"+sexo+"','"+cicloID+"');";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
@@ -18,6 +18,8 @@ public class databaseInsert {
 		String dbName = nutricionDB.getDbName();
 		String dbUser = nutricionDB.getDbUser();
 		String dbPassword = nutricionDB.getDbPassword();
+		
+		boolean status = true;
 		
 		Connection conection = null;
 		Statement insertData = null;
@@ -33,6 +35,7 @@ public class databaseInsert {
 		catch (Exception e)
 	    {
 			System.out.println(e.getMessage());
+			status = false;
 	    }
 		finally {
 			if (conection != null) {
@@ -41,7 +44,8 @@ public class databaseInsert {
 			if (insertData != null) {
 		        try { insertData.close(); } catch (SQLException e) { /* ignored */}
 		    }			
-		}		
+		}
+		return status;
 	}	
 
 	public static void ciclo(String nombre) {
@@ -80,9 +84,9 @@ public class databaseInsert {
 		}		
 	}	
 
-	public static void grupo(String nombre, String cicloID) {
+	public static void grupo(String nombre, String cicloID,String hospitalId,String capacidad) {
 		
-		String query = "INSERT INTO grupo(nombre,ciclo_id) VALUES ('"+nombre+"',"+cicloID+");";
+		String query = "INSERT INTO grupo(nombre,ciclo_id,hospital_id,capacidad) VALUES ('"+nombre+"',"+cicloID+","+hospitalId+","+capacidad+");";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
@@ -116,9 +120,9 @@ public class databaseInsert {
 		}		
 	}	
 	
-	public static void horario(String periodo, String horario, String hospitalID, String grupoID, String cupoTotal) {
+	public static void horario(String horario) {
 		
-		String query = "INSERT INTO horario(periodo,horario,hospital_id,grupo_id,cupo_total) VALUES ('"+periodo+"',"+horario+","+hospitalID+","+grupoID+","+cupoTotal+");";
+		String query = "INSERT INTO horario(horario) VALUES ('"+horario+"');";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
@@ -152,7 +156,7 @@ public class databaseInsert {
 		}		
 	}
 	
-	public static void hospital(String nombre, String horario, String periodo, String domicilio) {
+	public static boolean hospital(String nombre, String horario, String periodo, String domicilio) {
 		
 		String query = "INSERT INTO hospital (nombre,horario,periodo,domicilio) VALUES ('"+nombre+"','"+horario+"','"+periodo+"','"+domicilio+"');";
 		databaseData nutricionDB = new databaseData();
@@ -162,6 +166,8 @@ public class databaseInsert {
 		String dbName = nutricionDB.getDbName();
 		String dbUser = nutricionDB.getDbUser();
 		String dbPassword = nutricionDB.getDbPassword();
+		
+		boolean status = true;
 		
 		Connection conection = null;
 		Statement insertData = null;
@@ -177,6 +183,7 @@ public class databaseInsert {
 		catch (Exception e)
 	    {
 			System.out.println(e.getMessage());
+			status = false;
 	    }
 		finally {
 			if (conection != null) {
@@ -185,7 +192,8 @@ public class databaseInsert {
 			if (insertData != null) {
 		        try { insertData.close(); } catch (SQLException e) { /* ignored */}
 		    }			
-		}		
+		}	
+		return status;
 	}	
 	
 	public static void usuario(String usuario, String nombres, String apellidoPaterno, String apellidoMaterno,String telefono, String domicilio, String password, String rol) {
@@ -232,4 +240,45 @@ public class databaseInsert {
 		    }			
 		}		
 	}
+	
+	public static boolean Registro(String cuenta, String horarioId, String grupoId, String cicloiD) {
+		
+		String query = "insert into registro(cuenta, horario_id,grupo_id,ciclo_id) values ("+cuenta+","+horarioId+","+grupoId+","+cicloiD+");";
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		boolean status = true;
+		
+		Connection conection = null;
+		Statement insertData = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;			
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			insertData = conection.createStatement();
+			insertData.executeUpdate(query);
+        }
+		
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+			status = false;
+	    }
+		finally {
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (insertData != null) {
+		        try { insertData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}	
+		return status;
+	}
+	
 }

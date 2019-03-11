@@ -8,8 +8,8 @@ import models.*;
 public class databaseQuery {
 	
 	//Alumno
-	public static ArrayList<Alumno> getAlumno() {
-		String query = "select cuenta, nombre, apellido_paterno, apellido_materno, carrera, desc_carrera, sexo from alumno where active=1;";
+	public static ArrayList<Alumno> getAlumno(String cicloID) {
+		String query = "select cuenta, nombre, apellido_paterno, apellido_materno, carrera, desc_carrera, sexo, ciclo_id from alumno where ciclo_id="+cicloID+" AND active=1;";
 		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -42,6 +42,7 @@ public class databaseQuery {
 				alumno.setCarrera(rs.getString("carrera"));
 				alumno.setDescCarrera(rs.getString("desc_carrera"));
 				alumno.setSexo(rs.getString("sexo"));
+				alumno.setCicloID(String.valueOf(rs.getInt("ciclo_id")));
 				
 				alumnos.add(alumno);
 			}
@@ -93,7 +94,7 @@ public class databaseQuery {
 			while(rs.next()){
 				Ciclo ciclo = new Ciclo();
 				
-				ciclo.setId(rs.getInt("ciclo_id"));
+				ciclo.setId(rs.getString("ciclo_id"));
 				ciclo.setNombre(rs.getString("nombre"));
 				
 				ciclos.add(ciclo);
@@ -119,8 +120,11 @@ public class databaseQuery {
 	}	
 	
 	//Grupos
-	public static ArrayList<Grupo> getGrupo() {
-		String query = "select g.grupo_id, g.nombre, c.nombre from grupo AS g JOIN ciclo as c ON g.ciclo_id=c.ciclo_id WHERE g.active=1;";
+	public static ArrayList<Grupo> getGrupo(String cicloID) {
+		String query = "select g.grupo_id, g.nombre, g.hospital_id, h.nombre, g.capacidad, g.ciclo_id from grupo as g " + 
+				"join hospital as h " + 
+				"ON h.hospital_id=g.hospital_id " + 
+				"where g.ciclo_id=1 AND g.active =1;";
 		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -148,7 +152,10 @@ public class databaseQuery {
 				
 				grupo.setId(rs.getInt("g.grupo_id"));
 				grupo.setNombre(rs.getString("g.nombre"));
-				grupo.setCiclo(rs.getString("c.nombre"));
+				grupo.setHospitalID(rs.getInt("g.hospital_id"));
+				grupo.setHospital(rs.getString("h.nombre"));
+				grupo.setCicloID(rs.getInt("g.ciclo_id"));
+				grupo.setCapacidad(rs.getInt("g.capacidad"));
 				
 				grupos.add(grupo);
 			}
@@ -172,9 +179,58 @@ public class databaseQuery {
 		return grupos;
 	}	
 	
+	public static int getGrupoCapacidad(String grupoId) {
+		String query = "select capacidad from grupo where grupo_id="+grupoId+";";
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		Connection conection = null;
+		Statement getData = null;
+		ResultSet rs = null;
+		
+		int capacidad = -1;
+		
+		try {		
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;
+			Class.forName("com.mysql.jdbc.Driver");
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			getData = conection.createStatement();
+
+		
+			rs = getData.executeQuery(query);
+			rs.next();
+			
+			capacidad = rs.getInt("capacidad");
+			
+		}
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+			capacidad = -1;
+	    }
+		finally {
+			if (rs != null) {
+		        try { rs.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (getData != null) {
+		        try { getData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}	
+		return capacidad;
+	}	
+
+	
 	//Horario
 	public static ArrayList<Horario> getHorario() {
-		String query = "select hor.horario_id, hor.periodo, hor.horario, hosp.nombre, g.nombre, hor.cupo_total from horario as hor JOIN hospital as hosp ON hor.hospital_id=hosp.hospital_id JOIN grupo AS g ON hor.grupo_id=g.grupo_id WHERE hor.active=1;";
+		String query = "select horario_id, horario from horario WHERE active=1;";
 		ArrayList<Horario> horarios = new ArrayList<Horario>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -200,12 +256,8 @@ public class databaseQuery {
 			while(rs.next()){
 				Horario horario = new Horario();
 				
-				horario.setId(rs.getInt("hor.horario_id"));
-				horario.setPeriodo(rs.getInt("hor.periodo"));
-				horario.setHorario(rs.getString("hor.horario"));
-				horario.setHospital(rs.getString("hosp.nombre"));
-				horario.setGrupo(rs.getString("g.nombre"));
-				horario.setCupoTotal(rs.getInt("hor.cupo_total"));
+				horario.setId(rs.getInt("horario_id"));
+				horario.setHorario(rs.getString("horario"));
 				
 				horarios.add(horario);
 			}
@@ -230,8 +282,18 @@ public class databaseQuery {
 	}
 	
 	//Registros
-	public static ArrayList<Registro> getRegistros() {
-		String query = "select r.registro_id, r.cuenta, a.nombre, a.apellido_paterno, a.apellido_materno,hor.horario,hosp.nombre,g.nombre,c.nombre from registro AS r JOIN horario AS hor ON r.horario_id=hor.horario_id JOIN alumno AS a ON r.cuenta=a.cuenta JOIN grupo AS g ON g.grupo_id=hor.grupo_id JOIN hospital AS hosp ON hor.hospital_id=hosp.hospital_id JOIN ciclo as c ON c.ciclo_id=g.ciclo_id WHERE r.active=1;";
+	public static ArrayList<Registro> getRegistros(String cicloID) {
+		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id " + 
+				"from registro AS r " + 
+				"JOIN alumno as a " + 
+				"ON a.cuenta=r.cuenta " + 
+				"JOIN horario as hor " + 
+				"ON hor.horario_id=r.horario_id " + 
+				"JOIN grupo as g " + 
+				"ON g.grupo_id=r.grupo_id " + 
+				"JOIN hospital as h " + 
+				"ON g.hospital_id=h.hospital_id " + 
+				"where r.ciclo_id="+cicloID+" AND r.active=1;";
 		ArrayList<Registro> registros = new ArrayList<Registro>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -261,10 +323,13 @@ public class databaseQuery {
 				registro.setNombres(rs.getString("a.nombre"));
 				registro.setApellidoPaterno(rs.getString("a.apellido_paterno"));
 				registro.setApellidoMaterno(rs.getString("a.apellido_materno"));
+				registro.setHorarioID(rs.getInt("r.horario_id"));
 				registro.setHorario(rs.getString("hor.horario"));
-				registro.setHospital(rs.getString("hosp.nombre"));
+				registro.setGrupoID(rs.getInt("r.grupo_id"));
 				registro.setGrupo(rs.getString("g.nombre"));
-				registro.setCiclo(rs.getString("c.nombre"));
+				registro.setHospitalID(rs.getInt("h.hospital_id"));
+				registro.setHospital(rs.getString("h.nombre"));
+				registro.setCicloID(rs.getInt("r.ciclo_id"));
 				
 				registros.add(registro);
 			}
@@ -402,6 +467,5 @@ public class databaseQuery {
 		return usuarios;
 	}	
 
-	
 	
 }

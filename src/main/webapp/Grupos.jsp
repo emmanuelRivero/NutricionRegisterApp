@@ -22,30 +22,35 @@
 	String sesioName = (String)session.getAttribute("usuarioSesion");
 	String sessionRol = (String)session.getAttribute("usuarioRol");
 	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
+	String cicloID = (String)session.getAttribute("usuarioCicloID");
+	String sessioncicloID = (String)session.getAttribute("usuarioCicloID");
+	
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
 		String nombre = request.getParameter("nombre");
-		String ciclo = request.getParameter("ciclo");
-		System.out.println(ciclo);
+		String hospital = request.getParameter("hospital");
+		String capacidad = request.getParameter("capacidad");
+		System.out.println("id: " +hospital);
 		
-		databaseInsert.grupo(nombre, ciclo);
+		databaseInsert.grupo(nombre, sessioncicloID, hospital, capacidad);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
 	if (updateButton != null){
 		String id = request.getParameter("id");
 		String nombre = request.getParameter("nombre");
-		String ciclo = request.getParameter("ciclo");
+		String hospitalID = request.getParameter("hospital");
+		String capacidad = request.getParameter("capacidad");
 		
-		//databaseUpdate.hospital(id, hospital, telefono, responsable, domicilio);
+		databaseUpdate.Grupo(id, nombre, hospitalID, capacidad);
 	};
 	
 	ArrayList<Grupo> data;
-	data = databaseQuery.getGrupo();
+	data = databaseQuery.getGrupo(sessioncicloID);
 	
-	ArrayList<Ciclo> dataCiclos;
-	dataCiclos = databaseQuery.getCiclo();
+	ArrayList<Hospital> dataHospitales;
+	dataHospitales = databaseQuery.getHospitales();
 	
 	
 	%>
@@ -81,7 +86,8 @@
   <thead>
     <tr>
       <th class="th-sm">Nombre</th>
-      <th class="th-sm">Ciclo</th>
+      <th class="th-sm">Hospital</th>
+      <th class="th-sm">Capacidad</th>      
       <th class="th-sm"></th>        
     </tr>
   </thead>
@@ -89,7 +95,8 @@
   <% for (Grupo grupo : data){%>
     <tr>
       <td><%=grupo.getNombre()%></td>
-      <td><%=grupo.getCiclo()%></td>
+      <td><%=grupo.getHospital()%></td>
+      <td><%=grupo.getCapacidad()%></td>
       <td align="right">
       <%if (sessionRol.equals("admin")) {%>
       	<div class="btn-group mr-2" role="group" aria-label="First group">
@@ -126,12 +133,17 @@
     		<input class="form-control form-control-sm" type="text" placeholder="Nombre" name="nombre">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Ciclo</label>
-    		<select class="form-control" id="exampleFormControlSelect1" name="ciclo">
-    			<%for (Ciclo ciclos : dataCiclos){ %>
-      			<option value="<%=ciclos.getId()%>"><%=ciclos.getNombre()%></option>
+    		<label for="exampleFormControlInput1">Hospital</label>
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="hospital">
+    			<option>Selecciona un hospital</option>
+    			<%for (Hospital hospital : dataHospitales){ %>
+      			<option value="<%=hospital.getId()%>"><%=hospital.getNombre()%></option>
       			<%}%>
     		</select>
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Capacidad</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Capacidad" name="capacidad">
     	</div>
       </div>
       <div class="modal-footer">
@@ -143,7 +155,7 @@
   </div>
 </div>
 
-<!-- modales for hospital -->
+<!-- modales update -->
 
 <%
 if (sessionRol.equals("admin")){
@@ -152,7 +164,7 @@ for (Grupo grupo : data){ %>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Grupo: <%=grupo.getNombre() %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -165,22 +177,27 @@ for (Grupo grupo : data){ %>
     		<input class="form-control form-control-sm" type="text" placeholder="Nombre" name="nombre" value="<%=grupo.getNombre() %>">
     	</div>
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Ciclo</label>
-    		<select class="form-control" id="exampleFormControlSelect1" name="ciclo">
-    			<%for (Ciclo ciclos : dataCiclos){ 
-    				if (ciclos.getNombre().equals(grupo.getCiclo())){
-    			%>    				
-      				<option selected value="<%=ciclos.getId()%>"><%=ciclos.getNombre()%></option>
-      			<%  } else {%>
-      				<option value="<%=ciclos.getId()%>"><%=ciclos.getNombre()%></option>
-      			<%  }
+    		<label for="exampleFormControlInput1">Hospital</label>
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="hospital">
+    		    <option>Selecciona un hospital</option>
+    			<%for (Hospital hospital : dataHospitales){ 
+    				if(hospital.getId() == grupo.getHospitalID()){
+    			%>
+      				<option selected value="<%=hospital.getId()%>"><%=hospital.getNombre()%></option>
+      			<%}else {%>
+      				<option value="<%=hospital.getId()%>"><%=hospital.getNombre()%></option>
+      			<%	}
       			  }%>
     		</select>
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Capacidad</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="Capacidad" name="capacidad" value="<%=grupo.getCapacidad() %>">
     	</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary" name="updateButton" value="Nuevo">Actualizar</button>
+        <button type="submit" class="btn btn-primary" name="updateButton" value="Update">Actualizar</button>
       </div>
       </form>
     </div>
@@ -194,7 +211,7 @@ for (Grupo grupo : data){ %>
 
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
-<script src="js/paopper.min.js"></script>
+<script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- datatables scrips -->
 <script src="js/jquery.dataTables.min.js"></script>

@@ -3,7 +3,10 @@ package models;
 public class Grupo {
 	private int id;
 	private String nombre;
-	private String ciclo;
+	private int hospitalID;	
+	private String hospital;
+	private int capacidad;
+	private int cicloID;
 	
 	public int getId() {
 		return id;
@@ -17,10 +20,29 @@ public class Grupo {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getCiclo() {
-		return ciclo;
+	public int getHospitalID() {
+		return hospitalID;
 	}
-	public void setCiclo(String ciclo) {
-		this.ciclo = ciclo;
+	public void setHospitalID(int hospitalID) {
+		this.hospitalID = hospitalID;
 	}
+	public String getHospital() {
+		return hospital;
+	}
+	public void setHospital(String hospital) {
+		this.hospital = hospital;
+	}
+	public int getCapacidad() {
+		return capacidad;
+	}
+	public void setCapacidad(int capacidad) {
+		this.capacidad = capacidad;
+	}
+	public int getCicloID() {
+		return cicloID;
+	}
+	public void setCicloID(int cicloID) {
+		this.cicloID = cicloID;
+	}
+	
 }

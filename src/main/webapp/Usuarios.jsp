@@ -76,13 +76,6 @@
   </tbody>
 </table>
 
-<script>
-$(document).ready(function () {
-	  $('#dtBasicExample').DataTable();
-	  $('.dataTables_length').addClass('bs-select');
-	});
-</script>
-
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>

@@ -26,43 +26,65 @@
 -->
 <%@page import="database.login" %>
 <%@page import="database.databaseQuery" %>
+<%@page import="database.databaseInsert" %>
 <%@page import="models.Session" %>
 <%@page import="models.Ciclo" %>
 <%@page import="java.util.ArrayList" %>
 <%
+// catch new request form
+String newButton = request.getParameter("newButton");
+if (newButton != null){
+	String nombre = request.getParameter("nombre");
+	
+	databaseInsert.ciclo(nombre);
+};
+
 ArrayList<Ciclo> dataCiclos;
 dataCiclos = databaseQuery.getCiclo();
+
 
 String loginButton = request.getParameter("loginButton"); 
 String CicloButton = request.getParameter("CicloButton"); 
 if (loginButton != null){
 	String usuario = request.getParameter("usuario");
 	String contraseña = request.getParameter("contraseña");
-	String formCiclo = request.getParameter("ciclo");
+	String formCicloID = request.getParameter("ciclo");
 	
 	Session nuevaSesion = new Session();
 	nuevaSesion = login.loginUser(usuario, contraseña);
 	System.out.println(nuevaSesion.getUsername());
 	System.out.println(nuevaSesion.getRol());
 	
+	for (Ciclo ciclo : dataCiclos){
+		if (ciclo.getId().equals(formCicloID)){
+			session.setAttribute("usuarioCiclo", ciclo.getNombre());
+		}
+	}
 	session.setAttribute("usuarioSesion", nuevaSesion.getUsername());
 	session.setAttribute("usuarioRol", nuevaSesion.getRol());
-	session.setAttribute("usuarioCiclo", formCiclo);
+	session.setAttribute("usuarioCicloID", formCicloID);
 }
 
 if (CicloButton != null){
-	String formCiclo = request.getParameter("ciclo");
+	String formCicloID = request.getParameter("cicloId");	
+	String formCiclo = request.getParameter("CicloButton");	
+	session.setAttribute("usuarioCicloID", formCicloID);
 	session.setAttribute("usuarioCiclo", formCiclo);
 }
 
 String sesion = (String)session.getAttribute("usuarioSesion");
 String rol = (String)session.getAttribute("usuarioRol");
 String ciclo = (String)session.getAttribute("usuarioCiclo");
+String cicloID = (String)session.getAttribute("usuarioCicloID");
 
 System.out.println("sesion: " + sesion);
 System.out.println("rol: " + rol);
 System.out.println("ciclo: " + ciclo);
+System.out.println("cicloID: " + cicloID);
 System.out.println("loginButton: " + loginButton);
+System.out.println("cicloButton: " + CicloButton);
+
+
 if (sesion == null){
 	%>
 	<script type="text/javascript">
@@ -77,7 +99,17 @@ if (sesion == null){
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link disabled" id="home-tab" data-toggle="tab" role="tab" aria-controls="registros" aria-selected="true">Ciclo: <%=ciclo %></a>
+	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%=ciclo%></a>
+    <div class="dropdown-menu">
+    <%for (Ciclo cicloBox : dataCiclos){ %>
+      <form action="index.jsp" method="post">
+      <input type="hidden" name="cicloId" value="<%=cicloBox.getId()%>">
+      	<button type="submit"class="dropdown-item" name="CicloButton" value="<%=cicloBox.getNombre()%>"><%=cicloBox.getNombre()%></button>
+      </form>
+      <%}%>
+      <div class="dropdown-divider"></div>
+	  <a class="dropdown-item" href="#nuevoCicloModal" role="button" data-toggle="modal" rel="tooltip" data-original-title='Hello'>Nuevo ciclo</a>
+    </div>
   </li>
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#nav-registros" role="tab" aria-controls="registros" aria-selected="true">Registros</a>
@@ -88,28 +120,27 @@ if (sesion == null){
   <li class="nav-item">
     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-horarios" role="tab" aria-controls="horarios" aria-selected="false">Horarios</a>
   </li>
-    <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-hospitales" role="tab" aria-controls="hospitales" aria-selected="false">Hospitales</a>
-  </li>
-    <li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-grupos" role="tab" aria-controls="grupos" aria-selected="false">Grupos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-hospitales" role="tab" aria-controls="hospitales" aria-selected="false">Hospitales</a>
   </li>
    	<%if (rol != null){
   		if (rol.equals("admin")) {%>
+  		<!-- 
     	<li class="nav-item">
     		<a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-ciclos" role="tab" aria-controls="ciclos" aria-selected="false">Ciclos</a>
  		</li>
+ 		 -->
     	<li class="nav-item">
     		<a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-usuarios" role="tab" aria-controls="usuarios" aria-selected="false">Usuarios</a>
   		</li>
   <%	}
   	} %>
-  
   <li class="nav-item">
 	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cuenta</a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="#CambioCicloModal" role="button" data-toggle="modal" rel="tooltip" data-original-title='Hello'>Cambiar ciclo</a>
-      <div class="dropdown-divider"></div>
       <form action="logout.jsp" method="post">
       	<button type="submit"class="dropdown-item" name="logoutButton" value="logout">Cerrar sesión</button>
       </form>
@@ -146,12 +177,6 @@ if (sesion == null){
   <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">
   	<div class="embed-responsive embed-responsive-16by9">
   		<iframe class="embed-responsive-item" src="Grupos.jsp" allowfullscreen></iframe>
-  	</div>
-  </div>
-  
-  <div class="tab-pane fade" id="nav-ciclos" role="tabpanel" aria-labelledby="nav-ciclo-tab">
-  	<div class="embed-responsive embed-responsive-16by9">
-  		<iframe class="embed-responsive-item" src="Ciclos.jsp" allowfullscreen></iframe>
   	</div>
   </div>
  
@@ -191,7 +216,7 @@ if (sesion == null){
     		<label for="exampleFormControlSelect1">Ciclo</label>
     		<select class="form-control" id="exampleFormControlSelect1" name="ciclo">
     		<%for (Ciclo ciclos : dataCiclos){ %>
-      			<option><%=ciclos.getNombre()%></option>
+      			<option value="<%=ciclos.getId()%>"><%=ciclos.getNombre()%></option>
       			<%}%>
     		</select>
   		</div>
@@ -204,34 +229,31 @@ if (sesion == null){
   </div>
 </div>
 
-<div class="modal fade" id="CambioCicloModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Nuevo ciclo modal -->
+<div class="modal fade" id="nuevoCicloModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cambio de ciclo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo ciclo</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="index.jsp" method="post">
+      <form action="Ciclos.jsp" method="post">
       <div class="modal-body">
-     	 <div class="form-group">
-    		<label for="exampleFormControlSelect1">Ciclo</label>
-    		<select class="form-control" id="exampleFormControlSelect1" name="ciclo">
-    		<%for (Ciclo ciclos : dataCiclos){ %>
-      			<option><%=ciclos.getNombre()%></option>
-      			<%}%>
-    		</select>
-  		</div>
-  	  </div>
+      	<div class="form-group">
+    		<label for="exampleFormControlInput1">Nombre</label>
+    		<input class="form-control form-control-sm" type="text" placeholder="nombre" name="nombre">
+    	</div>
+      </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" name="CicloButton" value="cambioCiclo">Login</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="newButton" value="Nuevo">Nuevo</button>
       </div>
       </form>
     </div>
   </div>
 </div>
-
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

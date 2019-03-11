@@ -23,15 +23,17 @@
 	String sesioName = (String)session.getAttribute("usuarioSesion");
 	String sessionRol = (String)session.getAttribute("usuarioRol");
 	String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
+	String sessionImportResult = (String)session.getAttribute("importResult");	
+	
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
 		String hospital = request.getParameter("hospital");
-		String telefono = request.getParameter("telefono");
-		String horario = request.getParameter("horario");
 		String periodo = request.getParameter("periodo");
+		String horario = request.getParameter("horario");
+		String domicilio = request.getParameter("domicilio");
 		
-		databaseInsert.hospital(hospital,telefono,horario,periodo);
+		databaseInsert.hospital(hospital,horario,periodo,domicilio);
 	};
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
@@ -44,6 +46,19 @@
 		
 		databaseUpdate.hospital(id, hospital, horario, periodo, domicilio);
 	};
+	
+	if (sessionImportResult != null){
+		if (sessionImportResult.equals("Success")){
+			request.getSession().removeAttribute("importResult");
+			%>
+			<script type="text/javascript">
+				document.addEventListener("DOMContentLoaded", function() {
+				$('#importModalSuccess').modal('show');
+			});
+			</script>			
+			<%
+		}
+	}
 	
 	ArrayList<Hospital> data;
 	data = databaseQuery.getHospitales();
@@ -156,12 +171,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Importar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="upload.jsp" method="post" enctype="multipart/form-data">
+      <form action="uploadHospital.jsp" method="post" enctype="multipart/form-data">
       <div class="modal-body">
 		<div class="form-group">
     		<label for="exampleFormControlFile1">Importar hospitales</label>
@@ -170,13 +185,32 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary" name="importButton" value="hospital">Importar</button>
+        <button type="submit" class="btn btn-primary" name="importButton" value="hospitales">Importar</button>
       </div>
       </form>
     </div>
   </div>
 </div>
 
+<!-- import result success -->
+<div class="modal fade" id="importModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Importar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>La importación fue exitosa.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- update modals -->
 
@@ -187,7 +221,7 @@ for (Hospital hospital : data){ %>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Hospital <%=hospital.getNombre() %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -228,7 +262,7 @@ for (Hospital hospital : data){ %>
 
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
-<script src="js/paopper.min.js"></script>
+<script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- datatables scrips -->
 <script src="js/jquery.dataTables.min.js"></script>
