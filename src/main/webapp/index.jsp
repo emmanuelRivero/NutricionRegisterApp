@@ -208,7 +208,7 @@ if (sesion == null){
       <div class="modal-body">
       	<div class="form-group">
     		<label for="exampleFormControlInput1">Contraseña</label>
-    		<input class="form-control form-control-sm" type="text" placeholder="Contraseña" name="contraseña">
+    		<input class="form-control form-control-sm" type="password" placeholder="Contraseña" name="contraseña">
     	</div>
       </div>
       <div class="modal-body">
