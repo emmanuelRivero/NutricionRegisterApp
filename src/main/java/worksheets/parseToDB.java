@@ -89,7 +89,7 @@ public class parseToDB {
 				}		
 		}
 		ArrayList<Alumno> DBdata = new ArrayList<Alumno>();
-		DBdata = databaseQuery.getAlumno(cicloID);
+		DBdata = databaseQuery.getAlumno();
 		for (Alumno data : alumnos) {
 			boolean update = false;
 			for (Alumno db : DBdata) {

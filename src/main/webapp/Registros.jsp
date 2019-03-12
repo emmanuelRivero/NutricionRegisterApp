@@ -34,8 +34,8 @@ if (newButton != null){
 	String horarioId = request.getParameter("horario");
 	
 	boolean valGrupo = databaseValidate.grupoInsert(grupoId);
-	boolean valCuenta = databaseValidate.cuentaExist(cuenta);
-	boolean valCuentaReg = databaseValidate.cuentaRegistered(cuenta);
+	boolean valCuenta = databaseValidate.cuentaExist(cuenta, sessioncicloID);
+	boolean valCuentaReg = databaseValidate.cuentaRegistered(cuenta, sessioncicloID);
 	
 	if (valCuenta == true && valGrupo == true && valCuentaReg == false){
 		databaseInsert.Registro(cuenta, horarioId, grupoId, sessioncicloID);

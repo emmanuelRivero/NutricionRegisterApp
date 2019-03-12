@@ -8,6 +8,65 @@ import models.*;
 public class databaseQuery {
 	
 	//Alumno
+	
+	public static ArrayList<Alumno> getAlumno() {
+		String query = "select cuenta, nombre, apellido_paterno, apellido_materno, carrera, desc_carrera, sexo, ciclo_id from alumno where active=1;";
+		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		Connection conection = null;
+		Statement getData = null;
+		ResultSet rs = null;
+		
+		try {		
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;
+			Class.forName("com.mysql.jdbc.Driver");
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			getData = conection.createStatement();
+
+		
+			rs = getData.executeQuery(query);
+			
+			while(rs.next()){
+				Alumno alumno = new Alumno();
+				
+				alumno.setCuenta(rs.getInt("cuenta"));
+				alumno.setNombre(rs.getString("nombre"));
+				alumno.setApellidoPaterno(rs.getString("apellido_paterno"));
+				alumno.setApellidoMaterno(rs.getString("apellido_materno"));
+				alumno.setCarrera(rs.getString("carrera"));
+				alumno.setDescCarrera(rs.getString("desc_carrera"));
+				alumno.setSexo(rs.getString("sexo"));
+				alumno.setCicloID(String.valueOf(rs.getInt("ciclo_id")));
+				
+				alumnos.add(alumno);
+			}
+		}
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+	    }
+		finally {
+			if (rs != null) {
+		        try { rs.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (getData != null) {
+		        try { getData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}
+		
+		return alumnos;
+	}
+	
 	public static ArrayList<Alumno> getAlumno(String cicloID) {
 		String query = "select cuenta, nombre, apellido_paterno, apellido_materno, carrera, desc_carrera, sexo, ciclo_id from alumno where ciclo_id="+cicloID+" AND active=1;";
 		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
