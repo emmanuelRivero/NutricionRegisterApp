@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<title>nutricion</title>
+<title>nutricion V0.5</title>
 </head>
 <body>
 <!-- 
@@ -138,9 +138,6 @@ if (sesion == null){
   		</li>
   <%	}
   	} %>
-  <li class="nav-item">
-    <p>v0.5
-  </li>
   <li class="nav-item">
 	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cuenta</a>
     <div class="dropdown-menu">
