@@ -139,6 +139,9 @@ if (sesion == null){
   <%	}
   	} %>
   <li class="nav-item">
+    <p>v0.5
+  </li>
+  <li class="nav-item">
 	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cuenta</a>
     <div class="dropdown-menu">
       <form action="logout.jsp" method="post">
