@@ -8,9 +8,14 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/ui-autocomplete.css">
+<link rel="stylesheet" href="css/all.css">
 <title>Insert title here</title>
 </head>
 <body>
+<%@page import="java.io.IOException" %>
+<%@page import="com.itextpdf.text.DocumentException" %>
+<%@page import="fileGenerator.*" %>
+<%@page import="database.databaseQuery" %>
 <%@page import="database.*" %>
 <%@page import="database.databaseQuery"%>
 <%@page import="database.databaseValidate"%>
@@ -18,17 +23,19 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.Iterator" %>
 <%@page import="models.*" %>
-
 <% 
 //Session data
 String sesioName = (String)session.getAttribute("usuarioSesion");
 String sessionRol = (String)session.getAttribute("usuarioRol");
 String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
 String sessioncicloID = (String)session.getAttribute("usuarioCicloID");
+Registro alumnoRegistrado = null;
+String URLPD ="";
 
 // catch new request form
 String newButton = request.getParameter("newButton");
 if (newButton != null){
+	
 	String cuenta = request.getParameter("cuenta");
 	String grupoId = request.getParameter("grupo");
 	String horarioId = request.getParameter("horario");
@@ -39,6 +46,39 @@ if (newButton != null){
 	
 	if (valCuenta == true && valGrupo == true && valCuentaReg == false){
 		databaseInsert.Registro(cuenta, horarioId, grupoId, sessioncicloID);
+		alumnoRegistrado = databaseQuery.getRegistros(sessioncicloID, cuenta);
+		
+		String currentPath = request.getSession().getServletContext().getRealPath("/");
+		String pathHTMLTempleate = currentPath + "autoCreated/PlantillaRegistro.html";
+		String pathHTML = currentPath + "autoCreated/registro-"+cuenta+".html";
+		String pathPDF = currentPath + "autoCreated/registro-"+cuenta+".pdf";
+		String currentWorkingPath = currentPath + "autoCreated/";
+		
+		String contextPath = request.getContextPath();
+		URLPD = contextPath + "/autoCreated/registro-"+cuenta+".pdf";
+		
+		try{
+			generateHTML.generateRegistroHTML(pathHTMLTempleate, pathHTML, alumnoRegistrado);
+		}catch(IOException e){
+			e.printStackTrace();	
+		}
+		
+		try {
+			generatePDF.generatePDFFromHTML(pathHTML, pathPDF, currentWorkingPath, currentWorkingPath);
+		}catch(IOException e){
+			e.printStackTrace();
+		}catch(DocumentException e){
+			e.printStackTrace();
+		}
+		
+		%>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+			$('#SuccessfulRegister').modal('show');
+		});
+		</script>
+		<%
+		
 	}else if (valCuenta == false){
 		%>
 		<script type="text/javascript">
@@ -196,12 +236,39 @@ dataHorarios = databaseQuery.getHorario();
   </div>
 </div>
 
+<%if (newButton != null){ %>
+<!-- Successful register -->
+<div class="modal fade" id="SuccessfulRegister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registro exito</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>El alumno <%=alumnoRegistrado.getNombres()%> <%=alumnoRegistrado.getApellidoPaterno()%> <%=alumnoRegistrado.getApellidoMaterno()%>  </p>
+      	<p>con cuenta <%=alumnoRegistrado.getCuenta() %> fue registrado exitosamente </p>
+		<form action="<%=URLPD%>" method="post" target="_blank">
+			<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Formato PDF</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%} %>
+
 <!-- bad account -->
 <div class="modal fade" id="badAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        <h5 class="modal-title" id="exampleModalLabel">No se pudo registrar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -221,7 +288,7 @@ dataHorarios = databaseQuery.getHorario();
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        <h5 class="modal-title" id="exampleModalLabel">No se pudo registrar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -241,7 +308,7 @@ dataHorarios = databaseQuery.getHorario();
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        <h5 class="modal-title" id="exampleModalLabel">No se pudo registrar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -326,6 +393,5 @@ $(document).ready(function() {
     $('#mainTable').DataTable();
 } );
 </script>
-
 </body>
 </html>

@@ -71,9 +71,9 @@ public class parseToDB {
 		
 		boolean status = true;
 		
-		for (int i=1; i<= 10;i++) {
+		//for (int i=1; i<= 10;i++) {
 			
-		//for (int i=1; i<= firstSheet.getLastRowNum();i++) {
+		for (int i=1; i<= firstSheet.getLastRowNum();i++) {
 			Alumno alumno = new Alumno();
 				if (formatter.formatCellValue(firstSheet.getRow(i).getCell(0)).equals("") ) {
 					System.out.println("Line:" + i + "Found empty");

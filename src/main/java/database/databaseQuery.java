@@ -412,6 +412,74 @@ public class databaseQuery {
 		return registros;
 	}
 
+	public static Registro getRegistros(String cicloID, String cuenta) {
+		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id " + 
+				"from registro AS r " + 
+				"JOIN alumno as a " + 
+				"ON a.cuenta=r.cuenta " + 
+				"JOIN horario as hor " + 
+				"ON hor.horario_id=r.horario_id " + 
+				"JOIN grupo as g " + 
+				"ON g.grupo_id=r.grupo_id " + 
+				"JOIN hospital as h " + 
+				"ON g.hospital_id=h.hospital_id " + 
+				"where r.ciclo_id="+cicloID+" AND r.cuenta="+cuenta+" AND  r.active=1;";
+		Registro registro = new Registro();
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		Connection conection = null;
+		Statement getData = null;
+		ResultSet rs = null;
+		
+		try {		
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;
+			Class.forName("com.mysql.jdbc.Driver");
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			getData = conection.createStatement();
+
+		
+			rs = getData.executeQuery(query);
+			rs.next();
+				registro.setId(rs.getInt("r.registro_id"));
+				registro.setCuenta(rs.getInt("r.cuenta"));
+				registro.setNombres(rs.getString("a.nombre"));
+				registro.setApellidoPaterno(rs.getString("a.apellido_paterno"));
+				registro.setApellidoMaterno(rs.getString("a.apellido_materno"));
+				registro.setHorarioID(rs.getInt("r.horario_id"));
+				registro.setHorario(rs.getString("hor.horario"));
+				registro.setGrupoID(rs.getInt("r.grupo_id"));
+				registro.setGrupo(rs.getString("g.nombre"));
+				registro.setHospitalID(rs.getInt("h.hospital_id"));
+				registro.setHospital(rs.getString("h.nombre"));
+				registro.setCicloID(rs.getInt("r.ciclo_id"));
+				
+		}
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+	    }
+		finally {
+			if (rs != null) {
+		        try { rs.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (getData != null) {
+		        try { getData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}
+		
+		return registro;
+	}
+	
+	
 	//Hospital
 	public static ArrayList<Hospital> getHospitales() {
 		String query = "select hospital_id, nombre, horario, periodo, domicilio from hospital WHERE active=1;";
