@@ -427,7 +427,7 @@ function setLugares(value,modalID){
 	if (value.length >= 17){
 		t.textContent = "Lugares restantes: "
 	}else{
-		t.textContent = "Lugares restantes: " + lugares[value];
+		t.textContent = "Lugares restantes: " + lugares[value - 1];
 	}
 } 
 </script>
