@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<title>nutricion V0.5</title>
+<title>nutricion V0.6</title>
 </head>
 <body>
 <!-- 
@@ -89,7 +89,10 @@ if (sesion == null){
 	%>
 	<script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
-		$('#loginModal').modal('show');
+		$('#loginModal').modal({
+    		backdrop: 'static',
+    		keyboard: false
+		});
 		});
 	</script>
 	<%
@@ -194,7 +197,7 @@ if (sesion == null){
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" aria-label="Close" disabled>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

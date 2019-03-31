@@ -96,10 +96,6 @@
       		<button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
       	</div>
       <%} else {%>
-      	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<button type="button" class="btn btn-outline-primary btn-sm" disabled>Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" disabled>Eliminar</button>
-      	</div>
       <%} %>
       </td>
     </tr>
