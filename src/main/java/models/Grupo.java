@@ -6,8 +6,16 @@ public class Grupo {
 	private int hospitalID;	
 	private String hospital;
 	private int capacidad;
+	private int lugares;
 	private int cicloID;
 	
+	
+	public int getLugares() {
+		return lugares;
+	}
+	public void setLugares(int lugares) {
+		this.lugares = lugares;
+	}
 	public int getId() {
 		return id;
 	}

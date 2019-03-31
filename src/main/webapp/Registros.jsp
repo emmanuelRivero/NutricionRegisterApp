@@ -12,6 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <%@page import="java.io.IOException" %>
 <%@page import="com.itextpdf.text.DocumentException" %>
 <%@page import="fileGenerator.*" %>
@@ -190,7 +191,7 @@ dataHorarios = databaseQuery.getHorario();
 
 
 
-<!-- Modal Nuevo-->
+<!-- Modal Nuevo Set group-->
 <div class="modal fade" id="nuevoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -208,13 +209,14 @@ dataHorarios = databaseQuery.getHorario();
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Grupo</label>
-    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo">
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo" onclick="setLugares(this.value)">
     		    <option>Selecciona un grupo</option>
     			<%for (Grupo grupo : dataGrupos){ 
     			%>
       				<option value="<%=grupo.getId()%>"><%=grupo.getNombre()%></option>
       			<%	}%>
     		</select>
+    	<label for="exampleFormControlInput1" id="lugaresRestantes" style="padding-left: 10px; font-size: 15px;">Lugares restantes:</label>
     	</div>
     	 <div class="form-group">
     		<label for="exampleFormControlInput1">Horario</label>
@@ -382,6 +384,19 @@ for (Registro registro : dataRegistros){ %>
 }
 %>
 
+<!-- spinner modal -->
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="loader"></div>
+        <div clas="loader-txt">
+          <p>Check out this slick bootstrap spinner modal. <br><br><small>We are addicted to Bootstrap... #love</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
@@ -392,6 +407,29 @@ for (Registro registro : dataRegistros){ %>
 $(document).ready(function() {
     $('#mainTable').DataTable();
 } );
+
+
+
+function setLugares(value,modalID){
+	console.log(value);
+	var lugares = [ 
+		<%Iterator<Grupo> grupoIterator = dataGrupos.iterator(); 
+		while (grupoIterator.hasNext()){
+			Grupo current = grupoIterator.next();
+			if (grupoIterator.hasNext()){
+				%>"<%=current.getLugares()%>",<%
+			}else{
+				%>" <%=current.getLugares()%>"<%
+			}
+		}%>
+	];
+	var t = document.getElementById('lugaresRestantes');
+	if (value.length >= 17){
+		t.textContent = "Lugares restantes: "
+	}else{
+		t.textContent = "Lugares restantes: " + lugares[value];
+	}
+} 
 </script>
 </body>
 </html>

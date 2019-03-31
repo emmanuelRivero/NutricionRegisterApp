@@ -87,7 +87,8 @@
     <tr>
       <th class="th-sm">Nombre</th>
       <th class="th-sm">Hospital</th>
-      <th class="th-sm">Capacidad</th>      
+      <th class="th-sm">Capacidad</th>
+      <th class="th-sm">Lugares disponibles</th>            
       <th class="th-sm"></th>        
     </tr>
   </thead>
@@ -97,6 +98,7 @@
       <td><%=grupo.getNombre()%></td>
       <td><%=grupo.getHospital()%></td>
       <td><%=grupo.getCapacidad()%></td>
+      <td><%=grupo.getLugares()%></td>
       <td align="right">
       <%if (sessionRol.equals("admin")) {%>
       	<div class="btn-group mr-2" role="group" aria-label="First group">

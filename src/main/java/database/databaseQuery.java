@@ -180,10 +180,13 @@ public class databaseQuery {
 	
 	//Grupos
 	public static ArrayList<Grupo> getGrupo(String cicloID) {
-		String query = "select g.grupo_id, g.nombre, g.hospital_id, h.nombre, g.capacidad, g.ciclo_id from grupo as g " + 
+		String query = "select g.grupo_id, g.nombre, g.hospital_id, h.nombre, g.capacidad, g.ciclo_id, count(r.cuenta) from grupo as g " + 
 				"join hospital as h " + 
 				"ON h.hospital_id=g.hospital_id " + 
-				"where g.ciclo_id=1 AND g.active =1;";
+				"left join registro as r " +
+				"on g.grupo_id = r.grupo_id " +
+				"where g.ciclo_id=1 AND g.active = 1 " +
+				"group by g.grupo_id, g.nombre, g.hospital_id, h.nombre, g.capacidad, g.ciclo_id;";
 		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
 		databaseData nutricionDB = new databaseData();
 		
@@ -209,12 +212,15 @@ public class databaseQuery {
 			while(rs.next()){
 				Grupo grupo = new Grupo();
 				
+				int lugares = rs.getInt("g.capacidad") - rs.getInt("count(r.cuenta)");
+				
 				grupo.setId(rs.getInt("g.grupo_id"));
 				grupo.setNombre(rs.getString("g.nombre"));
 				grupo.setHospitalID(rs.getInt("g.hospital_id"));
 				grupo.setHospital(rs.getString("h.nombre"));
 				grupo.setCicloID(rs.getInt("g.ciclo_id"));
 				grupo.setCapacidad(rs.getInt("g.capacidad"));
+				grupo.setLugares(lugares);
 				
 				grupos.add(grupo);
 			}

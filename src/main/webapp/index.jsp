@@ -112,19 +112,19 @@ if (sesion == null){
     </div>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#nav-registros" role="tab" aria-controls="registros" aria-selected="true">Registros</a>
+    <a class="nav-link active" id="registros-tab" data-toggle="tab" href="#nav-registros" role="tab" aria-controls="registros" aria-selected="true">Registros</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#nav-alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
+    <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#nav-alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-horarios" role="tab" aria-controls="horarios" aria-selected="false">Horarios</a>
+    <a class="nav-link" id="horarios-tab" data-toggle="tab" href="#nav-horarios" role="tab" aria-controls="horarios" aria-selected="false">Horarios</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-grupos" role="tab" aria-controls="grupos" aria-selected="false">Grupos</a>
+    <a class="nav-link" id="grupos-tab" data-toggle="tab" href="#nav-grupos" role="tab" aria-controls="grupos" aria-selected="false">Grupos</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-hospitales" role="tab" aria-controls="hospitales" aria-selected="false">Hospitales</a>
+    <a class="nav-link" id="hospitales-tab" data-toggle="tab" href="#nav-hospitales" role="tab" aria-controls="hospitales" aria-selected="false">Hospitales</a>
   </li>
    	<%if (rol != null){
   		if (rol.equals("admin")) {%>
@@ -152,7 +152,7 @@ if (sesion == null){
 	<!-- aqui empiezan las ligas de los tabls -->
   <div class="tab-pane fade show active" id="nav-registros" role="tabpanel" aria-labelledby="nav-registros-tab">
 	<div class="embed-responsive embed-responsive-16by9">
-  	<iframe class="embed-responsive-item" src="Registros.jsp" allowfullscreen></iframe>
+  	<iframe class="embed-responsive-item" id="frame-registros" src="Registros.jsp" allowfullscreen></iframe>
 	</div>
   </div>
 	
@@ -176,7 +176,7 @@ if (sesion == null){
   
   <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">
   	<div class="embed-responsive embed-responsive-16by9">
-  		<iframe class="embed-responsive-item" src="Grupos.jsp" allowfullscreen></iframe>
+  		<iframe class="embed-responsive-item" id="frame-grupos" src="Grupos.jsp" allowfullscreen></iframe>
   	</div>
   </div>
  
@@ -254,8 +254,34 @@ if (sesion == null){
     </div>
   </div>
 </div>
+
+<!-- spinner modal -->
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="loader"></div>
+        <div clas="loader-txt">
+          <p>Check out this slick bootstrap spinner modal. <br><br><small>We are addicted to Bootstrap... #love</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<label id="reloadLabel" style="visibility: hidden">this is hidden</label> 
+
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$('#registros-tab').click(function() {
+	var frame = document.getElementById('frame-registros');
+	frame.src = "Loading.jsp?page=Registros.jsp";	
+});
+$('#grupos-tab').click(function() {
+	var frame = document.getElementById('frame-grupos');
+	frame.src = "Loading.jsp?page=Grupos.jsp";	
+});
+</script>
 </body>
 </html>
