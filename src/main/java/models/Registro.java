@@ -13,7 +13,71 @@ public class Registro {
 	private int hospitalID;	
 	private String hospital;
 	private int cicloID;
+	private String email;
+	private String telefono;
+	private String emergencia;
+	private String telfam;
+	private int historial;
+	private int cartilla;
+	private int fotos;
+	private int seguro;
+	private int horario2;
 	
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	public String getEmergencia() {
+		return emergencia;
+	}
+	public void setEmergencia(String emergencia) {
+		this.emergencia = emergencia;
+	}
+	public String getTelfam() {
+		return telfam;
+	}
+	public void setTelfam(String telfam) {
+		this.telfam = telfam;
+	}
+	public int getHistorial() {
+		return historial;
+	}
+	public void setHistorial(int historial) {
+		this.historial = historial;
+	}
+	public int getCartilla() {
+		return cartilla;
+	}
+	public void setCartilla(int cartilla) {
+		this.cartilla = cartilla;
+	}
+	public int getFotos() {
+		return fotos;
+	}
+	public void setFotos(int fotos) {
+		this.fotos = fotos;
+	}
+	public int getSeguro() {
+		return seguro;
+	}
+	public void setSeguro(int seguro) {
+		this.seguro = seguro;
+	}
+	public int getHorario2() {
+		return horario2;
+	}
+	public void setHorario2(int horario2) {
+		this.horario2 = horario2;
+	}
 	public int getId() {
 		return id;
 	}

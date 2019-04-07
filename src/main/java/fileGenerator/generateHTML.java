@@ -15,10 +15,10 @@ public class generateHTML {
 		
 		htmlString = htmlString.replace("$cuenta", String.valueOf(registro.getCuenta()));
 		htmlString = htmlString.replace("$alumno", registro.getNombres() + " " + registro.getApellidoPaterno() + " " + registro.getApellidoMaterno());
-		htmlString = htmlString.replace("$eMail", "TDL");
-		htmlString = htmlString.replace("$telefono", "TDL");
-		htmlString = htmlString.replace("$emergencia", "TDL");
-		htmlString = htmlString.replace("$emeTelefono", "TDL");
+		htmlString = htmlString.replace("$eMail", registro.getEmail());
+		htmlString = htmlString.replace("$telefono", registro.getTelefono());
+		htmlString = htmlString.replace("$emergencia", registro.getEmergencia());
+		htmlString = htmlString.replace("$emeTelefono", registro.getTelfam());
 		htmlString = htmlString.replace("$fechaPractica", "TDL");
 		htmlString = htmlString.replace("$hospital", registro.getHospital());
 		htmlString = htmlString.replace("$horario", registro.getHorario());

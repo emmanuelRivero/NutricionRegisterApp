@@ -348,7 +348,8 @@ public class databaseQuery {
 	
 	//Registros
 	public static ArrayList<Registro> getRegistros(String cicloID) {
-		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id " + 
+		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id, " + 
+				"r.email, r.telefono, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
 				"from registro AS r " + 
 				"JOIN alumno as a " + 
 				"ON a.cuenta=r.cuenta " + 
@@ -357,7 +358,7 @@ public class databaseQuery {
 				"JOIN grupo as g " + 
 				"ON g.grupo_id=r.grupo_id " + 
 				"JOIN hospital as h " + 
-				"ON g.hospital_id=h.hospital_id " + 
+				"ON g.hospital_id=h.hospital_id " +
 				"where r.ciclo_id="+cicloID+" AND r.active=1;";
 		ArrayList<Registro> registros = new ArrayList<Registro>();
 		databaseData nutricionDB = new databaseData();
@@ -396,6 +397,16 @@ public class databaseQuery {
 				registro.setHospital(rs.getString("h.nombre"));
 				registro.setCicloID(rs.getInt("r.ciclo_id"));
 				
+				registro.setEmail(rs.getString("r.email"));
+				registro.setTelefono(rs.getString("r.telefono"));
+				registro.setEmergencia(rs.getString("r.emergencia"));
+				registro.setTelfam(rs.getString("r.telfam"));
+				registro.setHistorial(rs.getInt("r.historial"));
+				registro.setCartilla(rs.getInt("r.cartilla"));
+				registro.setFotos(rs.getInt("r.fotos"));
+				registro.setSeguro(rs.getInt("r.seguro"));
+				registro.setHorario2(rs.getInt("r.horario"));
+				
 				registros.add(registro);
 			}
 		}
@@ -419,7 +430,8 @@ public class databaseQuery {
 	}
 
 	public static Registro getRegistros(String cicloID, String cuenta) {
-		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id " + 
+		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id, " + 
+				"r.email, r.telefono, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
 				"from registro AS r " + 
 				"JOIN alumno as a " + 
 				"ON a.cuenta=r.cuenta " + 
@@ -465,6 +477,15 @@ public class databaseQuery {
 				registro.setHospital(rs.getString("h.nombre"));
 				registro.setCicloID(rs.getInt("r.ciclo_id"));
 				
+				registro.setEmail(rs.getString("r.email"));
+				registro.setTelefono(rs.getString("r.telefono"));
+				registro.setEmergencia(rs.getString("r.emergencia"));
+				registro.setTelfam(rs.getString("r.telfam"));
+				registro.setHistorial(rs.getInt("r.historial"));
+				registro.setCartilla(rs.getInt("r.cartilla"));
+				registro.setFotos(rs.getInt("r.fotos"));
+				registro.setSeguro(rs.getInt("r.seguro"));
+				registro.setHorario2(rs.getInt("r.horario"));
 		}
 		catch (Exception e)
 	    {

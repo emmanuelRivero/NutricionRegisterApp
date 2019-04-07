@@ -30,6 +30,7 @@ String sesioName = (String)session.getAttribute("usuarioSesion");
 String sessionRol = (String)session.getAttribute("usuarioRol");
 String sessionCiclo = (String)session.getAttribute("usuarioCiclo");
 String sessioncicloID = (String)session.getAttribute("usuarioCicloID");
+String cuentaRegistro = request.getParameter("cuenta");
 Registro alumnoRegistrado = null;
 String URLPD ="";
 
@@ -47,37 +48,13 @@ if (newButton != null){
 	
 	if (valCuenta == true && valGrupo == true && valCuentaReg == false){
 		databaseInsert.Registro(cuenta, horarioId, grupoId, sessioncicloID);
-		alumnoRegistrado = databaseQuery.getRegistros(sessioncicloID, cuenta);
-		
-		String currentPath = request.getSession().getServletContext().getRealPath("/");
-		String pathHTMLTempleate = currentPath + "autoCreated/PlantillaRegistro.html";
-		String pathHTML = currentPath + "autoCreated/registro-"+cuenta+".html";
-		String pathPDF = currentPath + "autoCreated/registro-"+cuenta+".pdf";
-		String currentWorkingPath = currentPath + "autoCreated/";
-		
-		String contextPath = request.getContextPath();
-		URLPD = contextPath + "/autoCreated/registro-"+cuenta+".pdf";
-		
-		try{
-			generateHTML.generateRegistroHTML(pathHTMLTempleate, pathHTML, alumnoRegistrado);
-		}catch(IOException e){
-			e.printStackTrace();	
-		}
-		
-		try {
-			generatePDF.generatePDFFromHTML(pathHTML, pathPDF, currentWorkingPath, currentWorkingPath);
-		}catch(IOException e){
-			e.printStackTrace();
-		}catch(DocumentException e){
-			e.printStackTrace();
-		}
 		
 		%>
 		<script type="text/javascript">
 			document.addEventListener("DOMContentLoaded", function() {
-			$('#SuccessfulRegister').modal('show');
+			$('#nuevoModal2').modal('show');
 		});
-		</script>
+		</script>			
 		<%
 		
 	}else if (valCuenta == false){
@@ -107,15 +84,134 @@ if (newButton != null){
 	}
 	
 };
+
+String newButton2 = request.getParameter("newButton2");
+if (newButton2 != null){
+	String cuenta = request.getParameter("cuenta");
+	String email = request.getParameter("email");
+	String telefono = request.getParameter("telefono");
+	String emergencia = request.getParameter("emergencia");	
+	String telfam = request.getParameter("telfam");
+	String historial = request.getParameter("historial");
+	String cartilla = request.getParameter("cartilla");
+	String fotos = request.getParameter("fotos");
+	String seguro = request.getParameter("seguro");
+	String horario = request.getParameter("horario");
+		
+	if (historial == null || !historial.equals("1")){
+		historial="0";
+	}
+	
+	if (cartilla == null || !cartilla.equals("1")){
+		cartilla="0";
+	}
+	if (fotos == null || !fotos.equals("1")){
+		fotos="0";
+	}
+	if (seguro == null || !seguro.equals("1")){
+		seguro="0";
+	}
+	if (horario == null || !horario.equals("1")){
+		horario="0";
+	}
+	
+	databaseUpdate.Registro(cuenta, sessioncicloID, email, telefono, emergencia, telfam, historial, cartilla, fotos, seguro, horario);
+	
+	alumnoRegistrado = databaseQuery.getRegistros(sessioncicloID, cuenta);
+	
+	String currentPath = request.getSession().getServletContext().getRealPath("/");
+	String pathHTMLTempleate = currentPath + "autoCreated/PlantillaRegistro.html";
+	String pathHTML = currentPath + "autoCreated/registro-"+cuenta+".html";
+	String pathPDF = currentPath + "autoCreated/registro-"+cuenta+".pdf";
+	String currentWorkingPath = currentPath + "autoCreated/";
+	
+	String contextPath = request.getContextPath();
+	URLPD = contextPath + "/autoCreated/registro-"+cuenta+".pdf";
+	
+	try{
+		generateHTML.generateRegistroHTML(pathHTMLTempleate, pathHTML, alumnoRegistrado);
+	}catch(IOException e){
+		e.printStackTrace();	
+	}
+	
+	try {
+		generatePDF.generatePDFFromHTML(pathHTML, pathPDF, currentWorkingPath, currentWorkingPath);
+	}catch(IOException e){
+		e.printStackTrace();
+	}catch(DocumentException e){
+		e.printStackTrace();
+	}
+	
+	%>
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+		$('#SuccessfulRegister').modal('show');
+	});
+	</script>
+	<%
+}
+
 // catch update request form
 String updateButton = request.getParameter("updateButton");
 if (updateButton != null){
 	String id = request.getParameter("id");
+	String cuenta = request.getParameter("cuenta");
 	String grupoId = request.getParameter("grupo");
 	String horarioId = request.getParameter("horario");
 	
-	databaseUpdate.Registro(horarioId, grupoId, id);
+	System.out.println(id);
+	System.out.println(cuenta);
+	System.out.println(grupoId);
+	System.out.println(horarioId);
+	
+	boolean valGrupo = databaseValidate.grupoInsert(grupoId);
+	
+	if (valGrupo == true){
+		databaseUpdate.Registro(horarioId, grupoId, id);
+	}else if (valGrupo == false){
+		%>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+			$('#badGroup').modal('show');
+		});
+		</script>			
+		<%
+	}
+	
 };
+
+String updateButton2 = request.getParameter("updateButton2");
+if (updateButton2 != null){
+	String cuenta = request.getParameter("cuenta");
+	String email = request.getParameter("email");
+	String telefono = request.getParameter("telefono");
+	String emergencia = request.getParameter("emergencia");	
+	String telfam = request.getParameter("telfam");
+	String historial = request.getParameter("historial");
+	String cartilla = request.getParameter("cartilla");
+	String fotos = request.getParameter("fotos");
+	String seguro = request.getParameter("seguro");
+	String horario = request.getParameter("horario");
+		
+	if (historial == null || !historial.equals("1")){
+		historial="0";
+	}
+	
+	if (cartilla == null || !cartilla.equals("1")){
+		cartilla="0";
+	}
+	if (fotos == null || !fotos.equals("1")){
+		fotos="0";
+	}
+	if (seguro == null || !seguro.equals("1")){
+		seguro="0";
+	}
+	if (horario == null || !horario.equals("1")){
+		horario="0";
+	}
+	
+	databaseUpdate.Registro(cuenta, sessioncicloID, email, telefono, emergencia, telfam, historial, cartilla, fotos, seguro, horario);
+}
 
 
 ArrayList<Registro> dataRegistros;
@@ -174,7 +270,17 @@ dataHorarios = databaseQuery.getHorario();
       <td align="right">
       <%if (sessionRol.equals("admin")) {%>
       	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=registro.getId()%>">Modificar</button>
+      		<!-- <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=registro.getId()%>">Modificar</button> -->
+      		<div class="dropdown">
+			    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Opciones
+			    <span class="caret"></span></button>
+			    <ul class="dropdown-menu">
+				      <li><button type="submit"class="dropdown-item" data-toggle="modal" data-target="#modificarModal<%=registro.getId()%>">Modificar Grupo</button>
+				      <li><button type="submit"class="dropdown-item" data-toggle="modal" data-target="#modificarModal2<%=registro.getId()%>">Modificar Datos</button></li>
+				      <li><button type="submit"class="dropdown-item">Imprimir registro</button></li>	      
+			    </ul>
+  			</div>
+      		
       		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=registro.getId()%>>Eliminar</button>
       	</div>
       <%} else {%>
@@ -196,7 +302,7 @@ dataHorarios = databaseQuery.getHorario();
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Asignación de hospital</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -205,7 +311,7 @@ dataHorarios = databaseQuery.getHorario();
       <div class="modal-body">
       	<div class="form-group">
     		<label for="exampleFormControlInput1">Cuenta</label>
-    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="Cuenta" name="cuenta">
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="1234567" name="cuenta">
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Grupo</label>
@@ -238,7 +344,76 @@ dataHorarios = databaseQuery.getHorario();
   </div>
 </div>
 
-<%if (newButton != null){ %>
+<!-- Modal Nuevo info-->
+<div class="modal fade" id="nuevoModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos personales</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Registros.jsp" method="post">
+      <div class="modal-body">
+        <input type="hidden" id="custId" name="cuenta" value="<%=cuentaRegistro%>">
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Telefono</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="telefono">
+    	</div>
+      	<div class="form-group">
+    		<label for="exampleFormControlInput1">Correo electrónico</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="ejemplo@unitec.com" name="email">
+    	</div>    	
+      	<div class="form-group">
+    		<label for="exampleFormControlInput1">En caso de emergencia llamar a:</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="Contacto de emergencia" name="emergencia">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Telefono familiar:</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="telfam">
+    	</div> 
+    	<div class="form-check">
+		  <input class="form-check-input" type="checkbox" name="historial" value="1" id="defaultCheck1">
+		  <label class="form-check-label" for="defaultCheck1">
+		    Historial académico
+		  </label>
+      	</div>
+      	<div class="form-check">
+		  <input class="form-check-input" type="checkbox" name="cartilla" value="1" id="defaultCheck1">
+		  <label class="form-check-label" for="defaultCheck1">
+		    Cartilla de vacunación
+		  </label>
+      	</div>
+      	<div class="form-check">
+		  <input class="form-check-input" type="checkbox" name="fotos" value="1" id="defaultCheck1">
+		  <label class="form-check-label" for="defaultCheck1">
+		    Dos fotografías infantiles
+		  </label>
+      	</div>
+      	<div class="form-check">
+		  <input class="form-check-input" type="checkbox" name="seguro" value="1" id="defaultCheck1">
+		  <label class="form-check-label" for="defaultCheck1">
+		    Seguro médico vigente
+		  </label>
+      	</div>
+      	<div class="form-check">
+		  <input class="form-check-input" type="checkbox" name="horario" value="1" id="defaultCheck1">
+		  <label class="form-check-label" for="defaultCheck1">
+		    Copia del horario de la materia de práctica clínica
+		  </label>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="newButton2" value="Nuevo">Nuevo</button>
+      </div> 
+      </form>
+    </div>
+  </div>
+</div>
+
+<%if (newButton2 != null){ %>
 <!-- Successful register -->
 <div class="modal fade" id="SuccessfulRegister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -250,8 +425,7 @@ dataHorarios = databaseQuery.getHorario();
         </button>
       </div>
       <div class="modal-body">
-        <p>El alumno <%=alumnoRegistrado.getNombres()%> <%=alumnoRegistrado.getApellidoPaterno()%> <%=alumnoRegistrado.getApellidoMaterno()%>  </p>
-      	<p>con cuenta <%=alumnoRegistrado.getCuenta() %> fue registrado exitosamente </p>
+        <p>El alumno <%=alumnoRegistrado.getNombres()%> <%=alumnoRegistrado.getApellidoPaterno()%> <%=alumnoRegistrado.getApellidoMaterno()%> con cuenta <%=alumnoRegistrado.getCuenta() %> fue registrado exitosamente </p>
 		<form action="<%=URLPD%>" method="post" target="_blank">
 			<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Formato PDF</button>
 		</form>
@@ -328,7 +502,8 @@ dataHorarios = databaseQuery.getHorario();
 <!-- update modals -->
 <% 
 if (sessionRol.equals("admin")){
-for (Registro registro : dataRegistros){ %>
+for (Registro registro : dataRegistros){ 
+	int lugares = 0; %>
 <div class="modal fade" id="modificarModal<%=registro.getId()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -339,14 +514,16 @@ for (Registro registro : dataRegistros){ %>
         </button>
       </div>
       <form action="Registros.jsp" method="post">
-      <input type="hidden" name="cuenta" value="<%=registro.getId()%>">
+      <input type="hidden" name="id" value="<%=registro.getId()%>">
+      <input type="hidden" name="cuenta" value="<%=registro.getCuenta()%>">
       <div class="modal-body">
      	 <div class="form-group">
     		<label for="exampleFormControlInput1">Grupo</label>
-    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo">
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo" onclick="setLugaresID(this.value, <%=registro.getId()%>)">
     		    <option>Selecciona un grupo</option>
     			<%for (Grupo grupo : dataGrupos){ 
     				if (grupo.getId() == registro.getGrupoID()){
+    					lugares = grupo.getLugares();
     			%>
       				<option selected value="<%=grupo.getId()%>"><%=grupo.getNombre()%></option>
       			<%	}else{%>
@@ -354,6 +531,7 @@ for (Registro registro : dataRegistros){ %>
       			<%	}
     			  }%>
     		</select>
+    		<label for="exampleFormControlInput1" id="lugaresRestantes<%=registro.getId()%>" style="padding-left: 10px; font-size: 15px;">Lugares restantes: <%=lugares %></label>
     	</div>
     	 <div class="form-group">
     		<label for="exampleFormControlInput1">Horario</label>
@@ -373,30 +551,107 @@ for (Registro registro : dataRegistros){ %>
     	</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary" name="updateButton" value="Nuevo">Actualizar</button>
+        <button type="submit" class="btn btn-primary" name="updateButton" value="Actualizar">Actualizar</button>
       </div>
       </form>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modificarModal2<%=registro.getId()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos personales</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Registros.jsp" method="post">
+      <div class="modal-body">
+        <input type="hidden" id="custId" name="cuenta" value="<%=registro.getCuenta()%>">
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Telefono</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="telefono" value="<%=registro.getTelefono() %>">
+    	</div>
+      	<div class="form-group">
+    		<label for="exampleFormControlInput1">Correo electrónico</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="ejemplo@unitec.com" name="email" value="<%=registro.getEmail()%>">
+    	</div>    	
+      	<div class="form-group">
+    		<label for="exampleFormControlInput1">En caso de emergencia llamar a:</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="Contacto de emergencia" name="emergencia" value="<%=registro.getEmergencia()%>">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Telefono familiar:</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="telfam" value="<%=registro.getTelfam()%>">
+    	</div> 
+    	<div class="form-check">
+    	<%if (registro.getHistorial() == 1){ %>
+		  <input class="form-check-input" type="checkbox" name="historial" value="1" id="defaultCheck1" checked>
+		<%} else { %>
+		  <input class="form-check-input" type="checkbox" name="historial" value="1" id="defaultCheck1">
+		<%} %>
+		  <label class="form-check-label" for="defaultCheck1">
+		    Historial académico
+		  </label>
+      	</div>
+      	<div class="form-check">
+      	<%if (registro.getCartilla() == 1){ %>
+		  <input class="form-check-input" type="checkbox" name="cartilla" value="1" id="defaultCheck1" checked>
+		<%} else { %> 
+		  <input class="form-check-input" type="checkbox" name="cartilla" value="1" id="defaultCheck1">
+		<%} %>
+		  <label class="form-check-label" for="defaultCheck1">
+		    Cartilla de vacunación
+		  </label>
+      	</div>
+      	<div class="form-check">
+      	<%if (registro.getFotos() == 1){ %>
+		  <input class="form-check-input" type="checkbox" name="fotos" value="1" id="defaultCheck1" checked>
+		<%} else { %>  
+		  <input class="form-check-input" type="checkbox" name="fotos" value="1" id="defaultCheck1">
+		<%} %> 
+		  <label class="form-check-label" for="defaultCheck1">
+		    Dos fotografías infantiles
+		  </label>
+      	</div>
+      	<div class="form-check">
+      	<%if (registro.getSeguro() == 1){ %>
+		  <input class="form-check-input" type="checkbox" name="seguro" value="1" id="defaultCheck1" checked>
+		<%} else { %> 
+		  <input class="form-check-input" type="checkbox" name="seguro" value="1" id="defaultCheck1">
+		<%} %>  
+		  <label class="form-check-label" for="defaultCheck1">
+		    Seguro médico vigente
+		  </label>
+      	</div>
+      	<div class="form-check">
+      	<%if (registro.getHorario2() == 1){ %>
+		  <input class="form-check-input" type="checkbox" name="horario" value="1" id="defaultCheck1" checked>
+		<%} else { %> 
+		  <input class="form-check-input" type="checkbox" name="horario" value="1" id="defaultCheck1">
+		<%} %> 
+		  <label class="form-check-label" for="defaultCheck1">
+		    Copia del horario de la materia de práctica clínica
+		  </label>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="updateButton2" value="Actualizar">Actualizar</button>
+      </div> 
+      </form>
+    </div>
+  </div>
+</div>
+
 <%
 }
 }
 %>
 
-<!-- spinner modal -->
-<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <div class="loader"></div>
-        <div clas="loader-txt">
-          <p>Check out this slick bootstrap spinner modal. <br><br><small>We are addicted to Bootstrap... #love</small></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
@@ -408,9 +663,7 @@ $(document).ready(function() {
     $('#mainTable').DataTable();
 } );
 
-
-
-function setLugares(value,modalID){
+function setLugares(value){
 	console.log(value);
 	var lugares = [ 
 		<%Iterator<Grupo> grupoIterator = dataGrupos.iterator(); 
@@ -424,6 +677,28 @@ function setLugares(value,modalID){
 		}%>
 	];
 	var t = document.getElementById('lugaresRestantes');
+	if (value.length >= 17){
+		t.textContent = "Lugares restantes: "
+	}else{
+		t.textContent = "Lugares restantes: " + lugares[value - 1];
+	}
+} 
+
+function setLugaresID(value,modalID){
+	console.log(value);
+	var lugares = [ 
+		<%grupoIterator = dataGrupos.iterator(); 
+		while (grupoIterator.hasNext()){
+			Grupo current = grupoIterator.next();
+			if (grupoIterator.hasNext()){
+				%>"<%=current.getLugares()%>",<%
+			}else{
+				%>" <%=current.getLugares()%>"<%
+			}
+		}%>
+	];
+	var t = document.getElementById('lugaresRestantes' + modalID);
+	console.log(t);
 	if (value.length >= 17){
 		t.textContent = "Lugares restantes: "
 	}else{

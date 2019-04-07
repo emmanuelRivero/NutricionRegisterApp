@@ -204,7 +204,47 @@ public class databaseUpdate {
 	
 	public static boolean Registro(String horarioId, String grupoId, String registroId) {
 		
-		String query = "UPDATE registro SET horario_id="+horarioId+", grupo_id='"+grupoId+", WHERE registro_id="+registroId+";";
+		String query = "UPDATE registro SET horario_id="+horarioId+", grupo_id="+grupoId+" WHERE registro_id="+registroId+";";
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		boolean status = true;
+		
+		Connection conection = null;
+		Statement insertData = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;			
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			insertData = conection.createStatement();
+			insertData.executeUpdate(query);
+        }
+		
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+			status = false;
+	    }
+		finally {
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (insertData != null) {
+		        try { insertData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}	
+		return status;
+	}
+
+	public static boolean Registro(String cuenta, String cicloID, String email,String telefono, String emergencia, String telfam, String historial, String cartilla, String fotos, String seguro, String horario) {
+		
+		String query = "update registro SET email='"+email+"', telefono='"+telefono+"', emergencia='"+emergencia+"', telfam='"+telfam+"', historial="+historial+",cartilla="+cartilla+",fotos="+fotos+",seguro="+seguro+",horario="+horario+" where cuenta="+cuenta+" AND ciclo_id="+cicloID+";";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
