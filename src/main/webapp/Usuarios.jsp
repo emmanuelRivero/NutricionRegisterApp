@@ -35,7 +35,9 @@
 		String password = request.getParameter("password");
 		String password2 = request.getParameter("password2");
 		
-		if (password != password2){
+		if (password.equals(password2)){
+			databaseInsert.usuario(usuario, nombres, apellidoPaterno, apellidoMaterno, telefono, domicilio, password, rol);
+		} else {
 			%>
 			<script type="text/javascript">
 				document.addEventListener("DOMContentLoaded", function() {
@@ -43,8 +45,6 @@
 				});
 			</script>	
 			<%
-		} else {
-			databaseInsert.usuario(usuario, nombres, apellidoPaterno, apellidoMaterno, telefono, domicilio, password, rol);
 		}
 	}
 	// catch update request form
