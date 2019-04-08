@@ -198,7 +198,7 @@ public class databaseInsert {
 	
 	public static void usuario(String usuario, String nombres, String apellidoPaterno, String apellidoMaterno,String telefono, String domicilio, String password, String rol) {
 		
-		String query = "{call creaUsuario('?','?','?','?','?','?','?','?')}";
+		String query = "{call creaUsuario(?,?,?,?,?,?,?,?)}";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
@@ -224,7 +224,7 @@ public class databaseInsert {
 			insertData.setString(7, password);
 			insertData.setString(8, rol);
 			
-			insertData.executeUpdate(query);
+			insertData.executeUpdate();
         }
 		
 		catch (Exception e)

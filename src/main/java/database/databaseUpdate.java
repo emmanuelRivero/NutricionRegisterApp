@@ -282,4 +282,86 @@ public class databaseUpdate {
 		return status;
 	}
 
+	public static boolean Usuario(String usuarioID, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String domicilio, String rolID) {
+		
+		String query = "UPDATE users SET nombres='"+nombre+"', apellido_paterno='"+apellidoPaterno+"', apellido_materno='"+apellidoMaterno+"', telefono='"+telefono+"', domicilio='"+domicilio+"', rol_id="+rolID+"  WHERE user_id="+usuarioID+";";
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		boolean status = true;
+
+		
+		Connection conection = null;
+		Statement insertData = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;			
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			insertData = conection.createStatement();
+			insertData.executeUpdate(query);
+        }
+		
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+			status = false;
+	    }
+		finally {
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (insertData != null) {
+		        try { insertData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}	
+		return status;
+	}
+	
+	public static boolean UsuarioPass(String usuarioID, String password) {
+		
+		String query = "UPDATE users SET password=md5('"+password+"') WHERE user_id="+usuarioID+";";
+		databaseData nutricionDB = new databaseData();
+		
+		String dbIP = nutricionDB.getDbIP();
+		String dbPort = nutricionDB.getDbPort();
+		String dbName = nutricionDB.getDbName();
+		String dbUser = nutricionDB.getDbUser();
+		String dbPassword = nutricionDB.getDbPassword();
+		
+		boolean status = true;
+
+		
+		Connection conection = null;
+		Statement insertData = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://" + dbIP + ":" + dbPort + "/" + dbName;			
+			conection=DriverManager.getConnection(url,dbUser,dbPassword);
+			insertData = conection.createStatement();
+			insertData.executeUpdate(query);
+        }
+		
+		catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+			status = false;
+	    }
+		finally {
+			if (conection != null) {
+		        try { conection.close(); } catch (SQLException e) { /* ignored */}
+		    }
+			if (insertData != null) {
+		        try { insertData.close(); } catch (SQLException e) { /* ignored */}
+		    }			
+		}	
+		return status;
+	}
+	
 }
