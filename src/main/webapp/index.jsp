@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<title>nutricion V0.6</title>
+<title>nutricion V0.7</title>
 </head>
 <body>
 <!-- 
