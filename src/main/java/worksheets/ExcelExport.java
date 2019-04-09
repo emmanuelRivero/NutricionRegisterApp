@@ -143,12 +143,17 @@ public class ExcelExport {
         	//documentosString = URLEncoder.encode(documentosString, "UTF-8");
         	
         	//String documentosANSI = new String(documentosString.getBytes(Charset.forName("ISO-8859-1")));
-        	Charset iso88591charset = Charset.forName("ISO-8859-1");
-        	byte[] documentosISObyte = documentosString.getBytes(iso88591charset);
-        	String documentosISO = new String (documentosISObyte,iso88591charset);
+        	//Charset iso88591charset = Charset.forName("ISO-8859-1");
+        	//byte[] documentosISObyte = documentosString.getBytes(iso88591charset);
+        	//String documentosISO = new String (documentosISObyte,iso88591charset);
+        	
+        	Charset utf8charset = Charset.forName("UTF-8");
+        	byte[] documentosUTFbyte = documentosString.getBytes(utf8charset);
+        	String documentosUTF = new String (documentosUTFbyte,utf8charset);
+         	
         	
         	Cell documentos = data.createCell(10);    
-        	documentos.setCellValue(documentosISO);
+        	documentos.setCellValue(documentosUTF);
         	sheet.autoSizeColumn(10);
         }
         
