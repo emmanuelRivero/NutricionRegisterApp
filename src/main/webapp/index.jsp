@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<title>nutricion V0.7</title>
+<title>nutricion V0.8</title>
 </head>
 <body>
 <!-- 
@@ -97,7 +97,6 @@ if (sesion == null){
 	</script>
 	<%
 }
-
 %>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -271,8 +270,7 @@ if (sesion == null){
     </div>
   </div>
 </div>
-<label id="reloadLabel" style="visibility: hidden">this is hidden</label> 
-
+<div id="version" style="text-align: right; font-size: 8px; display: none">versión 0.8</div>
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -285,6 +283,12 @@ $('#grupos-tab').click(function() {
 	var frame = document.getElementById('frame-grupos');
 	frame.src = "Loading.jsp?page=Grupos.jsp";	
 });
+
+	<%if (sesion != null){%>
+	$(document).ready(function() {
+		 $('#version').css({'display': 'block'});
+	} );
+	<%}%>
 </script>
 </body>
 </html>
