@@ -72,7 +72,6 @@
        <%if (sessionRol.equals("admin")) {%>   
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
-                <a class="btn btn-sm btn-outline-secondary">Exportar</a>
             </div>
         </div>
         <%} %>

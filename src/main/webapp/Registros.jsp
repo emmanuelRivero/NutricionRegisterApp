@@ -24,6 +24,8 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.Iterator" %>
 <%@page import="models.*" %>
+<%@page import="worksheets.*" %>
+
 <% 
 //Session data
 String sesioName = (String)session.getAttribute("usuarioSesion");
@@ -33,6 +35,7 @@ String sessioncicloID = (String)session.getAttribute("usuarioCicloID");
 String cuentaRegistro = request.getParameter("cuenta");
 Registro alumnoRegistrado = null;
 String URLPD ="";
+String URLXLS="";
 
 // catch new request form
 String newButton = request.getParameter("newButton");
@@ -178,7 +181,7 @@ if (updateButton != null){
 		<%
 	}
 	
-};
+}
 
 String updateButton2 = request.getParameter("updateButton2");
 if (updateButton2 != null){
@@ -221,6 +224,29 @@ if (deleteButton != null){
 	databaseDelete.Registro(registroID);
 }
 
+//catch export request form
+String exportButton = request.getParameter("exportButton");
+if (exportButton != null){
+	String currentPath = request.getSession().getServletContext().getRealPath("/");
+	String OutPath = currentPath + "autoCreated/registros.xlsx";
+	String contextPath = request.getContextPath();
+	URLXLS = contextPath + "/autoCreated/registros.xlsx";
+	try {
+	ExcelExport.registros(sessioncicloID, OutPath);
+	} catch(IOException e){
+		e.printStackTrace();
+	}
+	
+	%>
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+		$('#exportModal').modal('show');
+	});
+	</script>			
+	<%
+	
+}
+
 ArrayList<Registro> dataRegistros;
 dataRegistros = databaseQuery.getRegistros(sessioncicloID);
 
@@ -241,8 +267,10 @@ dataHorarios = databaseQuery.getHorario();
 
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
-                <%if (sessionRol.equals("admin")) {%>     
-                <a class="btn btn-sm btn-outline-secondary">exportar</a>
+                <%if (sessionRol.equals("admin")) {%> 
+                <form action="Registros.jsp" method="post">    
+                <button type="submit" class="btn btn-sm btn-outline-primary" name = "exportButton" value=Export">exportar</button>
+                </form>
                 <%} %>
             </div>
 
@@ -441,7 +469,6 @@ dataHorarios = databaseQuery.getHorario();
     </div>
   </div>
 </div>
-
 <%} %>
 
 <!-- bad account -->
@@ -680,6 +707,31 @@ for (Registro registro : dataRegistros){
     </div>
   </div>
 </div>
+
+<%if (exportButton != null){ %>
+<!-- Successful register -->
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos exportados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Los registros han sido exportados exitosamente</p>
+		<form action="<%=URLXLS%>" method="post" target="_blank">
+			<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar Excel</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%} %>
 
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>

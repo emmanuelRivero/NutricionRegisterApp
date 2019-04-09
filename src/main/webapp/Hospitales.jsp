@@ -84,7 +84,6 @@
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nuevoModal">Nuevo</a>
                 <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#importModal">Importar</a>
-                <a class="btn btn-sm btn-outline-secondary">exportar</a>
             </div>
         </div>
         <%} %>
