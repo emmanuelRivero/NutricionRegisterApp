@@ -509,7 +509,7 @@ dataHorarios = databaseQuery.getHorario();
       <div class="modal-body">
         <p>El alumno <%=alumnoRegistrado.getNombres()%> <%=alumnoRegistrado.getApellidoPaterno()%> <%=alumnoRegistrado.getApellidoMaterno()%> con cuenta <%=alumnoRegistrado.getCuenta() %> fue registrado exitosamente </p>
 		<form action="<%=URLPD%>" method="post" target="_blank">
-			<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Formato PDF</button>
+			<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar Hoja de registro</button>
 		</form>
       </div>
       <div class="modal-footer">
@@ -787,7 +787,7 @@ for (Registro registro : dataRegistros){
 <%} %>
 
 <%if (printButton != null){ %>
-<!-- Successful register -->
+<!-- ´print button -->
 <div class="modal fade" id="printModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
