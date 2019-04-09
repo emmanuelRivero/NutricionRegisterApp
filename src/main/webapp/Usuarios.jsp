@@ -25,6 +25,9 @@
 	// catch new request form
 	String newButton = request.getParameter("newButton");
 	if (newButton != null){
+		
+		boolean updated = true;
+		
 		String usuario = request.getParameter("usuario");
 		String nombres = request.getParameter("nombre");
 		String apellidoPaterno = request.getParameter("apellidoPaterno");
@@ -36,7 +39,7 @@
 		String password2 = request.getParameter("password2");
 		
 		if (password.equals(password2)){
-			databaseInsert.usuario(usuario, nombres, apellidoPaterno, apellidoMaterno, telefono, domicilio, password, rol);
+			updated = databaseInsert.usuario(usuario, nombres, apellidoPaterno, apellidoMaterno, telefono, domicilio, password, rol);
 		} else {
 			%>
 			<script type="text/javascript">
@@ -46,6 +49,16 @@
 			</script>	
 			<%
 		}
+		if (updated == false){
+			%>
+			<script type="text/javascript">
+				document.addEventListener("DOMContentLoaded", function() {
+				$('#badUsername').modal('show');
+				});
+			</script>	
+			<%
+		}
+		
 	}
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
@@ -61,6 +74,14 @@
 		databaseUpdate.Usuario(usuarioID, nombres, apellidoPaterno, apellidoMaterno, telefono, domicilio, rol);	
 	}
 
+	// catch delete request form
+	String deleteButton = request.getParameter("deleteButton");
+	if (deleteButton != null){
+		String usuariosID = request.getParameter("id");
+		
+		databaseDelete.Usuario(usuariosID);
+	}
+	
 	// catch password request form
 	String passwordButton = request.getParameter("passwordButton");
 	if (passwordButton != null){
@@ -82,6 +103,8 @@
 			<%
 		}
 	}
+	
+	
 	
 	ArrayList<Usuario> data;
 	data = databaseQuery.getUsuario();
@@ -129,7 +152,7 @@
       	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=usuario.getId()%>">Modificar</button>
       		<button type="button" class="btn btn-outline-primary btn-sm" onclick="setPasswordID(<%=usuario.getId()%>)">Reinicar contraseña</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=usuario.getId()%>)">Eliminar</button>
       	</div>
       </td>
     </tr>
@@ -292,7 +315,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary" name="passwordButton" value="Nuevo">Nuevo</button>
+        <button type="submit" class="btn btn-primary" name="passwordButton" value="Nuevo">Actualizar</button>
       </div>
       </form>
     </div>
@@ -319,6 +342,51 @@
   </div>
 </div>
 
+<!-- bad password-->
+<div class="modal fade" id="badUsername" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">No se pudo crear usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>El nombre de usuario ya ha sido registrado.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Usuarios.jsp" method="post">
+      	<input type="hidden" id="deleteID" name="id" value="">
+      <div class="modal-body">
+        <p>¿Seguro que desea eliminar este registro?</p>
+        <p>Ya no podra recuperar su información.</p>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger" name="deleteButton" value="Delete">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
@@ -333,6 +401,11 @@ $(document).ready(function() {
 function setPasswordID(ID){
 	document.getElementById('passwordID').value=ID;
 	$('#passwordModal').modal('show');
+}
+
+function setDeleteID(ID){
+	document.getElementById('deleteID').value=ID;
+	$('#deleteModal').modal('show');
 }
 </script>
 <%}%>

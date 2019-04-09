@@ -43,7 +43,7 @@ if (newButton != null){
 	String horarioId = request.getParameter("horario");
 	
 	boolean valGrupo = databaseValidate.grupoInsert(grupoId);
-	boolean valCuenta = databaseValidate.cuentaExist(cuenta, sessioncicloID);
+	boolean valCuenta = databaseValidate.cuentaExist(cuenta);
 	boolean valCuentaReg = databaseValidate.cuentaRegistered(cuenta, sessioncicloID);
 	
 	if (valCuenta == true && valGrupo == true && valCuentaReg == false){
@@ -213,6 +213,13 @@ if (updateButton2 != null){
 	databaseUpdate.Registro(cuenta, sessioncicloID, email, telefono, emergencia, telfam, historial, cartilla, fotos, seguro, horario);
 }
 
+//catch delete request form
+String deleteButton = request.getParameter("deleteButton");
+if (deleteButton != null){
+	String registroID = request.getParameter("id");
+		
+	databaseDelete.Registro(registroID);
+}
 
 ArrayList<Registro> dataRegistros;
 dataRegistros = databaseQuery.getRegistros(sessioncicloID);
@@ -281,13 +288,9 @@ dataHorarios = databaseQuery.getHorario();
 			    </ul>
   			</div>
       		
-      		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=registro.getId()%>>Eliminar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=registro.getId()%>)">Eliminar</button>
       	</div>
       <%} else {%>
-      	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<button type="button" class="btn btn-outline-primary btn-sm" disabled>Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" disabled>Eliminar</button>
-      	</div>
       <%} %>
       </td>
     </tr>
@@ -315,12 +318,14 @@ dataHorarios = databaseQuery.getHorario();
     	</div>
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Grupo</label>
-    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo" onclick="setLugares(this.value)">
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo" onchange="setLugares(this)">
     		    <option>Selecciona un grupo</option>
-    			<%for (Grupo grupo : dataGrupos){ 
+    			<%
+    			for (Grupo grupo : dataGrupos){ 
     			%>
       				<option value="<%=grupo.getId()%>"><%=grupo.getNombre()%></option>
-      			<%	}%>
+      			<%	
+    			}%>
     		</select>
     	<label for="exampleFormControlInput1" id="lugaresRestantes" style="padding-left: 10px; font-size: 15px;">Lugares restantes:</label>
     	</div>
@@ -519,7 +524,7 @@ for (Registro registro : dataRegistros){
       <div class="modal-body">
      	 <div class="form-group">
     		<label for="exampleFormControlInput1">Grupo</label>
-    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo" onclick="setLugaresID(this.value, <%=registro.getId()%>)">
+    		<select class="form-control form-control-sm" id="exampleFormControlSelect1" name="grupo" onchange="setLugaresID(this,<%=registro.getId()%>)">
     		    <option>Selecciona un grupo</option>
     			<%for (Grupo grupo : dataGrupos){ 
     				if (grupo.getId() == registro.getGrupoID()){
@@ -651,6 +656,30 @@ for (Registro registro : dataRegistros){
 }
 %>
 
+<!-- Delete modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Registros.jsp" method="post">
+      	<input type="hidden" id="deleteID" name="id" value="">
+      <div class="modal-body">
+        <p>¿Seguro que desea eliminar este registro?</p>
+        <p>Ya no podra recuperar su información.</p>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger" name="deleteButton" value="Delete">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
@@ -665,6 +694,7 @@ $(document).ready(function() {
 
 function setLugares(value){
 	console.log(value);
+	o = value.selectedIndex
 	var lugares = [ 
 		<%Iterator<Grupo> grupoIterator = dataGrupos.iterator(); 
 		while (grupoIterator.hasNext()){
@@ -680,12 +710,13 @@ function setLugares(value){
 	if (value.length >= 17){
 		t.textContent = "Lugares restantes: "
 	}else{
-		t.textContent = "Lugares restantes: " + lugares[value - 1];
+		t.textContent = "Lugares restantes: " + lugares[o - 1];
 	}
 } 
 
 function setLugaresID(value,modalID){
 	console.log(value);
+	o = value.selectedIndex
 	var lugares = [ 
 		<%grupoIterator = dataGrupos.iterator(); 
 		while (grupoIterator.hasNext()){
@@ -693,7 +724,7 @@ function setLugaresID(value,modalID){
 			if (grupoIterator.hasNext()){
 				%>"<%=current.getLugares()%>",<%
 			}else{
-				%>" <%=current.getLugares()%>"<%
+				%>"<%=current.getLugares()%>"<%
 			}
 		}%>
 	];
@@ -702,9 +733,14 @@ function setLugaresID(value,modalID){
 	if (value.length >= 17){
 		t.textContent = "Lugares restantes: "
 	}else{
-		t.textContent = "Lugares restantes: " + lugares[value - 1];
+		t.textContent = "Lugares restantes: " + lugares[o - 1];
 	}
 } 
+
+function setDeleteID(ID){
+	document.getElementById('deleteID').value=ID;
+	$('#deleteModal').modal('show');
+}
 </script>
 </body>
 </html>

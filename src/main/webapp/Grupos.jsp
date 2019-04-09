@@ -34,7 +34,7 @@
 		System.out.println("id: " +hospital);
 		
 		databaseInsert.grupo(nombre, sessioncicloID, hospital, capacidad);
-	};
+	}
 	// catch update request form
 	String updateButton = request.getParameter("updateButton");
 	if (updateButton != null){
@@ -44,7 +44,15 @@
 		String capacidad = request.getParameter("capacidad");
 		
 		databaseUpdate.Grupo(id, nombre, hospitalID, capacidad);
-	};
+	}
+	
+	// catch delete request form
+	String deleteButton = request.getParameter("deleteButton");
+	if (deleteButton != null){
+		String grupoID = request.getParameter("id");
+		
+		databaseDelete.Grupo(grupoID);
+	}
 	
 	ArrayList<Grupo> data;
 	data = databaseQuery.getGrupo(sessioncicloID);
@@ -103,7 +111,7 @@
       <%if (sessionRol.equals("admin")) {%>
       	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=grupo.getId()%>">Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
+      		<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=grupo.getId()%>)">Eliminar</button>
       	</div>
       <%} else {%>
       <%} %>
@@ -206,6 +214,30 @@ for (Grupo grupo : data){ %>
 }
 %>
 
+<!-- Delete modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Grupos.jsp" method="post">
+      	<input type="hidden" id="deleteID" name="id" value="">
+      <div class="modal-body">
+        <p>¿Seguro que desea eliminar este registro?</p>
+        <p>Ya no podra recuperar su información.</p>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger" name="deleteButton" value="Delete">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
@@ -217,6 +249,11 @@ for (Grupo grupo : data){ %>
 $(document).ready(function() {
     $('#mainTable').DataTable();
 } );
+
+function setDeleteID(ID){
+	document.getElementById('deleteID').value=ID;
+	$('#deleteModal').modal('show');
+}
 </script>
 </body>
 </html>

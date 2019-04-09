@@ -184,8 +184,8 @@ public class databaseQuery {
 				"join hospital as h " + 
 				"ON h.hospital_id=g.hospital_id " + 
 				"left join registro as r " +
-				"on g.grupo_id = r.grupo_id " +
-				"where g.ciclo_id=1 AND g.active = 1 " +
+				"on g.grupo_id = r.grupo_id AND r.active=1 " +
+				"where g.ciclo_id="+cicloID+" AND g.active = 1 " +
 				"group by g.grupo_id, g.nombre, g.hospital_id, h.nombre, g.capacidad, g.ciclo_id;";
 		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
 		databaseData nutricionDB = new databaseData();

@@ -53,7 +53,9 @@
 		String sexo = request.getParameter("sexo");
 		
 		databaseUpdate.Alumno(cuenta, nombres, apellidoPaterno, apellidoMaterno, carrera, descCarrera, sexo);
-	};
+	}
+	
+	
 	if (sessionImportResult != null){
 		if (sessionImportResult.equals("Success")){
 			request.getSession().removeAttribute("importResult");
@@ -69,7 +71,7 @@
 	
 	
 	ArrayList<Alumno> data;
-	data = databaseQuery.getAlumno(sessioncicloID);
+	data = databaseQuery.getAlumno();
 	%>
 	
 <header>
@@ -125,7 +127,6 @@
       <%if (sessionRol.equals("admin")) {%>
       	<div class="btn-group mr-2" role="group" aria-label="First group">
       		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=alumno.getCuenta()%>">Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" id=<%=alumno.getCuenta()%>>Eliminar</button>
       	</div>
       <%} else {%>
       <%} %>
@@ -237,7 +238,6 @@
 </div>
 
 <!-- update modals -->
-
 <% 
 if (sessionRol.equals("admin")){
 for (Alumno alumno : data){ %>
@@ -314,6 +314,7 @@ for (Alumno alumno : data){ %>
 $(document).ready(function() {
     $('#mainTable').DataTable();
 } );
+
 </script>
 </body>
 </html>

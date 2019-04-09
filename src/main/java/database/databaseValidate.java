@@ -76,8 +76,8 @@ public class databaseValidate {
 		}
 	}
 	
-	public static boolean cuentaExist(String cuenta, String cicloID) {
-		String query = "select cuenta from alumno where cuenta="+cuenta+" AND ciclo_id="+cicloID+";";
+	public static boolean cuentaExist(String cuenta) {
+		String query = "select cuenta from alumno where cuenta="+cuenta+" AND active=1;";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
@@ -131,7 +131,7 @@ public class databaseValidate {
 	}
 	
 	public static boolean cuentaRegistered(String cuenta, String cicloId) {
-		String query = "select cuenta from registro where cuenta="+cuenta+" AND ciclo_id="+cicloId+";";
+		String query = "select cuenta from registro where cuenta="+cuenta+" AND ciclo_id="+cicloId+" AND active=1;";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
