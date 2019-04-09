@@ -348,7 +348,7 @@ public class databaseQuery {
 	
 	//Registros
 	public static ArrayList<Registro> getRegistros(String cicloID) {
-		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id, " + 
+		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, r.fecha_practica, g.nombre, h.hospital_id, h.nombre, h.domicilio, r.ciclo_id, " + 
 				"r.email, r.telefono, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
 				"from registro AS r " + 
 				"JOIN alumno as a " + 
@@ -395,8 +395,10 @@ public class databaseQuery {
 				registro.setGrupo(rs.getString("g.nombre"));
 				registro.setHospitalID(rs.getInt("h.hospital_id"));
 				registro.setHospital(rs.getString("h.nombre"));
+				registro.setHospitalDom(rs.getString("h.domicilio"));
 				registro.setCicloID(rs.getInt("r.ciclo_id"));
-				
+
+				registro.setFechaPractica(rs.getString("r.fecha_practica"));
 				registro.setEmail(rs.getString("r.email"));
 				registro.setTelefono(rs.getString("r.telefono"));
 				registro.setEmergencia(rs.getString("r.emergencia"));
@@ -430,7 +432,7 @@ public class databaseQuery {
 	}
 
 	public static Registro getRegistros(String cicloID, String cuenta) {
-		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, g.nombre, h.hospital_id, h.nombre, r.ciclo_id, " + 
+		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, r.fecha_practica, g.nombre, h.hospital_id, h.nombre, h.domicilio, r.ciclo_id, " + 
 				"r.email, r.telefono, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
 				"from registro AS r " + 
 				"JOIN alumno as a " + 
@@ -475,8 +477,10 @@ public class databaseQuery {
 				registro.setGrupo(rs.getString("g.nombre"));
 				registro.setHospitalID(rs.getInt("h.hospital_id"));
 				registro.setHospital(rs.getString("h.nombre"));
+				registro.setHospitalDom(rs.getString("h.domicilio"));
 				registro.setCicloID(rs.getInt("r.ciclo_id"));
 				
+				registro.setFechaPractica(rs.getString("r.fecha_practica"));
 				registro.setEmail(rs.getString("r.email"));
 				registro.setTelefono(rs.getString("r.telefono"));
 				registro.setEmergencia(rs.getString("r.emergencia"));

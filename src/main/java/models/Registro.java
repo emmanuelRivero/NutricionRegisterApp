@@ -12,7 +12,9 @@ public class Registro {
 	private String grupo;
 	private int hospitalID;	
 	private String hospital;
+	private String hospitalDom;	
 	private int cicloID;
+	private String FechaPractica;
 	private String email;
 	private String telefono;
 	private String emergencia;
@@ -23,7 +25,18 @@ public class Registro {
 	private int seguro;
 	private int horario2;
 	
-	
+	public String getHospitalDom() {
+		return hospitalDom;
+	}
+	public void setHospitalDom(String hospitalDom) {
+		this.hospitalDom = hospitalDom;
+	}
+	public String getFechaPractica() {
+		return FechaPractica;
+	}
+	public void setFechaPractica(String fechaPractica) {
+		FechaPractica = fechaPractica;
+	}
 	public String getEmail() {
 		return email;
 	}

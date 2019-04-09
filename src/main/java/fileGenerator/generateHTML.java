@@ -15,14 +15,53 @@ public class generateHTML {
 		
 		htmlString = htmlString.replace("$cuenta", String.valueOf(registro.getCuenta()));
 		htmlString = htmlString.replace("$alumno", registro.getNombres() + " " + registro.getApellidoPaterno() + " " + registro.getApellidoMaterno());
-		htmlString = htmlString.replace("$eMail", registro.getEmail());
-		htmlString = htmlString.replace("$telefono", registro.getTelefono());
-		htmlString = htmlString.replace("$emergencia", registro.getEmergencia());
-		htmlString = htmlString.replace("$emeTelefono", registro.getTelfam());
-		htmlString = htmlString.replace("$fechaPractica", "TDL");
-		htmlString = htmlString.replace("$hospital", registro.getHospital());
-		htmlString = htmlString.replace("$horario", registro.getHorario());
-		htmlString = htmlString.replace("$direccion", "TDL");
+		if (registro.getEmail()!= null && !registro.getEmail().isEmpty()) {
+			htmlString = htmlString.replace("$eMail", registro.getEmail());
+		} else {
+			htmlString = htmlString.replace("$eMail", "");
+		}
+		
+		if (registro.getTelefono()!= null && !registro.getTelefono().isEmpty()) {
+			htmlString = htmlString.replace("$telefono", registro.getTelefono());
+		} else {
+			htmlString = htmlString.replace("$telefono", "");
+		}
+		
+		if (registro.getEmergencia()!= null && !registro.getEmergencia().isEmpty()) {
+			htmlString = htmlString.replace("$emergencia", registro.getEmergencia());
+		} else {
+			htmlString = htmlString.replace("$emergencia", "");
+		}
+
+		if (registro.getTelfam()!= null && !registro.getTelfam().isEmpty()) {
+			htmlString = htmlString.replace("$emeTelefono", registro.getTelfam());
+		} else {
+			htmlString = htmlString.replace("$emeTelefono", "");
+		}
+		
+		if (registro.getFechaPractica()!= null && !registro.getFechaPractica().isEmpty()) {			
+			htmlString = htmlString.replace("$fechaPractica", registro.getFechaPractica());
+		} else {
+			htmlString = htmlString.replace("$fechaPractica", "");
+		}
+
+		if (registro.getHospital()!= null && !registro.getHospital().isEmpty()) {			
+			htmlString = htmlString.replace("$hospital", registro.getHospital());
+		} else {
+			htmlString = htmlString.replace("$hospital", "");
+		}
+		
+		if (registro.getHorario()!= null && !registro.getHorario().isEmpty()) {	
+			htmlString = htmlString.replace("$horario", registro.getHorario());
+		} else {
+			htmlString = htmlString.replace("$horario", "");
+		}
+		
+		if (registro.getHorario()!= null && !registro.getHorario().isEmpty()) {
+			htmlString = htmlString.replace("$direccion", registro.getHospitalDom());
+		} else {
+			htmlString = htmlString.replace("$direccion", "");
+		}
 		
 		File newHtmlFile = new File(HTMLoutput);
 		FileUtils.writeStringToFile(newHtmlFile, htmlString);

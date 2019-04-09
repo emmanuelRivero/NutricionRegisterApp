@@ -242,9 +242,9 @@ public class databaseUpdate {
 		return status;
 	}
 
-	public static boolean Registro(String cuenta, String cicloID, String email,String telefono, String emergencia, String telfam, String historial, String cartilla, String fotos, String seguro, String horario) {
+	public static boolean Registro(String cuenta, String cicloID, String email,String telefono, String emergencia, String telfam, String historial, String cartilla, String fotos, String seguro, String horario, String fechaPractica) {
 		
-		String query = "update registro SET email='"+email+"', telefono='"+telefono+"', emergencia='"+emergencia+"', telfam='"+telfam+"', historial="+historial+",cartilla="+cartilla+",fotos="+fotos+",seguro="+seguro+",horario="+horario+" where cuenta="+cuenta+" AND ciclo_id="+cicloID+";";
+		String query = "update registro SET email='"+email+"', telefono='"+telefono+"', emergencia='"+emergencia+"', telfam='"+telfam+"', historial="+historial+",cartilla="+cartilla+",fotos="+fotos+",seguro="+seguro+",horario="+horario+", fecha_practica='"+fechaPractica+"' where cuenta="+cuenta+" AND ciclo_id="+cicloID+";";
 		databaseData nutricionDB = new databaseData();
 		
 		String dbIP = nutricionDB.getDbIP();
