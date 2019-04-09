@@ -27,6 +27,7 @@
 <%@page import="database.login" %>
 <%@page import="database.databaseQuery" %>
 <%@page import="database.databaseInsert" %>
+<%@page import="database.*" %>
 <%@page import="models.Session" %>
 <%@page import="models.Ciclo" %>
 <%@page import="java.util.ArrayList" %>

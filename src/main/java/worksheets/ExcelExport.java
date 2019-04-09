@@ -13,6 +13,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 
 import database.databaseQuery;
 
@@ -108,7 +110,7 @@ public class ExcelExport {
         	String documentosString = "";
         	
         	if (registro.getHistorial() == 0) {
-        		documentosString = documentosString + "Historial academico";
+        		documentosString = documentosString + "Historial académico";
         	}
         	
         	if (registro.getCartilla() == 0) {
@@ -138,9 +140,15 @@ public class ExcelExport {
         		}
         		documentosString = documentosString + "Horario de la materia de práctica clínica";
         	}
-        	        	
+        	//documentosString = URLEncoder.encode(documentosString, "UTF-8");
+        	
+        	//String documentosANSI = new String(documentosString.getBytes(Charset.forName("ISO-8859-1")));
+        	Charset iso88591charset = Charset.forName("ISO-8859-1");
+        	byte[] documentosISObyte = documentosString.getBytes(iso88591charset);
+        	String documentosISO = new String (documentosISObyte,iso88591charset);
+        	
         	Cell documentos = data.createCell(10);    
-        	documentos.setCellValue(documentosString);
+        	documentos.setCellValue(documentosISO);
         	sheet.autoSizeColumn(10);
         }
         
