@@ -110,14 +110,14 @@ public class ExcelExport {
         	String documentosString = "";
         	
         	if (registro.getHistorial() == 0) {
-        		documentosString = documentosString + "Historial académico";
+        		documentosString = documentosString + "Historial academico";
         	}
         	
         	if (registro.getCartilla() == 0) {
         		if (documentosString.length() > 0) {
         			documentosString = documentosString + ", ";
         		}
-        		documentosString = documentosString + "Cartilla de vacunación";
+        		documentosString = documentosString + "Cartilla de vacunacion";
         	}
         	
         	if (registro.getFotos() == 0) {
@@ -131,14 +131,14 @@ public class ExcelExport {
         		if (documentosString.length() > 0) {
         			documentosString = documentosString + ", ";
         		}
-        		documentosString = documentosString + "Seguro médico";
+        		documentosString = documentosString + "Seguro medico";
         	}
         	
         	if (registro.getHorario2() == 0) {
         		if (documentosString.length() > 0) {
         			documentosString = documentosString + ", ";
         		}
-        		documentosString = documentosString + "Horario de la materia de práctica clínica";
+        		documentosString = documentosString + "Horario de la materia de practica clinica";
         	}
         	//documentosString = URLEncoder.encode(documentosString, "UTF-8");
         	
@@ -147,13 +147,13 @@ public class ExcelExport {
         	//byte[] documentosISObyte = documentosString.getBytes(iso88591charset);
         	//String documentosISO = new String (documentosISObyte,iso88591charset);
         	
-        	Charset utf8charset = Charset.forName("UTF-8");
-        	byte[] documentosUTFbyte = documentosString.getBytes(utf8charset);
-        	String documentosUTF = new String (documentosUTFbyte,utf8charset);
+        	//Charset utf8charset = Charset.forName("UTF-8");
+        	//byte[] documentosUTFbyte = documentosString.getBytes(utf8charset);
+        	//String documentosUTF = new String (documentosUTFbyte,utf8charset);
          	
         	
         	Cell documentos = data.createCell(10);    
-        	documentos.setCellValue(documentosUTF);
+        	documentos.setCellValue(documentosString);
         	sheet.autoSizeColumn(10);
         }
         
