@@ -1,4 +1,5 @@
 .box img {
     width: auto;
     height: 42px;
+    float: right;
 }
