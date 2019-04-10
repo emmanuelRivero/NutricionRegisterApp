@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<title>nutricion V0.9</title>
+<title>nutricion V0.9.5</title>
 </head>
 <body>
 <!-- 
@@ -271,7 +271,7 @@ if (sesion == null){
     </div>
   </div>
 </div>
-<div id="version" style="text-align: right; font-size: 8px; display: none">versión 0.9</div>
+<div id="version" style="text-align: right; font-size: 8px; display: none">versión 0.9.5</div>
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
