@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 <title>Nutrición V0.9</title>
 </head>
 <body>
@@ -116,11 +117,11 @@ if (sesion == null){
   </li>
   <li class="nav-item">
     <a class="nav-link active" id="registros-tab" data-toggle="tab" href="#nav-registros" role="tab" aria-controls="registros" aria-selected="true"
-        data-toggle="tooltip" data-placement="bottom" title="Gestionar asignaciÃ³n de prÃ¡cticas clÃ­nicas"><i class='fas fa-address-card'></i><span> Registros</span></a>
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar asignación de prácticas clínicas"><i class='fas fa-address-card'></i><span> Registros</span></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#nav-alumnos" role="tab" aria-controls="alumnos" aria-selected="false"
-        data-toggle="tooltip" data-placement="bottom" title="Gestionar datos bÃ¡sicos de alumnos"><i class='fas fa-user-md'></i><span> Alumnos</span></a>
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar datos básicos de alumnos"><i class='fas fa-user-md'></i><span> Alumnos</span></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="horarios-tab" data-toggle="tab" href="#nav-horarios" role="tab" aria-controls="horarios" aria-selected="false"
@@ -128,7 +129,7 @@ if (sesion == null){
   </li>
   <li class="nav-item">
     <a class="nav-link" id="grupos-tab" data-toggle="tab" href="#nav-grupos" role="tab" aria-controls="grupos" aria-selected="false"
-        data-toggle="tooltip" data-placement="bottom" title="Gestionar la relaciÃ³n de hospitales-plazas"><i class='fas fa-users'></i><span> Grupos</span></a>
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar la relación de hospitales-plazas"><i class='fas fa-users'></i><span> Grupos</span></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="hospitales-tab" data-toggle="tab" href="#nav-hospitales" role="tab" aria-controls="hospitales" aria-selected="false"
