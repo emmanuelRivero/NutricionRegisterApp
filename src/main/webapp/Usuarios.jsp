@@ -124,40 +124,46 @@
     </div>
 </header>
 
-<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Usuario</th>
-      <th class="th-sm">Nombres</th>
-      <th class="th-sm">Apellido paterno</th>
-      <th class="th-sm">Apellido materno</th>
-      <th class="th-sm">Telefono</th>
-      <th class="th-sm">Domicilio</th>
-      <th class="th-sm">Rol</th>   
-      <th class="th-sm"></th>            
-    </tr>
-  </thead>
-  <tbody>
-  <% for (Usuario usuario : data){%>
-    <tr>
-      <td><%=usuario.getUserName() %></td>
-      <td><%=usuario.getNombres() %></td>
-      <td><%=usuario.getApellidoPaterno() %></td>
-      <td><%=usuario.getApellidoMaterno() %></td>
-      <td><%=usuario.getTelefono() %></td>
-      <td><%=usuario.getDomicilio() %></td>
-      <td><%=usuario.getRol() %></td>
-      <td align="right">
-      	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=usuario.getId()%>">Modificar</button>
-      		<button type="button" class="btn btn-outline-primary btn-sm" onclick="setPasswordID(<%=usuario.getId()%>)">Reinicar contraseña</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=usuario.getId()%>)">Eliminar</button>
-      	</div>
-      </td>
-    </tr>
-    <%}%>
-  </tbody>
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				  <th class="th-sm">Usuario</th>
+				  <th class="th-sm">Nombres</th>
+				  <th class="th-sm">Apellido paterno</th>
+				  <th class="th-sm">Apellido materno</th>
+				  <th class="th-sm">Telefono</th>
+				  <th class="th-sm">Domicilio</th>
+				  <th class="th-sm">Rol</th>   
+				  <th class="th-sm"></th>            
+				</tr>
+			  </thead>
+			  <tbody>
+			  <% for (Usuario usuario : data){%>
+				<tr>
+				  <td><%=usuario.getUserName() %></td>
+				  <td><%=usuario.getNombres() %></td>
+				  <td><%=usuario.getApellidoPaterno() %></td>
+				  <td><%=usuario.getApellidoMaterno() %></td>
+				  <td><%=usuario.getTelefono() %></td>
+				  <td><%=usuario.getDomicilio() %></td>
+				  <td><%=usuario.getRol() %></td>
+				  <td align="right">
+      				<div class="btn-group mr-2" role="group" aria-label="First group">
+      					<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=usuario.getId()%>">Modificar</button>
+      					<button type="button" class="btn btn-outline-primary btn-sm" onclick="setPasswordID(<%=usuario.getId()%>)">Reinicar contraseña</button>
+      					<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=usuario.getId()%>)">Eliminar</button>
+      				</div>
+				  </td>
+				</tr>
+				<%}%>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
 <!-- Modal Nuevo-->
 <div class="modal fade" id="nuevoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

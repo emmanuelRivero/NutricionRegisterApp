@@ -325,57 +325,63 @@ dataHorarios = databaseQuery.getHorario();
 </header>
 
 <br>
-<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Cuenta</th>
-      <th class="th-sm">Nombres</th>
-      <th class="th-sm">Apellido paterno</th>
-      <th class="th-sm">Apellido materno</th>
-	  <th class="th-sm">Horario</th>
-      <th class="th-sm">Hospital</th>
-      <th class="th-sm">Grupo</th>
-      <th class="th-sm"></th>        
-    </tr>
-  </thead>
-  <tbody>
-  <% for (Registro registro : dataRegistros){%>
-    <tr>
-	  <td><%=registro.getCuenta()%></td>
-	  <td><%=registro.getNombres()%></td>
-	  <td><%=registro.getApellidoPaterno()%></td>
-	  <td><%=registro.getApellidoMaterno()%></td>
-	  <td><%=registro.getHorario()%></td>
-	  <td><%=registro.getHospital()%></td>
-	  <td><%=registro.getGrupo()%></td>
-      <td align="right">
-      <%if (sessionRol.equals("admin")) {%>
-      	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<!-- <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=registro.getId()%>">Modificar</button> -->
-      		<div class="dropdown">
-			    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Opciones
-			    <span class="caret"></span></button>
-			    <ul class="dropdown-menu">
-				      <li><button type="submit"class="dropdown-item" data-toggle="modal" data-target="#modificarModal<%=registro.getId()%>">Modificar Grupo</button>
-				      <li><button type="submit"class="dropdown-item" data-toggle="modal" data-target="#modificarModal2<%=registro.getId()%>">Modificar Datos</button></li>			      
-				      <li>
-				      	<form action="Registros.jsp" method="post">
-				      		<button type="submit"class="dropdown-item" name = "printButton" value="<%=registro.getCuenta()%>">Imprimir registro</button>
-				      	</form>
-				      </li>	      
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				  <th class="th-sm">Cuenta</th>
+				  <th class="th-sm">Nombres</th>
+				  <th class="th-sm">Apellido paterno</th>
+				  <th class="th-sm">Apellido materno</th>
+				  <th class="th-sm">Horario</th>
+				  <th class="th-sm">Hospital</th>
+				  <th class="th-sm">Grupo</th>
+				  <th class="th-sm"></th>        
+				</tr>
+			  </thead>
+			  <tbody>
+			  <% for (Registro registro : dataRegistros){%>
+				<tr>
+				  <td><%=registro.getCuenta()%></td>
+				  <td><%=registro.getNombres()%></td>
+				  <td><%=registro.getApellidoPaterno()%></td>
+				  <td><%=registro.getApellidoMaterno()%></td>
+				  <td><%=registro.getHorario()%></td>
+				  <td><%=registro.getHospital()%></td>
+				  <td><%=registro.getGrupo()%></td>
+				  <td align="right">
+				  <%if (sessionRol.equals("admin")) {%>
+      				<div class="btn-group mr-2" role="group" aria-label="First group">
+      					<!-- <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=registro.getId()%>">Modificar</button> -->
+      					<div class="dropdown">
+							<button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Opciones
+							<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								  <li><button type="submit"class="dropdown-item" data-toggle="modal" data-target="#modificarModal<%=registro.getId()%>">Modificar Grupo</button>
+								  <li><button type="submit"class="dropdown-item" data-toggle="modal" data-target="#modificarModal2<%=registro.getId()%>">Modificar Datos</button></li>			      
+								  <li>
+				      				<form action="Registros.jsp" method="post">
+				      					<button type="submit"class="dropdown-item" name = "printButton" value="<%=registro.getCuenta()%>">Imprimir registro</button>
+				      				</form>
+								  </li>	      
 			    	  
-			    </ul>
-  			</div>
+							</ul>
+  						</div>
       		
-      		<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=registro.getId()%>)">Eliminar</button>
-      	</div>
-      <%} else {%>
-      <%} %>
-      </td>
-    </tr>
-    <%}%>
-  </tbody>
-</table>
+      					<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=registro.getId()%>)">Eliminar</button>
+      				</div>
+				  <%} else {%>
+				  <%} %>
+				  </td>
+				</tr>
+				<%}%>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
 
 

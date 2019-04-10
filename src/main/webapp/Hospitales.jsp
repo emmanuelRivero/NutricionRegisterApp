@@ -100,37 +100,43 @@
 </div>-->
 
 <br>
-<div class="table-responsive">
-<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Hospital</th>
-      <th class="th-sm">Horario</th>
-      <th class="th-sm">Periodo</th>
-      <th class="th-sm">Domicilio</th>   
-      <th class="th-sm"></th>        
-    </tr>
-  </thead>
-  <tbody>
-  <% for (Hospital hospital : data){%>
-    <tr>
-      <td><%=hospital.getNombre()%></td>
-      <td><%=hospital.getHorario()%></td>
-      <td><%=hospital.getPeriodo()%></td>
-      <td><%=hospital.getDomiclio()%></td>
-      <td align="right">
-      <%if (sessionRol.equals("admin")) {%>
-      	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=hospital.getId()%>">Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=hospital.getId()%>)">Eliminar</button>
-      	</div>
-      <%} else {%>
-      <%} %>
-      </td>
-    </tr>
-    <%}%>
-  </tbody>
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-responsive">
+			<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				  <th class="th-sm">Hospital</th>
+				  <th class="th-sm">Horario</th>
+				  <th class="th-sm">Periodo</th>
+				  <th class="th-sm">Domicilio</th>   
+				  <th class="th-sm"></th>        
+				</tr>
+			  </thead>
+			  <tbody>
+			  <% for (Hospital hospital : data){%>
+				<tr>
+				  <td><%=hospital.getNombre()%></td>
+				  <td><%=hospital.getHorario()%></td>
+				  <td><%=hospital.getPeriodo()%></td>
+				  <td><%=hospital.getDomiclio()%></td>
+				  <td align="right">
+				  <%if (sessionRol.equals("admin")) {%>
+      				<div class="btn-group mr-2" role="group" aria-label="First group">
+      					<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=hospital.getId()%>">Modificar</button>
+      					<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=hospital.getId()%>)">Eliminar</button>
+      				</div>
+				  <%} else {%>
+				  <%} %>
+				  </td>
+				</tr>
+				<%}%>
+			  </tbody>
+			</table>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Modal Nuevo-->

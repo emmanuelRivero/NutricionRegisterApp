@@ -98,8 +98,9 @@
 </div>-->
 
 <br>
+<div class="container">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-12">
 			<div class="table-responsive">
 			<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
 			  <thead>
@@ -139,6 +140,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- Modal Nuevo-->
 <div class="modal fade" id="nuevoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

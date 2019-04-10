@@ -85,31 +85,37 @@
 </div>-->
 
 <br>
-<div class="table-responsive">
-<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Horario</th>
-      <th class="th-sm"></th>        
-    </tr>
-  </thead>
-  <tbody>
-  <% for (Horario horario: data){%>
-    <tr>
-      <td><%=horario.getHorario()%></td>     
-      <td align="right">
-	  <%if (sessionRol.equals("admin")) {%>
-      	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=horario.getId()%>">Modificar</button>
-      		<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=horario.getId()%>)">Eliminar</button>
-      	</div>
-      <%} else {%>
-      <%} %>
-      </td>
-    </tr>
-    <%}%>
-  </tbody>
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-responsive">
+			<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				  <th class="th-sm">Horario</th>
+				  <th class="th-sm"></th>        
+				</tr>
+			  </thead>
+			  <tbody>
+			  <% for (Horario horario: data){%>
+				<tr>
+				  <td><%=horario.getHorario()%></td>     
+				  <td align="right">
+				  <%if (sessionRol.equals("admin")) {%>
+      				<div class="btn-group mr-2" role="group" aria-label="First group">
+      					<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=horario.getId()%>">Modificar</button>
+      					<button type="button" class="btn btn-outline-danger btn-sm" onclick="setDeleteID(<%=horario.getId()%>)">Eliminar</button>
+      				</div>
+				  <%} else {%>
+				  <%} %>
+				  </td>
+				</tr>
+				<%}%>
+			  </tbody>
+			</table>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Modal Nuevo-->
