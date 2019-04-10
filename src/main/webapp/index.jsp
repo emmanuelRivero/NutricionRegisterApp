@@ -5,10 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<title>nutricion V0.9.5</title>
+<title>nutricion V0.9</title>
 </head>
 <body>
-<!-- 
+<!--
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-registros-tab" data-toggle="tab" href="#nav-registros" role="tab" aria-controls="nav-registros" aria-selected="true">Registros</a>
@@ -36,7 +36,7 @@
 String newButton = request.getParameter("newButton");
 if (newButton != null){
 	String nombre = request.getParameter("nombre");
-	
+
 	databaseInsert.ciclo(nombre);
 };
 
@@ -44,18 +44,18 @@ ArrayList<Ciclo> dataCiclos;
 dataCiclos = databaseQuery.getCiclo();
 
 
-String loginButton = request.getParameter("loginButton"); 
-String CicloButton = request.getParameter("CicloButton"); 
+String loginButton = request.getParameter("loginButton");
+String CicloButton = request.getParameter("CicloButton");
 if (loginButton != null){
 	String usuario = request.getParameter("usuario");
-	String contraseña = request.getParameter("contraseña");
+	String contraseï¿½a = request.getParameter("contraseï¿½a");
 	String formCicloID = request.getParameter("ciclo");
-	
+
 	Session nuevaSesion = new Session();
-	nuevaSesion = login.loginUser(usuario, contraseña);
+	nuevaSesion = login.loginUser(usuario, contraseï¿½a);
 	System.out.println(nuevaSesion.getUsername());
 	System.out.println(nuevaSesion.getRol());
-	
+
 	for (Ciclo ciclo : dataCiclos){
 		if (ciclo.getId().equals(formCicloID)){
 			session.setAttribute("usuarioCiclo", ciclo.getNombre());
@@ -67,8 +67,8 @@ if (loginButton != null){
 }
 
 if (CicloButton != null){
-	String formCicloID = request.getParameter("cicloId");	
-	String formCiclo = request.getParameter("CicloButton");	
+	String formCicloID = request.getParameter("cicloId");
+	String formCiclo = request.getParameter("CicloButton");
 	session.setAttribute("usuarioCicloID", formCicloID);
 	session.setAttribute("usuarioCiclo", formCiclo);
 }
@@ -107,45 +107,51 @@ if (sesion == null){
     <%for (Ciclo cicloBox : dataCiclos){ %>
       <form action="index.jsp" method="post">
       <input type="hidden" name="cicloId" value="<%=cicloBox.getId()%>">
-      	<button type="submit"class="dropdown-item" name="CicloButton" value="<%=cicloBox.getNombre()%>"><%=cicloBox.getNombre()%></button>
+      	<button type="submit"class="dropdown-item" name="CicloButton" value="<%=cicloBox.getNombre()%>"><i class='fas fa-book-medical'></i><span> <%=cicloBox.getNombre()%></button>
       </form>
       <%}%>
       <div class="dropdown-divider"></div>
-	  <a class="dropdown-item" href="#nuevoCicloModal" role="button" data-toggle="modal" rel="tooltip" data-original-title='Hello'>Nuevo ciclo</a>
+	  <a class="dropdown-item" href="#nuevoCicloModal" role="button" data-toggle="modal" rel="tooltip" data-original-title='Hello'><i class='fas fa-plus'></i><span> Nuevo ciclo</span></a>
     </div>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" id="registros-tab" data-toggle="tab" href="#nav-registros" role="tab" aria-controls="registros" aria-selected="true">Registros</a>
+    <a class="nav-link active" id="registros-tab" data-toggle="tab" href="#nav-registros" role="tab" aria-controls="registros" aria-selected="true"
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar asignaciÃ³n de prÃ¡cticas clÃ­nicas"><i class='fas fa-address-card'></i><span> Registros</span></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#nav-alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
+    <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#nav-alumnos" role="tab" aria-controls="alumnos" aria-selected="false"
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar datos bÃ¡sicos de alumnos"><i class='fas fa-user-md'></i><span> Alumnos</span></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="horarios-tab" data-toggle="tab" href="#nav-horarios" role="tab" aria-controls="horarios" aria-selected="false">Horarios</a>
+    <a class="nav-link" id="horarios-tab" data-toggle="tab" href="#nav-horarios" role="tab" aria-controls="horarios" aria-selected="false"
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar horarios para grupos"><i class='fas fa-clock'></i><span> Horarios</span></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="grupos-tab" data-toggle="tab" href="#nav-grupos" role="tab" aria-controls="grupos" aria-selected="false">Grupos</a>
+    <a class="nav-link" id="grupos-tab" data-toggle="tab" href="#nav-grupos" role="tab" aria-controls="grupos" aria-selected="false"
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar la relaciÃ³n de hospitales-plazas"><i class='fas fa-users'></i><span> Grupos</span></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="hospitales-tab" data-toggle="tab" href="#nav-hospitales" role="tab" aria-controls="hospitales" aria-selected="false">Hospitales</a>
+    <a class="nav-link" id="hospitales-tab" data-toggle="tab" href="#nav-hospitales" role="tab" aria-controls="hospitales" aria-selected="false"
+        data-toggle="tooltip" data-placement="bottom" title="Gestionar datos de hospitales"><i class='fas fa-hospital-alt'></i><span> Hospitales</span></a>
   </li>
    	<%if (rol != null){
   		if (rol.equals("admin")) {%>
-  		<!-- 
+  		<!--
     	<li class="nav-item">
     		<a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-ciclos" role="tab" aria-controls="ciclos" aria-selected="false">Ciclos</a>
  		</li>
  		 -->
     	<li class="nav-item">
-    		<a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-usuarios" role="tab" aria-controls="usuarios" aria-selected="false">Usuarios</a>
+    		<a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-usuarios" role="tab" aria-controls="usuarios" aria-selected="false"
+                data-toggle="tooltip" data-placement="bottom" title="Gestionar asignaciÃ³n de prÃ¡cticas clÃ­nicas"><i class='fas fa-user-cog'></i><span> Usuarios</span></a>
   		</li>
   <%	}
   	} %>
   <li class="nav-item">
-	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cuenta</a>
+	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class='fas fa-user-cog'></i><span> Cuenta</span></a>
     <div class="dropdown-menu">
       <form action="logout.jsp" method="post">
-      	<button type="submit"class="dropdown-item" name="logoutButton" value="logout">Cerrar sesión</button>
+      	<button type="submit"class="dropdown-item" name="logoutButton" value="logout">Cerrar sesiÃ³n</button>
       </form>
     </div>
   </li>
@@ -158,31 +164,31 @@ if (sesion == null){
   	<iframe class="embed-responsive-item" id="frame-registros" src="Registros.jsp" allowfullscreen></iframe>
 	</div>
   </div>
-	
+
   <div class="tab-pane fade" id="nav-alumnos" role="tabpanel" aria-labelledby="nav-alumnos-tab">
   <div class="embed-responsive embed-responsive-16by9">
   	<iframe class="embed-responsive-item" src="Alumnos.jsp" allowfullscreen></iframe>
 	</div>
   </div>
-  
+
   <div class="tab-pane fade" id="nav-horarios" role="tabpanel" aria-labelledby="nav-horarios-tab">
   <div class="embed-responsive embed-responsive-16by9">
   	<iframe class="embed-responsive-item" src="Horarios.jsp" allowfullscreen></iframe>
 	</div>
   </div>
-  
+
   <div class="tab-pane fade" id="nav-hospitales" role="tabpanel" aria-labelledby="nav-hospitales-tab">
   	<div class="embed-responsive embed-responsive-16by9">
   		<iframe class="embed-responsive-item" src="Hospitales.jsp" allowfullscreen></iframe>
 	</div>
   </div>
-  
+
   <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">
   	<div class="embed-responsive embed-responsive-16by9">
   		<iframe class="embed-responsive-item" id="frame-grupos" src="Grupos.jsp" allowfullscreen></iframe>
   	</div>
   </div>
- 
+
   <div class="tab-pane fade" id="nav-usuarios" role="tabpanel" aria-labelledby="nav-usuarios-tab">
   	<div class="embed-responsive embed-responsive-16by9">
   	<iframe class="embed-responsive-item" src="Usuarios.jsp" allowfullscreen></iframe>
@@ -210,8 +216,8 @@ if (sesion == null){
       </div>
       <div class="modal-body">
       	<div class="form-group">
-    		<label for="exampleFormControlInput1">Contraseña</label>
-    		<input class="form-control form-control-sm" type="password" placeholder="Contraseña" name="contraseña">
+    		<label for="exampleFormControlInput1">ContraseÃ±a</label>
+    		<input class="form-control form-control-sm" type="password" placeholder="ContraseÃ±a" name="contraseÃ±a">
     	</div>
       </div>
       <div class="modal-body">
@@ -271,20 +277,22 @@ if (sesion == null){
     </div>
   </div>
 </div>
-<div id="version" style="text-align: right; font-size: 8px; display: none">versión 0.9.5</div>
+<div id="version" style="text-align: right; font-size: 8px; display: none">versiÃ³n 0.9</div>
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $('#registros-tab').click(function() {
 	var frame = document.getElementById('frame-registros');
-	frame.src = "Loading.jsp?page=Registros.jsp";	
+	frame.src = "Loading.jsp?page=Registros.jsp";
 });
 $('#grupos-tab').click(function() {
 	var frame = document.getElementById('frame-grupos');
-	frame.src = "Loading.jsp?page=Grupos.jsp";	
+	frame.src = "Loading.jsp?page=Grupos.jsp";
 });
-
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
 	<%if (sesion != null){%>
 	$(document).ready(function() {
 		 $('#version').css({'display': 'block'});
