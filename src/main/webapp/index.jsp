@@ -103,7 +103,7 @@ if (sesion == null){
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
-	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%=ciclo%></a>
+	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class='fas fa-book-medical'></i><span> <%=ciclo%></span></a>
     <div class="dropdown-menu">
     <%for (Ciclo cicloBox : dataCiclos){ %>
       <form action="index.jsp" method="post">
@@ -158,43 +158,49 @@ if (sesion == null){
   </li>
 </ul>
 <%if (sesion != null){ %>
-<div class="tab-content" id="nav-tabContent">
-	<!-- aqui empiezan las ligas de los tabls -->
-  <div class="tab-pane fade show active" id="nav-registros" role="tabpanel" aria-labelledby="nav-registros-tab">
-	<div class="embed-responsive embed-responsive-16by9">
-  	<iframe class="embed-responsive-item" id="frame-registros" src="Registros.jsp" allowfullscreen></iframe>
-	</div>
-  </div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="tab-content" id="nav-tabContent">
+				<!-- aqui empiezan las ligas de los tabls -->
+			  <div class="tab-pane fade show active" id="nav-registros" role="tabpanel" aria-labelledby="nav-registros-tab">
+				<div class="embed-responsive embed-responsive-16by9">
+  				<iframe class="embed-responsive-item" id="frame-registros" src="Registros.jsp" allowfullscreen></iframe>
+				</div>
+			  </div>
 
-  <div class="tab-pane fade" id="nav-alumnos" role="tabpanel" aria-labelledby="nav-alumnos-tab">
-  <div class="embed-responsive embed-responsive-16by9">
-  	<iframe class="embed-responsive-item" src="Alumnos.jsp" allowfullscreen></iframe>
-	</div>
-  </div>
+			  <div class="tab-pane fade" id="nav-alumnos" role="tabpanel" aria-labelledby="nav-alumnos-tab">
+			  <div class="embed-responsive embed-responsive-16by9">
+  				<iframe class="embed-responsive-item" src="Alumnos.jsp" allowfullscreen></iframe>
+				</div>
+			  </div>
 
-  <div class="tab-pane fade" id="nav-horarios" role="tabpanel" aria-labelledby="nav-horarios-tab">
-  <div class="embed-responsive embed-responsive-16by9">
-  	<iframe class="embed-responsive-item" src="Horarios.jsp" allowfullscreen></iframe>
-	</div>
-  </div>
+			  <div class="tab-pane fade" id="nav-horarios" role="tabpanel" aria-labelledby="nav-horarios-tab">
+			  <div class="embed-responsive embed-responsive-16by9">
+  				<iframe class="embed-responsive-item" src="Horarios.jsp" allowfullscreen></iframe>
+				</div>
+			  </div>
 
-  <div class="tab-pane fade" id="nav-hospitales" role="tabpanel" aria-labelledby="nav-hospitales-tab">
-  	<div class="embed-responsive embed-responsive-16by9">
-  		<iframe class="embed-responsive-item" src="Hospitales.jsp" allowfullscreen></iframe>
-	</div>
-  </div>
+			  <div class="tab-pane fade" id="nav-hospitales" role="tabpanel" aria-labelledby="nav-hospitales-tab">
+  				<div class="embed-responsive embed-responsive-16by9">
+  					<iframe class="embed-responsive-item" src="Hospitales.jsp" allowfullscreen></iframe>
+				</div>
+			  </div>
 
-  <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">
-  	<div class="embed-responsive embed-responsive-16by9">
-  		<iframe class="embed-responsive-item" id="frame-grupos" src="Grupos.jsp" allowfullscreen></iframe>
-  	</div>
-  </div>
+			  <div class="tab-pane fade" id="nav-grupos" role="tabpanel" aria-labelledby="nav-grupos-tab">
+  				<div class="embed-responsive embed-responsive-16by9">
+  					<iframe class="embed-responsive-item" id="frame-grupos" src="Grupos.jsp" allowfullscreen></iframe>
+  				</div>
+			  </div>
 
-  <div class="tab-pane fade" id="nav-usuarios" role="tabpanel" aria-labelledby="nav-usuarios-tab">
-  	<div class="embed-responsive embed-responsive-16by9">
-  	<iframe class="embed-responsive-item" src="Usuarios.jsp" allowfullscreen></iframe>
+			  <div class="tab-pane fade" id="nav-usuarios" role="tabpanel" aria-labelledby="nav-usuarios-tab">
+  				<div class="embed-responsive embed-responsive-16by9">
+  				<iframe class="embed-responsive-item" src="Usuarios.jsp" allowfullscreen></iframe>
+				</div>
+			  </div>
+			</div>
+		</div>
 	</div>
-  </div>
 </div>
 <%} %>
 
