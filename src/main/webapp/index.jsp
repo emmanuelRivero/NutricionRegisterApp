@@ -48,11 +48,11 @@ String loginButton = request.getParameter("loginButton");
 String CicloButton = request.getParameter("CicloButton");
 if (loginButton != null){
 	String usuario = request.getParameter("usuario");
-	String contrase�a = request.getParameter("contrase�a");
+	String contrasena = request.getParameter("contrasena");
 	String formCicloID = request.getParameter("ciclo");
 
 	Session nuevaSesion = new Session();
-	nuevaSesion = login.loginUser(usuario, contrase�a);
+	nuevaSesion = login.loginUser(usuario, contrasena);
 	System.out.println(nuevaSesion.getUsername());
 	System.out.println(nuevaSesion.getRol());
 
