@@ -190,7 +190,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary" name="importButton" value="hospitales">Importar</button>
+        <button type="submit" class="btn btn-primary" name="importButton" value="hospitales" onclick="loadModal()">Importar</button>
       </div>
       </form>
     </div>
@@ -289,6 +289,31 @@ for (Hospital hospital : data){ %>
   </div>
 </div>
 
+<!-- file load modal-->
+<div class="modal fade" id="fileLoadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cargando datos</h5>
+        <button type="button" class="close" aria-label="Close" disabled>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Grupos.jsp" method="post">
+      	<input type="hidden" id="deleteID" name="id" value="">
+      <div class="modal-body">
+        <p>Estamos cargando los datos por favor no cierre la pestaña</p>
+        <div>
+         	<img src="images/loading.gif" width="200" height="200" style="display: block;margin-left: auto; margin-right: auto;""> 
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- bootstrap 4.3 -->
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
@@ -303,6 +328,11 @@ $(document).ready(function() {
 function setDeleteID(ID){
 	document.getElementById('deleteID').value=ID;
 	$('#deleteModal').modal('show');
+}
+
+function loadModal() {
+	$('#importModal').modal('hide');
+	$('#fileLoadModal').modal('show');
 }
 </script>
 </body>

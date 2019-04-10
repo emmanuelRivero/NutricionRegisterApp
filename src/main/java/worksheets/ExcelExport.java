@@ -31,9 +31,11 @@ public class ExcelExport {
 		headers.add("Horario");
 		headers.add("Hospital");
 		headers.add("Telefono");
+		headers.add("Celular");		
 		headers.add("E-mail");
 		headers.add("Nombre Emergencia");
 		headers.add("Tel. Familiar");
+		headers.add("Fecha Practica");
 		headers.add("Documentos faltantes");
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -95,17 +97,25 @@ public class ExcelExport {
         	telefono.setCellValue(registro.getTelefono());
         	sheet.autoSizeColumn(6);
         	
-        	Cell correo = data.createCell(7);    
-        	correo.setCellValue(registro.getEmail());
+        	Cell celular = data.createCell(7);    
+        	celular.setCellValue(registro.getCelular());
         	sheet.autoSizeColumn(7);
         	
-        	Cell emergencia = data.createCell(8);    
-        	emergencia.setCellValue(registro.getEmergencia());
+        	Cell correo = data.createCell(8);    
+        	correo.setCellValue(registro.getEmail());
         	sheet.autoSizeColumn(8);
         	
-        	Cell telfam = data.createCell(9);    
-        	telfam.setCellValue(registro.getTelfam());
+        	Cell emergencia = data.createCell(9);    
+        	emergencia.setCellValue(registro.getEmergencia());
         	sheet.autoSizeColumn(9);
+        	
+        	Cell telfam = data.createCell(10);    
+        	telfam.setCellValue(registro.getTelfam());
+        	sheet.autoSizeColumn(10);
+        	
+        	Cell fechaPractica = data.createCell(11);    
+        	fechaPractica.setCellValue(registro.getFechaPractica());
+        	sheet.autoSizeColumn(11);
         	
         	String documentosString = "";
         	
@@ -152,9 +162,9 @@ public class ExcelExport {
         	//String documentosUTF = new String (documentosUTFbyte,utf8charset);
          	
         	
-        	Cell documentos = data.createCell(10);    
+        	Cell documentos = data.createCell(12);    
         	documentos.setCellValue(documentosString);
-        	sheet.autoSizeColumn(10);
+        	sheet.autoSizeColumn(12);
         }
         
         

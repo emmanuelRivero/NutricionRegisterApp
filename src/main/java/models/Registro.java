@@ -17,6 +17,7 @@ public class Registro {
 	private String FechaPractica;
 	private String email;
 	private String telefono;
+	private String Celular;
 	private String emergencia;
 	private String telfam;
 	private int historial;
@@ -25,6 +26,13 @@ public class Registro {
 	private int seguro;
 	private int horario2;
 	
+	
+	public String getCelular() {
+		return Celular;
+	}
+	public void setCelular(String celular) {
+		Celular = celular;
+	}
 	public String getHospitalDom() {
 		return hospitalDom;
 	}

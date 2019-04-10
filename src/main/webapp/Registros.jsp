@@ -36,6 +36,7 @@ String cuentaRegistro = request.getParameter("cuenta");
 Registro alumnoRegistrado = null;
 String URLPD ="";
 String URLXLS="";
+String URLDOCX="";
 
 // catch new request form
 String newButton = request.getParameter("newButton");
@@ -93,6 +94,7 @@ if (newButton2 != null){
 	String cuenta = request.getParameter("cuenta");
 	String email = request.getParameter("email");
 	String telefono = request.getParameter("telefono");
+	String celular = request.getParameter("celular");
 	String emergencia = request.getParameter("emergencia");	
 	String telfam = request.getParameter("telfam");
 	String historial = request.getParameter("historial");
@@ -119,27 +121,28 @@ if (newButton2 != null){
 		horario="0";
 	}
 	
-	databaseUpdate.Registro(cuenta, sessioncicloID, email, telefono, emergencia, telfam, historial, cartilla, fotos, seguro, horario, fechaPractica);
+	databaseUpdate.Registro(cuenta, sessioncicloID, email, telefono, celular, emergencia, telfam, historial, cartilla, fotos, seguro, horario, fechaPractica);
 	
 	alumnoRegistrado = databaseQuery.getRegistros(sessioncicloID, cuenta);
 	
 	String currentPath = request.getSession().getServletContext().getRealPath("/");
-	String pathHTMLTempleate = currentPath + "autoCreated/PlantillaRegistro.html";
-	String pathHTML = currentPath + "autoCreated/registro-"+cuenta+".html";
+	String pathDOCTempleate = currentPath + "autoCreated/PlantillaRegistro.docx";
+	String pathDOCX = currentPath + "autoCreated/registro-"+cuenta+".docx";
 	String pathPDF = currentPath + "autoCreated/registro-"+cuenta+".pdf";
-	String currentWorkingPath = currentPath + "autoCreated/";
+	//String currentWorkingPath = currentPath + "autoCreated/";
 	
 	String contextPath = request.getContextPath();
 	URLPD = contextPath + "/autoCreated/registro-"+cuenta+".pdf";
+	URLDOCX =  contextPath + "/autoCreated/registro-"+cuenta+".docx";
 	
 	try{
-		generateHTML.generateRegistroHTML(pathHTMLTempleate, pathHTML, alumnoRegistrado);
+		generateDOCX.generateRegistroDOC(pathDOCTempleate, pathDOCX, alumnoRegistrado);
 	}catch(IOException e){
 		e.printStackTrace();	
 	}
 	
 	try {
-		generatePDF.generatePDFFromHTML(pathHTML, pathPDF, currentWorkingPath, currentWorkingPath);
+		generatePDF.generatePDFFromDOCX(pathDOCX, pathPDF);
 	}catch(IOException e){
 		e.printStackTrace();
 	}catch(DocumentException e){
@@ -189,6 +192,7 @@ if (updateButton2 != null){
 	String cuenta = request.getParameter("cuenta");
 	String email = request.getParameter("email");
 	String telefono = request.getParameter("telefono");
+	String celular = request.getParameter("celular");
 	String emergencia = request.getParameter("emergencia");	
 	String telfam = request.getParameter("telfam");
 	String historial = request.getParameter("historial");
@@ -215,7 +219,7 @@ if (updateButton2 != null){
 		horario="0";
 	}
 	
-	databaseUpdate.Registro(cuenta, sessioncicloID, email, telefono, emergencia, telfam, historial, cartilla, fotos, seguro, horario, fechaPractica);
+	databaseUpdate.Registro(cuenta, sessioncicloID, email, telefono, celular, emergencia, telfam, historial, cartilla, fotos, seguro, horario, fechaPractica);
 }
 
 //catch delete request form
@@ -248,30 +252,32 @@ if (exportButton != null){
 	<%
 	
 }
-
+// catch print requet
 String printButton = request.getParameter("printButton");
 if (printButton != null){
 	String cuenta = printButton;
-	System.out.println(cuenta);
+	
 	alumnoRegistrado = databaseQuery.getRegistros(sessioncicloID, cuenta);
-	System.out.println(alumnoRegistrado.getCuenta());
+	
 	String currentPath = request.getSession().getServletContext().getRealPath("/");
-	String pathHTMLTempleate = currentPath + "autoCreated/PlantillaRegistro.html";
-	String pathHTML = currentPath + "autoCreated/registro-"+cuenta+".html";
+	String pathDOCTempleate = currentPath + "autoCreated/PlantillaRegistro.docx";
+	String pathDOCX = currentPath + "autoCreated/registro-"+cuenta+".docx";
 	String pathPDF = currentPath + "autoCreated/registro-"+cuenta+".pdf";
-	String currentWorkingPath = currentPath + "autoCreated/";
+	//String currentWorkingPath = currentPath + "autoCreated/";
+	System.out.println("Template: " + pathDOCTempleate);
 	
 	String contextPath = request.getContextPath();
 	URLPD = contextPath + "/autoCreated/registro-"+cuenta+".pdf";
+	URLDOCX =  contextPath + "/autoCreated/registro-"+cuenta+".docx";
 	
 	try{
-		generateHTML.generateRegistroHTML(pathHTMLTempleate, pathHTML, alumnoRegistrado);
+		generateDOCX.generateRegistroDOC(pathDOCTempleate, pathDOCX, alumnoRegistrado);
 	}catch(IOException e){
 		e.printStackTrace();	
 	}
 	
 	try {
-		generatePDF.generatePDFFromHTML(pathHTML, pathPDF, currentWorkingPath, currentWorkingPath);
+		generatePDF.generatePDFFromDOCX(pathDOCX, pathPDF);
 	}catch(IOException e){
 		e.printStackTrace();
 	}catch(DocumentException e){
@@ -436,8 +442,12 @@ dataHorarios = databaseQuery.getHorario();
       <div class="modal-body">
         <input type="hidden" id="custId" name="cuenta" value="<%=cuentaRegistro%>">
     	<div class="form-group">
-    		<label for="exampleFormControlInput1">Telefono</label>
+    		<label for="exampleFormControlInput1">Telefono fijo</label>
     		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="telefono">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Telefono celular</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="celular">
     	</div>
       	<div class="form-group">
     		<label for="exampleFormControlInput1">Correo electrónico</label>
@@ -508,9 +518,20 @@ dataHorarios = databaseQuery.getHorario();
       </div>
       <div class="modal-body">
         <p>El alumno <%=alumnoRegistrado.getNombres()%> <%=alumnoRegistrado.getApellidoPaterno()%> <%=alumnoRegistrado.getApellidoMaterno()%> con cuenta <%=alumnoRegistrado.getCuenta() %> fue registrado exitosamente </p>
-		<form action="<%=URLPD%>" method="post" target="_blank">
-			<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar Hoja de registro</button>
-		</form>
+		<table>
+			<tr>
+				<td>
+					<form action="<%=URLPD%>" method="post" target="_blank">
+						<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar PDF</button>
+					</form>	
+				</td>
+				<td>
+					<form action="<%=URLDOCX%>" method="post" target="_blank">
+						<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar Word</button>
+					</form>
+				</td>
+			</tr>
+		</table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -654,6 +675,10 @@ for (Registro registro : dataRegistros){
     	<div class="form-group">
     		<label for="exampleFormControlInput1">Telefono</label>
     		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="telefono" value="<%=registro.getTelefono() %>">
+    	</div>
+    	<div class="form-group">
+    		<label for="exampleFormControlInput1">Telefono celular</label>
+    		<input class="form-control form-control-sm autocomplete" type="text" placeholder="55 11 22 33 44 55" name="celular" value="<%=registro.getCelular()%>">
     	</div>
       	<div class="form-group">
     		<label for="exampleFormControlInput1">Correo electrónico</label>
@@ -799,9 +824,20 @@ for (Registro registro : dataRegistros){
       </div>
       <div class="modal-body">
         <p>La hoja de registro ha sido generada has click en el boton para descargar.</p>
-		<form action="<%=URLPD%>" method="post" target="_blank">
-			<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar Hoja de registro</button>
-		</form>
+		<table>
+			<tr>
+				<td>
+					<form action="<%=URLPD%>" method="post" target="_blank">
+						<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar PDF</button>
+					</form>	
+				</td>
+				<td>
+					<form action="<%=URLDOCX%>" method="post" target="_blank">
+						<button type="submit" class="btn btn-secondary"><i class="fa fa-download fa-lg"></i>Descargar Word</button>
+					</form>
+				</td>
+			</tr>
+		</table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

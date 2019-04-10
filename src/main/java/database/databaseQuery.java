@@ -349,7 +349,7 @@ public class databaseQuery {
 	//Registros
 	public static ArrayList<Registro> getRegistros(String cicloID) {
 		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, r.fecha_practica, g.nombre, h.hospital_id, h.nombre, h.domicilio, r.ciclo_id, " + 
-				"r.email, r.telefono, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
+				"r.email, r.telefono, r.celular, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
 				"from registro AS r " + 
 				"JOIN alumno as a " + 
 				"ON a.cuenta=r.cuenta " + 
@@ -401,6 +401,7 @@ public class databaseQuery {
 				registro.setFechaPractica(rs.getString("r.fecha_practica"));
 				registro.setEmail(rs.getString("r.email"));
 				registro.setTelefono(rs.getString("r.telefono"));
+				registro.setCelular(rs.getString("r.celular"));
 				registro.setEmergencia(rs.getString("r.emergencia"));
 				registro.setTelfam(rs.getString("r.telfam"));
 				registro.setHistorial(rs.getInt("r.historial"));
@@ -433,7 +434,7 @@ public class databaseQuery {
 
 	public static Registro getRegistros(String cicloID, String cuenta) {
 		String query = "select r.registro_id, r.cuenta, a.nombre,a.apellido_paterno,a.apellido_materno, r.horario_id, hor.horario, r.grupo_id, r.fecha_practica, g.nombre, h.hospital_id, h.nombre, h.domicilio, r.ciclo_id, " + 
-				"r.email, r.telefono, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
+				"r.email, r.telefono, r.celular, r.emergencia, r.telfam, r.historial, r.cartilla, r.fotos, r.seguro, r.horario " + 
 				"from registro AS r " + 
 				"JOIN alumno as a " + 
 				"ON a.cuenta=r.cuenta " + 
@@ -462,8 +463,7 @@ public class databaseQuery {
 			Class.forName("com.mysql.jdbc.Driver");
 			conection=DriverManager.getConnection(url,dbUser,dbPassword);
 			getData = conection.createStatement();
-
-		
+					
 			rs = getData.executeQuery(query);
 			rs.next();
 				registro.setId(rs.getInt("r.registro_id"));
@@ -483,6 +483,7 @@ public class databaseQuery {
 				registro.setFechaPractica(rs.getString("r.fecha_practica"));
 				registro.setEmail(rs.getString("r.email"));
 				registro.setTelefono(rs.getString("r.telefono"));
+				registro.setCelular(rs.getString("r.celular"));
 				registro.setEmergencia(rs.getString("r.emergencia"));
 				registro.setTelfam(rs.getString("r.telfam"));
 				registro.setHistorial(rs.getInt("r.historial"));

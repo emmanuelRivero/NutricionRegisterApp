@@ -17,9 +17,19 @@ import com.itextpdf.tool.xml.pipeline.html.AbstractImageProvider;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 import com.itextpdf.tool.xml.pipeline.html.LinkProvider;
+
+import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.File;
 
 
 
@@ -83,4 +93,12 @@ public class generatePDF {
         System.out.println("pdf: " + PDFoutput);
     }
 	
+	public static void generatePDFFromDOCX(String DOCXPath, String PDFoutput) throws IOException, DocumentException {
+        InputStream doc = new FileInputStream(new File(DOCXPath));
+        XWPFDocument document = new XWPFDocument(doc);
+        PdfOptions options = PdfOptions.create();
+        OutputStream out = new FileOutputStream(new File(PDFoutput));
+        PdfConverter.getInstance().convert(document, out, options);
+        System.out.println("PDF: " + PDFoutput);
+	}
 }

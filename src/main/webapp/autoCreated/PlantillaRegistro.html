@@ -4,83 +4,222 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </meta>
 </head>
+<style>
+.headerDoc p {
+	text-aling:center;
+	font-size:13px;
+}
+
+.infoAlumno table {
+	font-size:11px;
+}
+
+.infoHospital table{
+	font-size:11px;
+	border: 1px solid black;
+	border-collapse: collapse;
+	
+}
+
+.infoHospital table td{
+	border: 1px solid black;
+}
+
+.infoHospital table tr{
+	border: 1px solid black;
+	height:30px
+}
+
+.indicaciones table { 
+	font-size:11px;	
+	border-spacing: 0px 8px;
+}
+
+.indicaciones tr td { 
+	font-size:11px;
+	
+}
+.indicaciones tr td:first-child {
+	width: 100px; 
+	font-size:9px;
+	vertical-align: text-top;
+}
+
+.footerDoc p{
+	text-aling:center;
+	line-height: 1.5;
+	font-size:10px;
+}
+</style>
 <body>
-	<table width="612" border="0">
-		<tr>
-			<td width="87"><img src="UnitecLogo.png" height="87" width="76"></img></td>
-			<td colspan="3" style="text-align: center">Asignación de campus clinico</td>
-			<td width="72" height="85" style="border-style: solid; border-width: thin; text-align: center">Foto</td>
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>Cuenta</td>
-			<td></td>
-			<td>$cuenta</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>Alumno:</td>
-			<td></td>	
-			<td>$alumno</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>e-mail:</td>
-			<td></td>	
-			<td>$eMail</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>telefono:</td>
-			<td></td>	
-			<td>$telefono</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>en caso de emergencia:</td>
-			<td></td>	
-			<td>$emergencia</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>telefono emergencia:</td>
-			<td></td>	
-			<td>$emeTelefono</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>hospital:</td>
-			<td></td>	
-			<td>$hospital</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>horario:</td>
-			<td></td>	
-			<td>$horario</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>fecha practica:</td>
-			<td></td>	
-			<td>$fechaPractica</td>
-			<td></td>	
-		</tr>
-		<tr>
-			<td width="87"></td>
-			<td>dirección:</td>
-			<td></td>	
-			<td>$direccion</td>
-			<td></td>	
-		</tr>
-	</table>
+<div class="headerDoc">
+<p>&nbsp;</p>
+<p><strong>UNIVERSIDAD TECNOL&Oacute;GICA DE M&Eacute;XICO CAMPUS SUR</strong></p>
+<p><strong>LICENCIATURA EN NUTRICI&Oacute;N </strong></p>
+<p><strong>CICLO&nbsp; 18-1</strong></p>
+<p>ASIGNACI&Oacute;N DE CAMPO CL&Iacute;NICO</p>
+</div>
+<p><strong>&nbsp;</strong></p>
+<p style="font-size:11px;"><strong>DATOS DE ALUMNO </strong></p>
+
+<div class="infoAlumno">
+<table >
+<tbody>
+<tr>
+<td width="589">
+<p>Nombre del Alumno: $alumno &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
+</td>
+</tr>
+<tr>
+<td width="589">
+<p>N&uacute;mero de Cuenta: $cuenta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="589">
+<p>Correo electr&oacute;nico: $eMail</p>
+</td>
+</tr>
+<tr>
+<td width="589">
+<p>Tel&eacute;fono fijo: $telefono &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Celular:$celular</p>
+</td>
+</tr>
+<tr>
+<td width="589">
+<p><em>En caso de Emergencia llamar a: $emergencia</em></p>
+</td>
+</tr>
+<tr>
+<td width="589">
+<p><em>Tel&eacute;fono de familiar: $emeTelefono</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>&nbsp;</strong></p>
+<p><strong>9&deg; CUATRIMESTRE</strong></p>
+<p><strong>&nbsp;</strong></p>
+
+<div class="infoHospital">
+<table width="623"  >
+<tbody>
+<tr>
+<td width="217">
+<p><strong>Lugar: </strong></p>
+</td>
+<td width="406">
+<p><strong>&nbsp;</strong><strong>$hospital</strong></p>
+</td>
+</tr>
+<tr>
+<td width="217">
+<p><strong>Horario: </strong></p>
+</td>
+<td width="406">
+<p><strong>&nbsp;</strong><strong>$horario</strong></p>
+</td>
+</tr>
+<tr>
+<td width="217">
+<p><strong>Fecha de la Practica: </strong></p>
+</td>
+<td width="406">
+<p><strong>&nbsp;$fechaPractica</strong></p>
+</td>
+</tr>
+<tr>
+<td width="217">
+<p><strong>Direcci&oacute;n: </strong></p>
+</td>
+<td width="406">
+<p>&nbsp;<strong>$direccion</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indicaciones">
+<p><strong>&nbsp;</strong></p>
+<p><strong>&nbsp;</strong></p>
+<table>
+	<tr>
+		<td>1. </td>
+		<td>Los Campos Cl&iacute;nicos quedan sujetos a CAMBIO SIN PREVIO AVISO cuando la Instituci&oacute;n Receptora as&iacute; lo disponga.</td>
+	</tr>
+	<tr>
+		<td>2. </td>
+		<td>La asistencia de campo cl&iacute;nico se toma en cuenta desde el primer d&iacute;a de Inducci&oacute;n y deber&aacute; ser del 100%</td>
+	</tr>
+	<tr>
+		<td>3. </td>
+		<td>Es obligaci&oacute;n del alumno el acceso puntual a las unidades de salud, por lo que deber&aacute; presentarse con 15 minutos de antelaci&oacute;n.</td>
+	</tr>
+	<tr>
+		<td>4. </td>
+		<td>Es obligaci&oacute;n del alumno acudir debidamente uniformado a los campos cl&iacute;nicos, de lo contrario no se permitir&aacute; el acceso</td>
+	</tr>
+	<tr>
+		<td>5. </td>	
+		<td>Durante la estancia en las unidades de salud deber&aacute; cumplir con las pol&iacute;ticas internas de la instituci&oacute;n donde realice la pr&aacute;ctica cl&iacute;nica.</td>
+	</tr>
+	<tr>
+		<td>6. </td>	
+		<td>Est&aacute; prohibido salir de la Unidad de salud asignada dentro del horario estipulado, de lo contrario ser&aacute; causa de sanci&oacute;n</td>
+	</tr>
+	<tr>
+		<td>7. </td>
+		<td>El estudiante no podr&aacute; ser acompa&ntilde;ado por ning&uacute;n familiar y/o amigo en el tiempo que realice su pr&aacute;ctica.</td>
+	</tr>
+	<tr>
+		<td>8. </td>
+		<td>El alumno no podr&aacute;&nbsp;&nbsp; realizar&nbsp;&nbsp; gestiones con el campo cl&iacute;nico para modificaciones en las condiciones de pr&aacute;ctica cl&iacute;nica (Unidad Asignada, horarios, justificaci&oacute;n de falta, etc.) de lo contrario, ser&aacute; acreedor a sanci&oacute;n por la Universidad.</td>
+	</tr>
+	<tr>
+		<td>9. </td>
+		<td>Presentarse a la pr&aacute;ctica sin mochilas voluminosas ni objetos de valor (tablets, laptop, iPhone, etc.)</td>
+	</tr>
+	<tr>
+		<td>10. </td>
+		<td>Cumplir con las tareas en tiempo y forma asignados por el docente y/o Instituci&oacute;n.</td>
+	</tr>
+	<tr>
+		<td>11. </td>
+		<td>Est&aacute; prohibido tomar fotograf&iacute;as y/o video de los pacientes y la Instituci&oacute;n de salud.</td>
+	</tr>
+	<tr>
+		<td>12. </td>
+		<td>El uso del celular queda restringido dentro del servicio y/o en la atenci&oacute;n del paciente.</td>
+	</tr>
+	<tr>
+		<td>13. </td>
+	<td>El alumno NO podr&aacute; permanecer en el campo cl&iacute;nico despu&eacute;s de su horario de pr&aacute;ctica.</td>
+	</tr>
+	<tr>
+		<td>14. </td>
+		<td>Es obligaci&oacute;n del alumno notificar de forma inmediata incidentes que pongan en riesgo la estancia en la unidad o instituci&oacute;n donde se realice la pr&aacute;ctica, as&iacute; como incidentes que pongan en riesgo la salud del practicante.</td>
+	</tr>
+	<tr>
+		<td>15. </td>
+		<td>Si el alumno abandona el campo cl&iacute;nico por su propia voluntad o es dado de baja por la instituci&oacute;n receptora, perder&aacute; su derecho a la reincorporaci&oacute;n de la pr&aacute;ctica cl&iacute;nica y/o acreditaci&oacute;n de la materia.</td>
+	</tr>
+	<tr>
+		<td>16. </td>
+		<td>La instituci&oacute;n de salud podr&aacute; dar de baja al alumno que no cumpla con los acuerdos establecidos en esta carta compromiso y reglamento institucional, notific&aacute;ndolo al &aacute;rea de Direcci&oacute;n Acad&eacute;mica de Nutrici&oacute;n de UNITEC.</td>
+	</tr>
+</table>
+</div>
+<div class="footerDoc">
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ________________________________________________</p>
+<p>NOMBRE Y FIRMA DEL ALUMNO.</p>
+<p>&nbsp;</p>
+<p><strong>ESTOY ENTERADO Y ME COMPROMETO A CUMPLIR EL REGLAMENTO DE CAMPOS CL&Iacute;NICOS, <em>AS&Iacute; MISMO, CONFIRMO QUE LA DOCUMENTACI&Oacute;N ENTREGADA EL D&Iacute;A DE LA ASIGNACI&Oacute;N ES VER&Iacute;DICA, QUEDANDO BAJO MI RESPONSABILIDAD EL MANTENERLA VIGENTE, ADEM&Aacute;S DE REVISAR Y VERIFICAR QUE MI HORARIO SEA EL CORRECTO EL D&Iacute;A DE MI INSCRIPCI&Oacute;N.</em></strong></p>
+<p><strong>&nbsp;</strong></p>
+</div>
 </body>
 </html>
