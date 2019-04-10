@@ -5,7 +5,7 @@
 }
 
 .box {
-    width: auto;
+    width: 400px;
     height: 42px;
     overflow: hidden;
 }
