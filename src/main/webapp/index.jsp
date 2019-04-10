@@ -157,8 +157,6 @@ if (sesion == null){
       </form>
     </div>
   </li>
-</ul>
-<ul class="nav navbar-nav navbar-right">
   <li class="nav-item">
 	<div class="box pull-right">
 		<img src="images/UNITEC_logo.jpg">
