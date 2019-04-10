@@ -7,6 +7,8 @@
 .box2 {
     font-size: 0.8rem;
     float: left;
+    width: auto;
+    height: 42px;
 }
 
 .box {
