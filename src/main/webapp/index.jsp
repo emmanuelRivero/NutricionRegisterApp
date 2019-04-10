@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<title>nutricion V0.9</title>
+<title>Nutrición V0.9</title>
 </head>
 <body>
 <!--
@@ -216,8 +216,8 @@ if (sesion == null){
       </div>
       <div class="modal-body">
       	<div class="form-group">
-    		<label for="exampleFormControlInput1">ContraseÃ±a</label>
-    		<input class="form-control form-control-sm" type="password" placeholder="ContraseÃ±a" name="contraseÃ±a">
+    		<label for="exampleFormControlInput1">Contraseña</label>
+    		<input class="form-control form-control-sm" type="password" placeholder="Contraseña" name="contrasena">
     	</div>
       </div>
       <div class="modal-body">
@@ -277,7 +277,7 @@ if (sesion == null){
     </div>
   </div>
 </div>
-<div id="version" style="text-align: right; font-size: 8px; display: none">versiÃ³n 0.9</div>
+<div id="version" style="text-align: right; font-size: 8px; display: none">versión 0.9</div>
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
