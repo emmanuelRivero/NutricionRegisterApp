@@ -4,6 +4,12 @@
     height:42px;
 }
 
+.box {
+    width: auto;
+    height: 42px;
+    overflow: hidden;
+}
+
 .box img {
     width: auto;
     height: 42px;
