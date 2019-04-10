@@ -144,7 +144,7 @@ if (sesion == null){
  		 -->
     	<li class="nav-item">
     		<a class="nav-link" id="contact-tab" data-toggle="tab" href="#nav-usuarios" role="tab" aria-controls="usuarios" aria-selected="false"
-                data-toggle="tooltip" data-placement="bottom" title="Gestionar asignación de prácticas clínicas"><i class='fas fa-user-cog'></i><span> Usuarios</span></a>
+                data-toggle="tooltip" data-placement="bottom" title="Gestionar usuarios y sus roles"><i class='fas fa-user-cog'></i><span> Usuarios</span></a>
   		</li>
   <%	}
   	} %>
@@ -152,7 +152,7 @@ if (sesion == null){
 	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class='fas fa-user-cog'></i><span> Cuenta</span></a>
     <div class="dropdown-menu">
       <form action="logout.jsp" method="post">
-      	<button type="submit"class="dropdown-item" name="logoutButton" value="logout">Cerrar sesión</button>
+      	<button type="submit"class="dropdown-item" name="logoutButton" value="logout">Cerrar sesi�n</button>
       </form>
     </div>
   </li>
