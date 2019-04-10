@@ -156,6 +156,9 @@ if (sesion == null){
       </form>
     </div>
   </li>
+  <li class="nav-item box pull-right">
+	<img src="images/UNITEC_logo.jpg">
+  </li>
 </ul>
 <%if (sesion != null){ %>
 <div class="tab-content" id="nav-tabContent">
