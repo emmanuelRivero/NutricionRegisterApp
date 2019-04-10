@@ -158,12 +158,14 @@ if (sesion == null){
     </div>
   </li>
   <li class="nav-item logo">
-	<div class="box2">
-		<span class="text-center">NutriSystem</span><br>
-		<span class="text-center">Dirección Académica de Nutrición</span>
-	</div>
-	<div class="box pull-right">
-		<img src="images/UNITEC_logo.jpg">
+  <div>
+		<div class="col-md-6">
+			<span class="text-center">NutriSystem</span><br>
+			<span class="text-center">Dirección Académica de Nutrición</span>
+		</div>
+		<div class="col-md-6">
+			<img src="images/UNITEC_logo.jpg">
+		</div>
 	</div>
   </li>
 </ul>
