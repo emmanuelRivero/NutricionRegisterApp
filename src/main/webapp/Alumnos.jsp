@@ -98,42 +98,48 @@
 </div>-->
 
 <br>
-<div class="table-responsive">
-<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Cuenta</th>
-      <th class="th-sm">Nombres</th>
-      <th class="th-sm">Apellido Paterno</th>
-      <th class="th-sm">Apellido Materno</th>   
-      <th class="th-sm">Carrera</th>   
-      <th class="th-sm">Desc.Carrera</th>      
-      <th class="th-sm">Sexo</th>        
-      <th class="th-sm"></th>        
-    </tr>
-  </thead>
-  <tbody>
-  <% for (Alumno alumno: data){%>
-    <tr>
-      <td><%=alumno.getCuenta()%></td>
-      <td><%=alumno.getNombre()%></td>
-      <td><%=alumno.getApellidoPaterno()%></td>
-      <td><%=alumno.getApellidoMaterno()%></td>
-      <td><%=alumno.getCarrera()%></td>
-      <td><%=alumno.getDescCarrera()%></td>
-      <td><%=alumno.getSexo()%></td>
-      <td align="right">
-      <%if (sessionRol.equals("admin")) {%>
-      	<div class="btn-group mr-2" role="group" aria-label="First group">
-      		<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=alumno.getCuenta()%>">Modificar</button>
-      	</div>
-      <%} else {%>
-      <%} %>
-      </td>
-    </tr>
-    <%}%>
-  </tbody>
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-responsive">
+			<table id="mainTable" class="table table-striped table-sm" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				  <th class="th-sm">Cuenta</th>
+				  <th class="th-sm">Nombres</th>
+				  <th class="th-sm">Apellido Paterno</th>
+				  <th class="th-sm">Apellido Materno</th>   
+				  <th class="th-sm">Carrera</th>   
+				  <th class="th-sm">Desc.Carrera</th>      
+				  <th class="th-sm">Sexo</th>        
+				  <th class="th-sm"></th>        
+				</tr>
+			  </thead>
+			  <tbody>
+			  <% for (Alumno alumno: data){%>
+				<tr>
+				  <td><%=alumno.getCuenta()%></td>
+				  <td><%=alumno.getNombre()%></td>
+				  <td><%=alumno.getApellidoPaterno()%></td>
+				  <td><%=alumno.getApellidoMaterno()%></td>
+				  <td><%=alumno.getCarrera()%></td>
+				  <td><%=alumno.getDescCarrera()%></td>
+				  <td><%=alumno.getSexo()%></td>
+				  <td align="right">
+				  <%if (sessionRol.equals("admin")) {%>
+      				<div class="btn-group mr-2" role="group" aria-label="First group">
+      					<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modificarModal<%=alumno.getCuenta()%>">Modificar</button>
+      				</div>
+				  <%} else {%>
+				  <%} %>
+				  </td>
+				</tr>
+				<%}%>
+			  </tbody>
+			</table>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Modal Nuevo-->
