@@ -12,13 +12,13 @@
 }
 
 .box {
-    width: 400px;
+    width: 200px;
     height: 42px;
     overflow: hidden;
 }
 
 .box img {
-    width: 200px;
+    width: auto;
     height: 42px;
     float: right;
 }
